@@ -9,7 +9,7 @@ The website collects visit **requests**, not exact appointments. The owner confi
   2. Preferred day (next 14 weekdays, first open day preselected) and window: Morning (7-12), Afternoon (12-5), Anytime. No exact slots.
   3. Name, phone, address or ZIP, optional note.
 - The confirmation says: "Request received. We will call or text to confirm your time, and we will let you know if anything changes." While `BOOKING_ENDPOINT` is empty it is labelled "(demo)" and nothing is sent.
-- The hero dial can carry context into the request: an optional **indoor temperature** (from "Inside my home" mode, editable or removable in the dialog) and the live **outside temperature** for Cleveland (Open-Meteo, only when available).
+- The hero dial can carry context into the request: an optional **indoor temperature** (the customer's own reading: it is sent only if they moved the dial, and it is editable or removable in the dialog) and the live **outside temperature** for Cleveland (Open-Meteo, only when available).
 - Days or windows that are blocked, full, or too soon show "Call us" instead of being hidden.
 - Everything is computed in the business timezone (`America/New_York`), whatever the visitor's device says.
 
@@ -46,11 +46,12 @@ Helpers on `window.TempTechScheduling`: `getSlots(config, serviceId, now)` (pure
   "feeAcknowledged": true,
   "serviceCallFeeUsd": 100,
   "indoorTempF": 58,
+  "indoorTempSource": "dial",
   "outdoorTempF": 41
 }
 ```
 
-`feeAcknowledged` is always `true` (the customer ticked the service call fee box); see `PAYMENTS.md`. `window` is `morning`, `afternoon` or `anytime`. `indoorTempF` and `outdoorTempF` are left out when not available. The server should reply `2xx` on success; `409` means the window just filled up (the form returns to step 2); any other error shows a retry message with the phone number.
+`feeAcknowledged` is always `true` (the customer ticked the service call fee box); see `PAYMENTS.md`. `window` is `morning`, `afternoon` or `anytime`. `indoorTempF` (with `indoorTempSource: "dial"`) is the customer's reading and is left out unless they moved the dial; `outdoorTempF` is the live Cleveland value and is left out when weather is unavailable. The server should reply `2xx` on success; `409` means the window just filled up (the form returns to step 2); any other error shows a retry message with the phone number.
 
 ## Going live, simplest first
 

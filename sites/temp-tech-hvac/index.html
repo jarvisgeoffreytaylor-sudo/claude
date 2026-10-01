@@ -154,23 +154,22 @@ nav a.btn:hover{background:var(--accent-hi)}
 }
 
 /* Hero: headline, one line, the dial, one button */
-.hero{background:var(--bg);padding:clamp(32px,6vw,80px) 0 clamp(48px,7vw,96px);position:relative;display:grid;align-items:center;min-height:clamp(0px,74dvh,780px)}
-.hero-grid{display:grid;gap:var(--s4);grid-template-areas:"copy" "dial"}
-.hero-copy{grid-area:copy;text-align:center}.dial-wrap{grid-area:dial}
+.hero{background:var(--bg);padding:clamp(20px,5vw,80px) 0 clamp(40px,7vw,96px);position:relative;display:grid;align-items:center;min-height:clamp(0px,74dvh,780px)}
+.hero-grid{display:grid;gap:clamp(20px,5vw,40px);grid-template-areas:"copy" "dial" "cta"}
+.hero-copy{grid-area:copy;text-align:center}.dial-wrap{grid-area:dial}.hero-cta{grid-area:cta;text-align:center}
 .hero h1{margin-bottom:var(--s2)}
-.hero p.lead{font-size:var(--fs-3);color:#cdd8e3;max-width:30ch;margin:0 auto var(--s3)}
+.hero p.lead{font-size:var(--fs-3);color:#cdd8e3;max-width:30ch;margin:0 auto}
 .hero .actions{display:flex;flex-wrap:wrap;gap:0 var(--s3);align-items:center;justify-content:center}
 @media(min-width:920px){
-  .hero-grid{grid-template-columns:1.1fr .9fr;grid-template-areas:"copy dial";align-items:center;column-gap:clamp(40px,6vw,80px)}
-  .hero-copy{text-align:left}.hero p.lead{margin-inline:0}.hero .actions{justify-content:flex-start}
+  .hero-grid{grid-template-columns:1.1fr .9fr;grid-template-areas:"copy dial" "cta dial";align-items:center;column-gap:clamp(40px,6vw,80px);row-gap:var(--s3)}
+  .hero-copy{text-align:left;align-self:end}.hero-cta{text-align:left;align-self:start}
+  .hero p.lead{margin-inline:0}.hero .actions{justify-content:flex-start}
 }
-.dial-wrap{display:none;justify-items:center;gap:var(--s1)}
+.dial-wrap{display:none;justify-items:center;gap:4px}
 .js .dial-wrap{display:grid}
-.mode{display:flex;gap:var(--s3);justify-content:center}
-.mode button{font:inherit;font-size:1rem;color:var(--muted);background:none;border:0;border-bottom:2px solid transparent;padding:10px 4px;min-height:48px;cursor:pointer;transition:color .25s,border-color .25s}
-.mode button:hover{color:#fff}
-.mode button[aria-checked="true"]{color:#fff;border-bottom-color:var(--accent)}
-.dial{position:relative;width:min(280px,74vw);aspect-ratio:1;border-radius:50%;touch-action:pan-y;cursor:grab;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+.dial-ask{font-family:var(--font-head);font-weight:500;font-size:var(--fs-3);color:#fff;margin:0;text-align:center;line-height:1.3;text-wrap:balance}
+.dial-sub{margin:0;color:var(--muted);text-align:center}
+.dial{position:relative;width:min(280px,74vw);aspect-ratio:1;border-radius:50%;touch-action:pan-y;cursor:grab;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;margin:var(--s1) 0}
 .dial.drag{cursor:grabbing}
 @media(min-width:920px){.dial{width:min(360px,100%)}}
 .knob-hit{position:absolute;width:60px;height:60px;transform:translate(-50%,-50%);border-radius:50%;touch-action:none;cursor:grab;z-index:2;left:50%;top:50%}
@@ -186,18 +185,18 @@ nav a.btn:hover{background:var(--accent-hi)}
 .dial #numText.pulse{animation:pulse .28s var(--ease)}
 @keyframes pulse{from{transform:scale(1.05)}to{transform:scale(1)}}
 .dial:focus-visible{outline:none}
-.dial.kb:focus-visible .face{stroke:var(--focus);stroke-width:4}
-.dial-msg{font-size:var(--fs-4);color:#e3eaf1;margin:0;text-align:center;min-height:3.4em;max-width:30ch;transition:opacity .25s}
-.dial-msg.swap{opacity:0}
-/* one quiet line under the readout: live label, or the Back button, or the call line (never more than one) */
-.dial-meta{min-height:48px;display:grid;place-items:center;text-align:center;color:var(--muted)}
-.dial-meta>*{margin:0;grid-area:1/1}
-.live-label{display:flex;align-items:center;gap:8px}
+.dial:focus-visible .face{stroke:var(--focus);stroke-width:4}
+/* the readout line, flanked by large round -/+ buttons */
+.dial-read{display:flex;align-items:center;justify-content:center;gap:var(--s2);width:100%;min-height:96px}
+.step-btn{flex:none;width:52px;height:52px;border-radius:50%;border:1.5px solid rgba(var(--accent-rgb),.5);background:rgba(var(--accent-rgb),.1);color:var(--accent-text);display:grid;place-items:center;cursor:pointer;padding:0;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;transition:background .2s}
+.step-btn:hover{background:rgba(var(--accent-rgb),.22)}
+.step-btn[aria-disabled="true"]{opacity:.4;cursor:default}
+.dial-msg{margin:0;flex:1;min-width:0;text-align:center;color:#e3eaf1;display:flex;align-items:center;justify-content:center;gap:8px;max-width:28ch}
+.dial-meta{min-height:48px;display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;white-space:nowrap;gap:0 var(--s2);text-align:center;color:var(--muted)}
 .ldot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);flex:none;animation:ping 2.4s ease-out infinite}
-.ldot.off{background:#8393a4;animation:none}
 @keyframes ping{0%{box-shadow:0 0 0 0 rgba(var(--accent-rgb),.5)}70%,100%{box-shadow:0 0 0 8px rgba(var(--accent-rgb),0)}}
-.live-back{font:inherit;color:var(--accent-text);background:none;border:0;padding:0 4px;min-height:48px;cursor:pointer;text-decoration:underline;text-underline-offset:6px}
-.dial-call a{display:inline-flex;align-items:center;min-height:48px;color:var(--accent-hi)}
+.link-btn{font:inherit;color:var(--accent-text);background:none;border:0;padding:0 4px;min-height:48px;cursor:pointer;text-decoration:underline;text-underline-offset:6px}
+.phone-urgent{color:var(--accent-hi)}
 
 /* Trust frame + reviews panel read as a pair: same thin accent border, same radius, soft tinted surface */
 .frame,.rv-panel{border:1px solid var(--line-accent);border-radius:var(--radius)}
@@ -294,8 +293,7 @@ footer .demo{margin-top:var(--s4);color:#8b9bad;text-align:center}
 .tp-btn{width:48px;height:48px;border-radius:50%;border:0;background:rgba(var(--accent-rgb),.12);color:var(--accent-text);cursor:pointer;display:grid;place-items:center;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;transition:background .2s}
 .tp-btn:hover{background:rgba(var(--accent-rgb),.24)}
 .tp-btn[aria-disabled="true"]{opacity:.4;cursor:default}
-.tp-val{display:flex;align-items:center;gap:6px;min-width:84px;justify-content:center;font-family:var(--font-head);font-weight:500;font-size:.98rem;color:#fff;padding:0 4px}
-.tp-live{background:transparent;border:1px solid rgba(var(--accent-rgb),.45);margin-left:2px}
+.tp-val{display:flex;align-items:center;gap:6px;min-width:128px;justify-content:center;font-family:var(--font-head);font-weight:500;font-size:.98rem;color:#fff;padding:0 4px}
 
 /* Reviews */
 .rv-actions{display:flex;flex-wrap:wrap;gap:0 24px;align-items:center;justify-content:center}
@@ -387,7 +385,8 @@ dialog#review{--cr-rgb:134,184,178}
   .sec{padding:56px 0}
 }
 @media(min-width:700px) and (max-height:500px){
-  .hero-grid{grid-template-columns:1.1fr .9fr;grid-template-areas:"copy dial";align-items:center;column-gap:36px}
+  .hero-grid{grid-template-columns:1.1fr .9fr;grid-template-areas:"copy dial" "cta dial";align-items:center;column-gap:36px;row-gap:12px}
+  .hero-copy{text-align:left;align-self:end}.hero-cta{text-align:left;align-self:start}.hero p.lead{margin-inline:0}.hero .actions{justify-content:flex-start}
   .dial{width:min(240px,62vh)}
 }
 
@@ -558,33 +557,37 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     <div class="hero-copy">
       <h1>We are Temp Tech HVAC Heating and Cooling</h1>
       <p class="lead">Expert installation, repair &amp; maintenance.</p>
-      <div class="actions">
-        <a class="btn btn-primary" id="dialCta" href="#contact" data-book>Request a visit</a>
-        <a class="text-link" href="tel:+12162132622">Prefer to talk? (216) 213-2622</a>
-      </div>
     </div>
 
     <div class="dial-wrap" aria-label="Interactive thermostat">
-      <div class="mode" id="modeSwitch" role="radiogroup" aria-label="What the dial shows">
-        <button type="button" role="radio" aria-checked="true" id="modeOut" tabindex="0" aria-label="Outside, Cleveland live">Outside</button>
-        <button type="button" role="radio" aria-checked="false" id="modeIn" tabindex="-1">Inside my home</button>
-      </div>
-      <div class="dial" id="dial" role="slider" tabindex="0" aria-label="Thermostat, outside temperature in Cleveland, degrees Fahrenheit" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70" aria-valuetext="70 degrees Fahrenheit">
+      <p class="dial-ask">What's it like inside your home?</p>
+      <p class="dial-sub">Turn the dial to your home's temperature.</p>
+      <div class="dial" id="dial" role="slider" tabindex="0" aria-label="Thermostat, degrees Fahrenheit" aria-valuemin="0" aria-valuemax="100" aria-valuenow="68" aria-valuetext="68 degrees">
         <svg viewBox="0 0 300 300" aria-hidden="true" focusable="false">
           <circle class="face" cx="150" cy="150" r="146"/>
           <g id="ticks"></g>
           <path class="track" d="M73.63 226.37 A108 108 0 1 1 226.37 226.37" fill="none" stroke-width="8" stroke-linecap="round"/>
           <path class="prog" id="prog" d="M73.63 226.37 A108 108 0 1 1 226.37 226.37" fill="none" stroke-width="8" stroke-linecap="round" pathLength="100" stroke-dasharray="55 100"/>
           <g id="knob"><circle class="knob" cx="150" cy="42" r="12"/></g>
-          <text id="numText" x="150" y="170" text-anchor="middle" font-size="76"><tspan id="num">70</tspan><tspan font-size="26" dy="-24" dx="2">°F</tspan></text>
+          <text id="numText" x="150" y="170" text-anchor="middle" font-size="76"><tspan id="num">68</tspan><tspan font-size="26" dy="-24" dx="2">°F</tspan></text>
         </svg>
         <div class="knob-hit" id="knobHit" aria-hidden="true"></div>
       </div>
-      <p class="dial-msg" id="dialMsg" aria-live="polite">Comfortable. Let's keep it that way.</p>
+      <div class="dial-read">
+        <button type="button" class="step-btn" id="dialMinus" aria-label="Lower temperature"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+        <p class="dial-msg" id="dialMsg" aria-live="polite"><span class="ldot" id="msgDot" aria-hidden="true" hidden></span><span id="msgText">Tap + or &minus; to set it.</span></p>
+        <button type="button" class="step-btn" id="dialPlus" aria-label="Raise temperature"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg></button>
+      </div>
       <div class="dial-meta">
-        <p class="live-label" id="liveLabel" hidden><span class="ldot" id="liveDot" aria-hidden="true"></span><span id="liveText"></span></p>
-        <button type="button" class="live-back" id="liveBack" hidden>Back to Cleveland now</button>
-        <p class="dial-call" id="dialCall" hidden>No heat or cooling right now? <a href="tel:+12162132622">Call (216) 213-2622</a></p>
+        <span id="homeLabel" hidden></span>
+        <button type="button" class="link-btn" id="clevLink" hidden></button>
+      </div>
+    </div>
+
+    <div class="hero-cta">
+      <div class="actions">
+        <a class="btn btn-primary" id="dialCta" href="#contact" data-book>Request a visit</a>
+        <a class="text-link" id="dialCall" href="tel:+12162132622">Prefer to talk? (216) 213-2622</a>
       </div>
     </div>
   </div>
@@ -735,11 +738,10 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   <a class="btn btn-primary" href="#contact" data-book>Request a visit</a>
 </div>
 
-<div class="tpill" id="tpill" role="group" aria-label="Page colour temperature">
+<div class="tpill" id="tpill" role="group" aria-label="Your home temperature">
   <button type="button" class="tp-btn" id="tpMinus" aria-label="Lower temperature"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
-  <span class="tp-val"><span id="tpVal" role="status">70&deg;F</span></span>
+  <span class="tp-val"><span id="tpVal" role="status">Your home 68&deg;F</span></span>
   <button type="button" class="tp-btn" id="tpPlus" aria-label="Raise temperature"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg></button>
-  <button type="button" class="tp-btn tp-live" id="tpLive" aria-label="Back to Cleveland now" title="Back to Cleveland now" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
 </div>
 
 <!-- REVIEW SHEET (customer review flow; nothing typed here is shown on this website) -->
@@ -1162,7 +1164,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
       address:document.getElementById('fAddr').value.trim(),note:document.getElementById('fNote').value.trim(),
       feeAcknowledged:true,serviceCallFeeUsd:SERVICE_CALL_FEE_USD
     };
-    if(indoor!==null&&!isNaN(indoor))p.indoorTempF=indoor;
+    if(indoor!==null&&!isNaN(indoor)){p.indoorTempF=indoor;p.indoorTempSource='dial'}
     if(c.outdoor!==null&&c.outdoor!==undefined)p.outdoorTempF=c.outdoor;
     return p;
   }
@@ -1674,12 +1676,13 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   var MIN=0,MAX=100,hero=document.getElementById('home');
   var prog=document.getElementById('prog'),knob=document.getElementById('knob'),ticksG=document.getElementById('ticks'),knobHit=document.getElementById('knobHit');
   var numEl=document.getElementById('num'),numText=document.getElementById('numText');
-  var msg=document.getElementById('dialMsg'),cta=document.getElementById('dialCta'),callLine=document.getElementById('dialCall');
-  var target=70,shown=70,lastInt=null,raf=0,dragging=false,ticks=[];
-  var mode='outside',indoorTemp=null,liveTemp=null;
+  var cta=document.getElementById('dialCta'),callLine=document.getElementById('dialCall');
+  var FALLBACK=68;
+  var target=FALLBACK,shown=FALLBACK,lastInt=null,raf=0,dragging=false,ticks=[];
+  var indoorTemp=null,liveTemp=null,homeSet=false;
   var NS='http://www.w3.org/2000/svg';
   /* context handed to the booking widget (read at open and at submit) */
-  function getContext(){return {indoor:indoorTemp,outdoor:(liveTemp!==null&&isFinite(liveTemp))?Math.round(liveTemp):null}}
+  function getContext(){return {indoor:homeSet?indoorTemp:null,outdoor:(liveTemp!==null&&isFinite(liveTemp))?Math.round(liveTemp):null}}
 
   for(var t=MIN;t<=MAX;t+=10){
     var th=(-135+(t-MIN)/(MAX-MIN)*270)*Math.PI/180,major=(t%10===0),r1=major?119:124,r2=133;
@@ -1739,36 +1742,41 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     if(metaTheme)metaTheme.setAttribute('content',css(bg));
   }
 
-  /* ---- hero copy: outside = adapts to the temperature; inside = plain read-out of the customer's own reading ---- */
-  var ZONES=[
-    {max:32,key:'heat',msg:"Freezing. Let's make sure your heat is ready."},
-    {max:50,key:'heat',msg:"Cold. Let's make sure your heating is ready."},
-    {max:64,key:'heat',msg:"A chill in the air. Worth checking your heating."},
-    {max:74,key:'',msg:"Comfortable. Let's keep it that way."},
-    {max:84,key:'ac',msg:"Getting warm. Worth checking your cooling."},
-    {max:999,key:'ac',msg:"Hot. Let's make sure your cooling is ready."}
-  ];
-  function zoneFor(n){for(var i=0;i<ZONES.length;i++)if(n<=ZONES[i].max)return i}
-  var lastZone=-1,swapT=0;
-  function setMsg(text,animate){
-    if(msg.textContent===text)return;
-    clearTimeout(swapT);
-    function apply(){msg.textContent=text;msg.classList.remove('swap')}
-    if(animate&&!reduce){msg.classList.add('swap');swapT=setTimeout(apply,160)}else apply();
+  /* ---- the dial: shows Cleveland (live) until the customer moves it; from then on it is THEIR HOME ---- */
+  var REFRESH_MS=600000,state='loading',touched=false,inflight=false,lastFetch=0,heroOut=false;
+  var msgText=document.getElementById('msgText'),msgDot=document.getElementById('msgDot'),homeLabel=document.getElementById('homeLabel'),clevLink=document.getElementById('clevLink');
+  var dMinus=document.getElementById('dialMinus'),dPlus=document.getElementById('dialPlus'),barBook=document.querySelector('.callbar [data-book]');
+  function clampT(v){return Math.max(MIN,Math.min(MAX,Math.round(v)))}
+  function baseline(){return liveTemp!==null?clampT(liveTemp):FALLBACK}
+  function readText(n){return n<=54?'Quite cold inside. Heating is likely the right visit.':n>=86?'Quite warm inside. Cooling is likely the right visit.':'Comfortable range.'}
+  function serviceFor(n){return n<=54?'heat':n>=86?'ac':''}
+  function renderLabels(){   /* immediate, quiet labels */
+    if(homeSet){
+      homeLabel.hidden=false;homeLabel.textContent='Your home: '+indoorTemp+'°F';
+      clevLink.hidden=false;
+      if(liveTemp!==null){clevLink.textContent='Cleveland: '+Math.round(liveTemp)+'°F';clevLink.setAttribute('aria-label','Cleveland is '+Math.round(liveTemp)+' degrees. Show Cleveland and clear your home reading.')}
+      else{clevLink.textContent='Clear';clevLink.setAttribute('aria-label','Clear your home reading')}
+    }else{homeLabel.hidden=true;clevLink.hidden=true}
+    dial.setAttribute('aria-valuenow',target);
+    dial.setAttribute('aria-valuetext',target+' degrees'+(homeSet?', your home':(state==='ok'?', Cleveland outside':'')));
+    syncPill();
   }
-  function setZone(n,animate){
-    var z=zoneFor(n);if(z===lastZone)return;lastZone=z;
-    var Z=ZONES[z];
-    setMsg(Z.msg,animate);cta.textContent='Request a visit';cta.setAttribute('data-service',Z.key);
+  function renderRead(){      /* the live-region line + the single primary button */
+    if(!homeSet){
+      if(state==='ok'){msgDot.hidden=false;msgText.textContent='Cleveland right now: '+Math.round(liveTemp)+'°F'}
+      else{msgDot.hidden=true;msgText.textContent='Tap + or − to set it.'}
+      cta.textContent='Request a visit';setService('');
+      callLine.textContent='Prefer to talk? (216) 213-2622';callLine.classList.remove('phone-urgent');
+    }else{
+      msgDot.hidden=true;msgText.textContent=readText(indoorTemp);
+      cta.textContent='Request a visit for this';setService(serviceFor(indoorTemp));
+      var urgent=indoorTemp<=45||indoorTemp>=90;
+      callLine.textContent=urgent?'No heat or cooling right now? Call (216) 213-2622':'Prefer to talk? (216) 213-2622';callLine.classList.toggle('phone-urgent',urgent);
+    }
   }
-  function applyInside(animate){
-    var t=indoorTemp,text,key='',label='Request a visit';
-    if(t===null)text="Set the dial to your home's current temperature.";
-    else if(t<=54){text='Your home is quite cold. Heating is likely the right visit.';key='heat';label='Request a visit for this'}
-    else if(t>=86){text='Your home is quite warm. Cooling is likely the right visit.';key='ac';label='Request a visit for this'}
-    else{text='Comfortable range. Pick the service you need, or choose “Not sure yet”.';label='Request a visit for this'}
-    setMsg(text,animate);cta.textContent=label;cta.setAttribute('data-service',key);
-  }
+  function setService(k){cta.setAttribute('data-service',k);if(barBook)barBook.setAttribute('data-service',k)}
+  var readT=0;
+  function scheduleRead(){clearTimeout(readT);readT=setTimeout(renderRead,250)}
 
   function draw(){
     var th=-135+(shown-MIN)/(MAX-MIN)*270,pct=(shown-MIN)/(MAX-MIN)*100;
@@ -1781,11 +1789,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
       var first=lastInt===null;lastInt=n;
       numEl.textContent=n;
       ticks.forEach(function(tk){tk.classList.toggle('on',+tk.dataset.t<=n)});
-      if(mode==='outside')setZone(n,!first);
-      if(!first&&!reduce){
-        numText.classList.remove('pulse');void numText.getBoundingClientRect();numText.classList.add('pulse');
-        if(dragging&&navigator.vibrate)try{navigator.vibrate(4)}catch(_){}
-      }
+      if(!first&&!reduce){numText.classList.remove('pulse');void numText.getBoundingClientRect();numText.classList.add('pulse')}
     }
   }
   function loop(){
@@ -1793,12 +1797,16 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     if(Math.abs(d)<.02){shown=target;draw();raf=0;return}
     shown+=d*.2;draw();raf=requestAnimationFrame(loop);
   }
+  function kick(){if(reduce){shown=target;draw()}else if(!raf)raf=requestAnimationFrame(loop)}
+  var nudgeT=0,nudgeBack=0,nudged=false;
   function setTarget(v,fromUser){
-    v=Math.max(MIN,Math.min(MAX,Math.round(v)));
-    target=v;
-    dial.setAttribute('aria-valuenow',v);dial.setAttribute('aria-valuetext',v+' degrees Fahrenheit');
-    if(reduce){shown=v;draw()}else if(!raf)raf=requestAnimationFrame(loop);
-    if(fromUser)userTouched();else syncLive();
+    v=clampT(v);var changed=v!==target;
+    clearTimeout(nudgeBack);target=v;kick();
+    if(fromUser){
+      nudged=true;clearTimeout(nudgeT);touched=true;homeSet=true;indoorTemp=v;
+      if(changed){try{if(navigator.vibrate)navigator.vibrate(8)}catch(_){}}
+      renderLabels();scheduleRead();
+    }else{clearTimeout(readT);renderLabels();renderRead()}
   }
   function fromPoint(x,y){
     var r=dial.getBoundingClientRect(),dx=x-(r.left+r.width/2),dy=y-(r.top+r.height/2);
@@ -1811,23 +1819,22 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   var tap=null;
   dial.addEventListener('pointerdown',function(e){
     if(e.pointerType==='touch'&&e.target!==knobHit){tap={x:e.clientX,y:e.clientY,t:Date.now(),id:e.pointerId};return}
-    dragging=true;dial.classList.add('drag');dial.classList.remove('kb');
+    dragging=true;dial.classList.add('drag');
     try{dial.setPointerCapture(e.pointerId)}catch(_){}
     dial.focus({preventScroll:true});
     fromPoint(e.clientX,e.clientY);e.preventDefault();
   });
   dial.addEventListener('pointermove',function(e){if(dragging)fromPoint(e.clientX,e.clientY)});
-  function end(){dragging=false;dial.classList.remove('drag');if(preview)userTouched()}
+  function end(){dragging=false;dial.classList.remove('drag')}
   dial.addEventListener('pointerup',function(e){
     if(tap&&e.pointerId===tap.id){
-      if(Math.hypot(e.clientX-tap.x,e.clientY-tap.y)<10&&Date.now()-tap.t<600){dial.classList.remove('kb');fromPoint(e.clientX,e.clientY)}
+      if(Math.hypot(e.clientX-tap.x,e.clientY-tap.y)<10&&Date.now()-tap.t<600)fromPoint(e.clientX,e.clientY);
       tap=null;
     }
     end();
   });
   dial.addEventListener('pointercancel',function(){tap=null;end()});
   dial.addEventListener('keydown',function(e){
-    dial.classList.add('kb');
     var k=e.key,d=0;
     if(k==='ArrowRight'||k==='ArrowUp')d=1;else if(k==='ArrowLeft'||k==='ArrowDown')d=-1;
     else if(k==='PageUp')d=5;else if(k==='PageDown')d=-5;
@@ -1836,12 +1843,12 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     else return;
     e.preventDefault();setTarget(target+d,true);
   });
-  /* ---- compact temperature pill (appears once the hero is out of view) ---- */
+  /* large -/+ buttons (dial) and the compact pill: 1 degree per tap, press-and-hold repeats */
   var pill=document.getElementById('tpill'),pMinus=document.getElementById('tpMinus'),pPlus=document.getElementById('tpPlus'),pVal=document.getElementById('tpVal');
   function syncPill(){
-    if(!pill)return;
-    pVal.textContent=target+'°F';
-    pMinus.setAttribute('aria-disabled',target<=MIN);pPlus.setAttribute('aria-disabled',target>=MAX);
+    [dMinus,pMinus].forEach(function(b){b.setAttribute('aria-disabled',target<=MIN)});[dPlus,pPlus].forEach(function(b){b.setAttribute('aria-disabled',target>=MAX)});
+    pVal.textContent='Your home '+target+'°F';
+    pill.classList.toggle('show',homeSet&&heroOut);   /* only once the customer has set a home temperature */
   }
   function bindStep(btn,d){
     var t1,t2,held=false;
@@ -1854,72 +1861,35 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     btn.addEventListener('contextmenu',function(e){e.preventDefault()});
     btn.addEventListener('click',function(){if(held){held=false;return}setTarget(target+d,true)});
   }
-  if(pill){
-    bindStep(pMinus,-1);bindStep(pPlus,1);
-    if('IntersectionObserver' in window){
-      new IntersectionObserver(function(es){var r=es[es.length-1].intersectionRatio;pill.classList.toggle('show',r<.12)},{threshold:[0,.12,.3]}).observe(hero);
-    }
+  bindStep(dMinus,-1);bindStep(dPlus,1);bindStep(pMinus,-1);bindStep(pPlus,1);
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){heroOut=es[es.length-1].intersectionRatio<.12;syncPill()},{threshold:[0,.12,.3]}).observe(hero);
   }
-
-  /* ---- live Cleveland temperature (Open-Meteo), preview mode, inside mode and fallback ---- */
-  var API='https://api.open-meteo.com/v1/forecast?latitude=41.4993&longitude=-81.6944&current=temperature_2m&temperature_unit=fahrenheit';
-  var FALLBACK=70,IDLE_MS=30000,REFRESH_MS=600000;
-  var state='loading',preview=false,idleT=0,inflight=false,lastFetch=0;
-  var lbl=document.getElementById('liveLabel'),lblText=document.getElementById('liveText'),lblDot=document.getElementById('liveDot');
-  var backBtn=document.getElementById('liveBack'),tpLive=document.getElementById('tpLive'),tpDot=document.getElementById('tpDot');
-  var modeOut=document.getElementById('modeOut'),modeIn=document.getElementById('modeIn');
-  function clampT(v){return Math.max(MIN,Math.min(MAX,Math.round(v)))}
-  function baseline(){return liveTemp!==null?clampT(liveTemp):FALLBACK}
-  function syncLive(){
-    var out=mode==='outside';
-    var showBack=out&&preview&&target!==baseline(),txt=liveTemp!==null?'Back to Cleveland now':'Reset to '+FALLBACK+'°F';
-    if(lbl){
-      if(!out){lbl.hidden=false;lblDot.className='ldot off';lblText.textContent=indoorTemp!==null?'Your home: '+indoorTemp+'°F':"Turn the dial to your home's temperature"}
-      else if(state==='ok'){lbl.hidden=false;lblText.textContent='Cleveland right now: '+Math.round(liveTemp)+'°F';lblDot.className='ldot'}
-      else if(state==='fail'){lbl.hidden=false;lblText.textContent='Live weather unavailable';lblDot.className='ldot off'}
-      else lbl.hidden=true;
-    }
-    var showCall=!out&&indoorTemp!==null&&(indoorTemp<=45||indoorTemp>=90);
-    callLine.hidden=!showCall;if(lbl&&(showBack||showCall))lbl.hidden=true;
-    if(backBtn){backBtn.hidden=!showBack;backBtn.textContent=txt}
-    if(tpLive){tpLive.hidden=!showBack;tpLive.setAttribute('aria-label',txt);tpLive.title=txt}
-    if(tpDot)tpDot.hidden=!(out&&state==='ok'&&!preview);
-    syncPill();
-  }
-  function userTouched(){
-    clearTimeout(idleT);
-    if(mode==='inside'){indoorTemp=target;applyInside(true);syncLive();return}
-    preview=target!==baseline();
-    if(preview)idleT=setTimeout(backToLive,IDLE_MS);
-    syncLive();
-  }
-  function backToLive(){
-    clearTimeout(idleT);preview=false;
-    setTarget(baseline(),false);
-  }
-  function setMode(m,focus){
-    if(m!==mode){
-      mode=m;clearTimeout(idleT);preview=false;
-      dial.setAttribute('aria-label',m==='outside'?'Thermostat, outside temperature in Cleveland, degrees Fahrenheit':"Thermostat, your home's temperature, degrees Fahrenheit");
-      if(m==='outside'){lastZone=-1;setTarget(baseline(),false);setZone(baseline(),true)}
-      else{setTarget(indoorTemp!==null?indoorTemp:FALLBACK,false);applyInside(true)}
-    }
-    [modeOut,modeIn].forEach(function(b){var on=(b===modeOut)===(mode==='outside');b.setAttribute('aria-checked',on);b.tabIndex=on?0:-1});
-    if(focus)(mode==='outside'?modeOut:modeIn).focus();
-    syncLive();
-  }
-  modeOut.addEventListener('click',function(){setMode('outside')});
-  modeIn.addEventListener('click',function(){setMode('inside')});
-  document.getElementById('modeSwitch').addEventListener('keydown',function(e){
-    if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();setMode('inside',true)}
-    else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();setMode('outside',true)}
+  clevLink.addEventListener('click',function(){   /* back to Cleveland and clear the home reading */
+    homeSet=false;indoorTemp=null;setTarget(baseline(),false);
   });
+
+  /* one subtle first-visit nudge: the knob drifts ~3 degrees and back, never while scrolling, off for reduced motion */
+  var lastScroll=0,dialVis=true,tries=0;
+  window.addEventListener('scroll',function(){lastScroll=Date.now()},{passive:true});
+  if('IntersectionObserver' in window)new IntersectionObserver(function(es){dialVis=es[es.length-1].intersectionRatio>.5},{threshold:[0,.5,1]}).observe(dial);
+  function tryNudge(){
+    if(touched||nudged||reduce)return;
+    if((state==='loading'||Date.now()-lastScroll<700||!dialVis||document.hidden)&&tries++<12){nudgeT=setTimeout(tryNudge,900);return}
+    if(tries>=12)return;
+    nudged=true;var base=target;target=base>MAX-3?base-3:base+3;kick();
+    nudgeBack=setTimeout(function(){if(!touched){target=base;kick()}},550);
+  }
+  nudgeT=setTimeout(tryNudge,1200);
+
+  /* live Cleveland temperature (Open-Meteo) */
+  var API='https://api.open-meteo.com/v1/forecast?latitude=41.4993&longitude=-81.6944&current=temperature_2m&temperature_unit=fahrenheit';
   function onLive(t){
     liveTemp=t;state='ok';
-    if(mode==='outside'&&!preview)setTarget(baseline(),false);else syncLive();
+    if(!homeSet)setTarget(baseline(),false);else{renderLabels()}
   }
   function onFail(){
-    if(liveTemp===null){state='fail';syncLive()}   /* keep the last good reading if a refresh fails */
+    if(liveTemp===null){state='fail';renderLabels();if(!homeSet)renderRead()}   /* keep the last good reading if a refresh fails */
   }
   function fetchLive(){
     if(inflight)return;
@@ -1939,13 +1909,11 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
         .then(function(){clearTimeout(to);inflight=false});
     }catch(_){inflight=false;onFail()}
   }
-  [backBtn,tpLive].forEach(function(b){if(b)b.addEventListener('click',backToLive)});
   setInterval(fetchLive,REFRESH_MS);
   document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'&&Date.now()-lastFetch>30000)fetchLive()});
 
   shown=target;
-  dial.setAttribute('aria-valuenow',target);dial.setAttribute('aria-valuetext',target+' degrees Fahrenheit');
-  syncLive();draw();
+  renderLabels();renderRead();draw();
   fetchLive();
 })();
 </script>
