@@ -230,6 +230,17 @@ footer .demo{margin-top:34px;font-size:.82rem;color:#8798ab;border-top:1px solid
 .callbar .btn{flex:1;padding:12px 10px;min-height:54px}
 @media(min-width:901px){.callbar{display:none}body{padding-bottom:0}}
 
+/* Live weather label */
+.dial-wrap{gap:20px}
+.live-row{display:flex;flex-direction:column;align-items:center;gap:10px;min-height:28px;text-align:center}
+.live-label{margin:0;display:flex;align-items:center;gap:9px;font-size:.95rem;color:#dbe5ef;font-weight:500}
+.ldot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--accent);flex:none;animation:ping 2.2s ease-out infinite}
+.ldot.off{background:#8798ab;animation:none}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(var(--accent-rgb),.6)}70%,100%{box-shadow:0 0 0 9px rgba(var(--accent-rgb),0)}}
+.live-back{font:inherit;font-weight:600;font-size:.92rem;color:var(--accent-text);background:rgba(var(--accent-rgb),.12);border:1px solid rgba(var(--accent-rgb),.5);border-radius:999px;padding:9px 18px;min-height:44px;cursor:pointer;transition:background .2s}
+.live-back:hover{background:rgba(var(--accent-rgb),.24)}
+.tp-val .ldot{width:8px;height:8px}
+
 /* Compact temperature control */
 .tpill{position:fixed;right:14px;bottom:calc(92px + env(safe-area-inset-bottom));z-index:55;display:flex;align-items:center;gap:2px;padding:4px;border-radius:999px;background:rgba(var(--bg3-rgb),.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--line-accent);box-shadow:0 8px 28px rgba(0,0,0,.4),0 0 0 1px rgba(0,0,0,.2);opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .3s var(--ease),transform .3s var(--ease),visibility 0s .3s}
 .tpill.show{opacity:1;visibility:visible;transform:none;transition:opacity .3s var(--ease),transform .3s var(--ease)}
@@ -239,6 +250,7 @@ footer .demo{margin-top:34px;font-size:.82rem;color:#8798ab;border-top:1px solid
 .tp-btn[aria-disabled="true"]{opacity:.4;cursor:default}
 .tp-val{display:flex;align-items:center;gap:6px;min-width:84px;justify-content:center;font-family:var(--font-head);font-weight:600;font-size:1rem;color:#fff;padding:0 4px}
 .tp-val svg{color:var(--accent-text);flex:none}
+.tp-live{background:transparent;border:1px solid rgba(var(--accent-rgb),.5);margin-left:2px}
 
 /* Reveal */
 .js .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
@@ -357,7 +369,7 @@ legend{font-family:var(--font-head);font-weight:600;font-size:.95rem;color:#fff;
     </div>
 
     <div class="dial-wrap" aria-label="Interactive thermostat">
-      <div class="dial" id="dial" role="slider" tabindex="0" aria-label="Thermostat temperature, degrees Fahrenheit" aria-valuemin="50" aria-valuemax="90" aria-valuenow="70" aria-valuetext="70 degrees Fahrenheit">
+      <div class="dial" id="dial" role="slider" tabindex="0" aria-label="Thermostat temperature, degrees Fahrenheit" aria-valuemin="10" aria-valuemax="100" aria-valuenow="70" aria-valuetext="70 degrees Fahrenheit">
         <svg viewBox="0 0 300 300" aria-hidden="true" focusable="false">
           <circle class="face" cx="150" cy="150" r="146"/>
           <g id="ticks"></g>
@@ -368,6 +380,10 @@ legend{font-family:var(--font-head);font-weight:600;font-size:.95rem;color:#fff;
           <text id="numText" x="150" y="168" text-anchor="middle" font-size="74"><tspan id="num">70</tspan><tspan font-size="26" dy="-24" dx="2">°F</tspan></text>
           <text class="cap" x="150" y="202" text-anchor="middle">Drag or tap to set</text>
         </svg>
+      </div>
+      <div class="live-row">
+        <p class="live-label" id="liveLabel" hidden><span class="ldot" id="liveDot" aria-hidden="true"></span><span id="liveText"></span></p>
+        <button type="button" class="live-back" id="liveBack" hidden>Back to Cleveland now</button>
       </div>
     </div>
 
@@ -602,8 +618,9 @@ legend{font-family:var(--font-head);font-weight:600;font-size:.95rem;color:#fff;
 
 <div class="tpill" id="tpill" role="group" aria-label="Page colour temperature">
   <button type="button" class="tp-btn" id="tpMinus" aria-label="Lower temperature"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
-  <span class="tp-val"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 14.8V4a2 2 0 0 0-4 0v10.8a4 4 0 1 0 4 0z"/></svg><span id="tpVal" role="status">70&deg;F</span></span>
+  <span class="tp-val"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 14.8V4a2 2 0 0 0-4 0v10.8a4 4 0 1 0 4 0z"/></svg><span class="ldot" id="tpDot" aria-hidden="true" hidden></span><span id="tpVal" role="status">70&deg;F</span></span>
   <button type="button" class="tp-btn" id="tpPlus" aria-label="Raise temperature"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg></button>
+  <button type="button" class="tp-btn tp-live" id="tpLive" aria-label="Back to Cleveland now" title="Back to Cleveland now" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
 </div>
 
 <!-- BOOKING WIDGET (demo, front-end only) -->
@@ -824,17 +841,14 @@ legend{font-family:var(--font-head);font-weight:600;font-size:.95rem;color:#fff;
   /* ---------- hero thermostat dial ---------- */
   var dial=document.getElementById('dial');
   if(!dial)return;
-  var MIN=50,MAX=90,hero=document.getElementById('home');
+  var MIN=10,MAX=100,hero=document.getElementById('home');
   var prog=document.getElementById('prog'),knob=document.getElementById('knob'),ticksG=document.getElementById('ticks');
   var numEl=document.getElementById('num'),numText=document.getElementById('numText');
   var msg=document.getElementById('dialMsg'),cta=document.getElementById('dialCta');
-  var STORE='tt-temp';
-  function load(){try{var n=parseInt(sessionStorage.getItem(STORE),10);if(n>=50&&n<=90)return n}catch(_){}return 70}
-  function save(v){try{sessionStorage.setItem(STORE,v)}catch(_){}}
-  var target=load(),shown=target,lastInt=null,raf=0,dragging=false,zoneKey='',ticks=[];
+  var target=70,shown=70,lastInt=null,raf=0,dragging=false,ticks=[];
   var NS='http://www.w3.org/2000/svg';
 
-  for(var t=MIN;t<=MAX;t+=2){
+  for(var t=MIN;t<=MAX;t+=5){
     var th=(-135+(t-MIN)/(MAX-MIN)*270)*Math.PI/180,major=(t%10===0),r1=major?119:124,r2=133;
     var ln=document.createElementNS(NS,'line');
     ln.setAttribute('x1',150+r1*Math.sin(th));ln.setAttribute('y1',150-r1*Math.cos(th));
@@ -867,13 +881,13 @@ legend{font-family:var(--font-head);font-weight:600;font-size:.95rem;color:#fff;
   }
   function css(c){return 'rgb('+Math.round(c[0])+','+Math.round(c[1])+','+Math.round(c[2])+')'}
   function chan(c){return Math.round(c[0])+','+Math.round(c[1])+','+Math.round(c[2])}
-  /* accent: cool blue-teal (50F) > calm teal (70F) > soft sand (80F, keeps the blend clean) > ember amber (90F) */
-  var ACC=[[50,[96,196,236]],[70,[92,194,186]],[80,[217,189,122]],[90,[242,178,92]]];
-  var BG=[[50,[11,26,45]],[70,[14,26,40]],[90,[26,24,22]]];
-  var BG2=[[50,[15,34,56]],[70,[18,34,52]],[90,[32,28,24]]];
-  var BG3=[[50,[8,19,31]],[70,[10,18,29]],[90,[18,16,14]]];
-  var SF=[[50,[22,42,69]],[70,[23,41,61]],[90,[42,36,31]]];
-  var SF2=[[50,[28,53,86]],[70,[30,52,80]],[90,[52,45,38]]];
+  /* accent: cool blue-teal (<=40F) > calm teal (65-72F) > soft sand (78F, keeps the blend clean) > ember amber (>=85F); clamps outside */
+  var ACC=[[40,[96,196,236]],[65,[92,194,186]],[72,[92,194,186]],[78,[217,189,122]],[85,[242,178,92]]];
+  var BG=[[40,[11,26,45]],[65,[14,26,40]],[72,[14,26,40]],[85,[26,24,22]]];
+  var BG2=[[40,[15,34,56]],[65,[18,34,52]],[72,[18,34,52]],[85,[32,28,24]]];
+  var BG3=[[40,[8,19,31]],[65,[10,18,29]],[72,[10,18,29]],[85,[18,16,14]]];
+  var SF=[[40,[22,42,69]],[65,[23,41,61]],[72,[23,41,61]],[85,[42,36,31]]];
+  var SF2=[[40,[28,53,86]],[65,[30,52,80]],[72,[30,52,80]],[85,[52,45,38]]];
   var INK=[6,20,28],WHITE=[255,255,255],lastTheme=-99;
   function theme(v){
     if(Math.abs(v-lastTheme)<.04)return;lastTheme=v;
@@ -893,11 +907,12 @@ legend{font-family:var(--font-head);font-weight:600;font-size:.95rem;color:#fff;
     if(metaTheme)metaTheme.setAttribute('content',css(bg));
   }
   var ZONES=[
-    {max:60,key:'heat',msg:"Cold house? Let's get your heat running.",cta:'Schedule heating service'},
-    {max:67,key:'heat',msg:"Feeling a chill? Let's check your heating.",cta:'Schedule heating service'},
+    {max:32,key:'heat',msg:"Freezing out? Let's make sure your heat is ready.",cta:'Schedule heating service'},
+    {max:50,key:'heat',msg:"Cold out? Let's get your heat running right.",cta:'Schedule heating service'},
+    {max:64,key:'heat',msg:"Feeling a chill? Let's check your heating.",cta:'Schedule heating service'},
     {max:74,key:'tune',msg:'Comfortable? Keep it that way.',cta:'Schedule a tune-up'},
-    {max:77,key:'ac',msg:"Getting warm? Let's check your cooling.",cta:'Schedule cooling service'},
-    {max:99,key:'ac',msg:"Too warm? Let's fix your cooling.",cta:'Schedule cooling service'}
+    {max:84,key:'ac',msg:"Getting warm? Let's check your cooling.",cta:'Schedule cooling service'},
+    {max:999,key:'ac',msg:"Hot out? Let's make sure your cooling is ready.",cta:'Schedule cooling service'}
   ];
   function zoneFor(n){for(var i=0;i<ZONES.length;i++)if(n<=ZONES[i].max)return i}
   var lastZone=-1;
@@ -930,18 +945,18 @@ legend{font-family:var(--font-head);font-weight:600;font-size:.95rem;color:#fff;
     if(Math.abs(d)<.02){shown=target;draw();raf=0;return}
     shown+=d*.2;draw();raf=requestAnimationFrame(loop);
   }
-  function setTarget(v){
+  function setTarget(v,fromUser){
     v=Math.max(MIN,Math.min(MAX,Math.round(v)));
     target=v;
     dial.setAttribute('aria-valuenow',v);dial.setAttribute('aria-valuetext',v+' degrees Fahrenheit');
-    syncPill();save(v);
     if(reduce){shown=v;draw()}else if(!raf)raf=requestAnimationFrame(loop);
+    if(fromUser)userTouched();else syncLive();
   }
   function fromPoint(x,y){
     var r=dial.getBoundingClientRect(),dx=x-(r.left+r.width/2),dy=y-(r.top+r.height/2);
     var th=Math.atan2(dx,-dy)*180/Math.PI;
-    if(th>135||th<-135)th=target>=70?135:-135;
-    setTarget(MIN+(th+135)/270*(MAX-MIN));
+    if(th>135||th<-135)th=target>=(MIN+MAX)/2?135:-135;
+    setTarget(MIN+(th+135)/270*(MAX-MIN),true);
   }
   dial.addEventListener('pointerdown',function(e){
     dragging=true;dial.classList.add('drag');dial.classList.remove('kb');
@@ -950,17 +965,17 @@ legend{font-family:var(--font-head);font-weight:600;font-size:.95rem;color:#fff;
     fromPoint(e.clientX,e.clientY);e.preventDefault();
   });
   dial.addEventListener('pointermove',function(e){if(dragging)fromPoint(e.clientX,e.clientY)});
-  function end(){dragging=false;dial.classList.remove('drag')}
+  function end(){dragging=false;dial.classList.remove('drag');if(preview)userTouched()}
   dial.addEventListener('pointerup',end);dial.addEventListener('pointercancel',end);
   dial.addEventListener('keydown',function(e){
     dial.classList.add('kb');
     var k=e.key,d=0;
     if(k==='ArrowRight'||k==='ArrowUp')d=1;else if(k==='ArrowLeft'||k==='ArrowDown')d=-1;
     else if(k==='PageUp')d=5;else if(k==='PageDown')d=-5;
-    else if(k==='Home'){e.preventDefault();return setTarget(MIN)}
-    else if(k==='End'){e.preventDefault();return setTarget(MAX)}
+    else if(k==='Home'){e.preventDefault();return setTarget(MIN,true)}
+    else if(k==='End'){e.preventDefault();return setTarget(MAX,true)}
     else return;
-    e.preventDefault();setTarget(target+d);
+    e.preventDefault();setTarget(target+d,true);
   });
   /* ---- compact temperature pill (appears once the hero is out of view) ---- */
   var pill=document.getElementById('tpill'),pMinus=document.getElementById('tpMinus'),pPlus=document.getElementById('tpPlus'),pVal=document.getElementById('tpVal');
@@ -974,11 +989,11 @@ legend{font-family:var(--font-head);font-weight:600;font-size:.95rem;color:#fff;
     function stop(){clearTimeout(t1);clearInterval(t2)}
     btn.addEventListener('pointerdown',function(e){
       if(e.button>0)return;held=false;
-      t1=setTimeout(function(){held=true;setTarget(target+d);t2=setInterval(function(){setTarget(target+d)},90)},420);
+      t1=setTimeout(function(){held=true;setTarget(target+d,true);t2=setInterval(function(){setTarget(target+d,true)},90)},420);
     });
     ['pointerup','pointerleave','pointercancel'].forEach(function(ev){btn.addEventListener(ev,stop)});
     btn.addEventListener('contextmenu',function(e){e.preventDefault()});
-    btn.addEventListener('click',function(){if(held){held=false;return}setTarget(target+d)});
+    btn.addEventListener('click',function(){if(held){held=false;return}setTarget(target+d,true)});
   }
   if(pill){
     bindStep(pMinus,-1);bindStep(pPlus,1);
@@ -986,9 +1001,69 @@ legend{font-family:var(--font-head);font-weight:600;font-size:.95rem;color:#fff;
       new IntersectionObserver(function(es){var r=es[es.length-1].intersectionRatio;pill.classList.toggle('show',r<.12)},{threshold:[0,.12,.3]}).observe(hero);
     }
   }
+  /* ---- live Cleveland temperature (Open-Meteo), preview mode and fallback ---- */
+  var API='https://api.open-meteo.com/v1/forecast?latitude=41.4993&longitude=-81.6944&current=temperature_2m&temperature_unit=fahrenheit';
+  var FALLBACK=70,IDLE_MS=30000,REFRESH_MS=600000;
+  var liveTemp=null,state='loading',preview=false,idleT=0,inflight=false,lastFetch=0;
+  var lbl=document.getElementById('liveLabel'),lblText=document.getElementById('liveText'),lblDot=document.getElementById('liveDot');
+  var backBtn=document.getElementById('liveBack'),tpLive=document.getElementById('tpLive'),tpDot=document.getElementById('tpDot');
+  function clampT(v){return Math.max(MIN,Math.min(MAX,Math.round(v)))}
+  function baseline(){return liveTemp!==null?clampT(liveTemp):FALLBACK}
+  function syncLive(){
+    var showBack=preview&&target!==baseline(),txt=liveTemp!==null?'Back to Cleveland now':'Reset to '+FALLBACK+'\u00B0F';
+    if(lbl){
+      if(state==='ok'){lbl.hidden=false;lblText.textContent='Cleveland right now: '+Math.round(liveTemp)+'\u00B0F';lblDot.className='ldot'}
+      else if(state==='fail'){lbl.hidden=false;lblText.textContent='Live weather unavailable';lblDot.className='ldot off'}
+      else lbl.hidden=true;
+    }
+    if(backBtn){backBtn.hidden=!showBack;backBtn.textContent=txt}
+    if(tpLive){tpLive.hidden=!showBack;tpLive.setAttribute('aria-label',txt);tpLive.title=txt}
+    if(tpDot)tpDot.hidden=!(state==='ok'&&!preview);
+    syncPill();
+  }
+  function userTouched(){
+    clearTimeout(idleT);
+    preview=target!==baseline();
+    if(preview)idleT=setTimeout(backToLive,IDLE_MS);
+    syncLive();syncPill();
+  }
+  function backToLive(){
+    clearTimeout(idleT);preview=false;
+    setTarget(baseline(),false);syncPill();
+  }
+  function onLive(t){
+    liveTemp=t;state='ok';
+    if(!preview)setTarget(baseline(),false);else syncLive();
+  }
+  function onFail(){
+    if(liveTemp===null){state='fail';syncLive()}   /* keep the last good reading if a refresh fails */
+  }
+  function fetchLive(){
+    if(inflight)return;
+    var ac,to;
+    try{
+      if(typeof fetch!=='function'||typeof AbortController==='undefined')throw 0;
+      inflight=true;lastFetch=Date.now();
+      ac=new AbortController();to=setTimeout(function(){ac.abort()},6000);
+      fetch(API,{signal:ac.signal,cache:'no-store'})
+        .then(function(r){if(!r.ok)throw 0;return r.json()})
+        .then(function(d){
+          var t=d&&d.current?d.current.temperature_2m:null;
+          if(typeof t!=='number'||!isFinite(t)||t<-60||t>140)throw 0;
+          onLive(t);
+        })
+        .catch(function(){onFail()})
+        .then(function(){clearTimeout(to);inflight=false});
+    }catch(_){inflight=false;onFail()}
+  }
+  [backBtn,tpLive].forEach(function(b){if(b)b.addEventListener('click',backToLive)});
+  setInterval(fetchLive,REFRESH_MS);
+  document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'&&Date.now()-lastFetch>30000)fetchLive()});
+
   shown=target;
   dial.setAttribute('aria-valuenow',target);dial.setAttribute('aria-valuetext',target+' degrees Fahrenheit');
-  syncPill();draw();
+  syncPill();syncLive();draw();
+  fetchLive();
 })();
 </script>
 </body>
