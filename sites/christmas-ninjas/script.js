@@ -38,7 +38,7 @@
     if (!run || !hero || !scene || !svg) { return {}; }
     var ninja = $('#ninja'), pilot = $('.pilot', svg);
     var btn = $('#lights-btn'), hint = $('#hero-hint'), status = $('#hero-status');
-    var header = $('#site-header');
+    var header = $('#site-header'), copy = $('#hero-copy');
     var active = root.classList.contains('motion');
 
     // Scene space = viewBox of #roof (house.jpg traced at 994 x 522).
@@ -81,22 +81,30 @@
     });
 
     var cw = 0, ch = 0, s = 1, vw = 980, camCur = null;
-    var runPx = 1, heroH = 1;
+    var runPx = 1, heroH = 1, runTop = 0;
     var target = 0, cur = 0, running = false, prevP = 0, lastLit = -1;
+    var hdrSolid = null, copyOp = -1;
 
+    // Layout is read here only (load, resize), never inside the scroll path.
     function measure() {
       heroH = hero.offsetHeight;
       runPx = Math.max(1, run.offsetHeight - heroH);
+      runTop = run.getBoundingClientRect().top + window.pageYOffset;
     }
     function layout() {
       cw = scene.clientWidth; ch = scene.clientHeight;
       if (!cw || !ch) { return; }
-      // Full house edge to edge on wide screens; on tall or narrow screens zoom in and follow the ninja.
-      s = Math.min(2.8, Math.max(cw / (CAM_MAX - CAM_MIN), ch * 0.0021));
+      // The roofline zone is whatever the headline block and ground strip leave. Fit the house height into it
+      // (about 285 scene units from the top of the tallest peak plus ninja to the ground), fill the width when
+      // that is possible, and on narrow screens hold a readable minimum zoom and follow the ninja.
+      var sFitW = cw / (CAM_MAX - CAM_MIN), sFitH = ch / 285;
+      var sMin = clamp(sFitH * 0.7, 1.3, 2);   // tall zones (tablet portrait) zoom in a little so the roof does not float low
+      s = Math.min(sFitH, Math.max(sFitW, sMin));
       vw = cw / s;
       svg.classList.add('cam');
       svg.style.width = (VB.w * s) + 'px';
       svg.style.height = (VB.h * s) + 'px';
+      scene.style.setProperty('--ground', Math.ceil(10 * s + 2) + 'px');
     }
 
     function setLight(st, f) {
@@ -163,42 +171,64 @@
     }
 
     var slider = false;
-    function targetFromScroll() {
-      var y = -run.getBoundingClientRect().top;
-      return clamp(y / runPx, 0, 1);
+    var WALK = 0.94; // the last 6% of the runway is a hold: the ninja stops and the roofline settles
+    function rawFromScroll() { return clamp((window.pageYOffset - runTop) / runPx, 0, 1); }
+    // scroll 0..1 to walk 0..1: gentle ease in and out, so the start and the landing feel soft
+    function ease(raw) {
+      var w = clamp(raw / WALK, 0, 1);
+      return w * 0.45 + smooth(w) * 0.55;
     }
-    var lastT = 0;
-    function tick(t) {
+    var lastT = 0, queued = false;
+    function frame(t) {
+      queued = false;
+      var y = window.pageYOffset;
+
+      // header gets its backing once the headline starts to leave
+      var solid = y > (active ? runPx : 0) + heroH * 0.45;
+      if (header && solid !== hdrSolid) { hdrSolid = solid; header.classList.toggle('solid', solid); }
+      if (!active) { return; }
+
+      // after the pin releases, the headline block fades before it can reach the header
+      if (copy) {
+        var r = clamp((y - runTop - runPx) / (heroH * 0.4), 0, 1);
+        var op = Math.round((1 - r) * 50) / 50;
+        if (op !== copyOp) { copyOp = op; copy.style.opacity = op >= 1 ? '' : op; }
+      }
+
+      target = ease(rawFromScroll());
+      // far below the hero nobody sees the walk: jump straight to the end state
+      if (y > runTop + runPx + heroH * 1.2) { cur = target; }
       var dt = lastT ? Math.min(100, t - lastT) : 16;
       lastT = t;
       var d = target - cur;
-      if (Math.abs(d) < 0.0006) { cur = target; render(cur); running = false; lastT = 0; return; }
-      cur += d * (1 - Math.exp(-dt / 120));
+      if (Math.abs(d) < 0.0006) {
+        if (cur !== target || !rendered) { cur = target; render(cur); rendered = true; }
+        lastT = 0; running = false; return;
+      }
+      cur += d * (1 - Math.exp(-dt / 110));
       render(cur);
-      window.requestAnimationFrame(tick);
+      running = true; queued = true;
+      window.requestAnimationFrame(frame);
     }
+    var rendered = false;
     function onScroll() {
-      var y = window.pageYOffset;
-      if (header) { header.classList.toggle('solid', y > (active ? runPx : 0) + heroH - 90); }
-      if (!active) { return; }
-      target = targetFromScroll();
-      // far below the hero nobody sees the walk: jump straight to the end state
-      if (window.pageYOffset > runPx + heroH * 1.2) { cur = target; }
-      if (!running) { running = true; window.requestAnimationFrame(tick); }
+      if (queued) { return; }
+      queued = true;
+      window.requestAnimationFrame(frame);
     }
 
     function scrollToP(p, smoothly) {
-      var top = run.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({ top: top + clamp(p, 0, 1) * runPx, behavior: (smoothly && smoothOK()) ? 'smooth' : 'auto' });
+      window.scrollTo({ top: runTop + clamp(p, 0, 1) * runPx, behavior: (smoothly && smoothOK()) ? 'smooth' : 'auto' });
     }
-    function nudge(dp) { scrollToP(targetFromScroll() + dp, true); }
+    function nudge(dp) { scrollToP(rawFromScroll() + dp, true); }
 
     function setup() {
       measure(); layout();
       if (active) {
-        target = cur = targetFromScroll();
+        target = cur = ease(rawFromScroll());
         camCur = null;
         render(cur, true);
+        rendered = true;
       } else {
         // static: all lights on, ninja crouched on the middle peak
         strings.forEach(function (st) { setLight(st, 1); });
@@ -211,6 +241,7 @@
         want = hi < lo ? (lo + hi) / 2 : clamp(want, lo, hi);
         svg.style.transform = 'translate3d(' + (-(want - VB.x) * s).toFixed(1) + 'px,0,0)';
       }
+      hdrSolid = null; copyOp = -1;
       onScroll();
     }
 
@@ -257,7 +288,7 @@
 
       if (btn) {
         btn.addEventListener('click', function () {
-          if (target >= 0.999) { scrollToP(0, false); } else { scrollToP(1, true); }
+          if (rawFromScroll() >= 0.999) { scrollToP(0, false); } else { scrollToP(1, true); }
         });
       }
     }
