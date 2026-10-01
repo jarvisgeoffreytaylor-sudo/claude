@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Temp Tech Heating &amp; Cooling | HVAC Service &amp; Installation in North Ridgeville, Ohio</title>
+<meta name="description" content="Temp Tech Heating &amp; Cooling provides HVAC service and installation based in North Ridgeville, Ohio. Call (216) 213-2622 or request a quote.">
+<meta name="theme-color" content="#2b2f36">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HVACBusiness",
+  "name": "Temp Tech Heating & Cooling",
+  "slogan": "Service & Installation",
+  "telephone": "+12162132622",
+  "email": "TempTechCle@gmail.com",
+  "address": { "@type": "PostalAddress", "addressLocality": "North Ridgeville", "addressRegion": "OH", "addressCountry": "US" },
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+    "opens": "07:00", "closes": "17:00"
+  }]
+}
+</script>
+<style>
+:root{
+  --blue:#1a73e8; --blue-dark:#1558b0;
+  --orange:#f28c28; --green:#3a9d4a; --maroon:#7a1f2b;
+  --charcoal:#2b2f36; --ink:#1f2328; --muted:#5b6470;
+  --bg:#ffffff; --soft:#f3f6fa; --line:#dde3ea;
+  --radius:14px;
+  --font-head:"Poppins",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;font-family:var(--font-body);color:var(--ink);background:var(--bg);line-height:1.6;padding-bottom:68px;-webkit-text-size-adjust:100%}
+img,svg{max-width:100%}
+a{color:var(--blue-dark)}
+h1,h2,h3{font-family:var(--font-head);line-height:1.2;margin:0 0 .5em;color:var(--charcoal)}
+h1{font-size:clamp(2rem,7vw,3.4rem);font-weight:800}
+h2{font-size:clamp(1.6rem,5vw,2.3rem);font-weight:700}
+h3{font-size:1.15rem;font-weight:600}
+p{margin:0 0 1em}
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 20px}
+section{padding:64px 0}
+.eyebrow{font-family:var(--font-head);font-weight:600;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:.6em;display:block}
+.section-head{max-width:640px;margin-bottom:36px}
+.skip{position:absolute;left:-999px;top:0;background:#fff;padding:10px 14px;z-index:100}
+.skip:focus{left:8px;top:8px}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--font-head);font-weight:600;font-size:1rem;text-decoration:none;border:2px solid transparent;border-radius:999px;padding:13px 26px;cursor:pointer;transition:background .15s,transform .15s;min-height:48px}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:var(--blue-dark)}
+.btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}
+.btn-ghost:hover{background:rgba(255,255,255,.12)}
+.btn-outline{border-color:var(--blue);color:var(--blue-dark);background:#fff}
+.btn-outline:hover{background:var(--soft)}
+
+/* Header */
+header.site{position:sticky;top:0;z-index:50;background:var(--charcoal);color:#fff;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff}
+.brand svg{width:40px;height:40px;flex:none}
+.brand .name{font-family:var(--font-head);font-weight:800;font-size:1.05rem;letter-spacing:.04em;line-height:1}
+.brand .name small{display:block;font-weight:600;font-size:.62rem;letter-spacing:.14em;color:#c4cad3;margin-top:3px}
+nav ul{list-style:none;margin:0;padding:0;display:flex;gap:4px;align-items:center}
+nav a{color:#e8ecf1;text-decoration:none;font-weight:500;font-size:.95rem;padding:10px 12px;border-radius:8px;display:block}
+nav a:hover{background:rgba(255,255,255,.1)}
+nav a.cta{background:var(--blue);color:#fff;font-weight:600;margin-left:8px}
+nav a.cta:hover{background:var(--blue-dark)}
+.menu-btn{display:none;background:none;border:0;color:#fff;padding:10px;cursor:pointer;border-radius:8px}
+.menu-btn svg{display:block}
+@media(max-width:860px){
+  .menu-btn{display:block}
+  nav{position:absolute;left:0;right:0;top:64px;background:var(--charcoal);display:none;border-top:1px solid rgba(255,255,255,.12);padding:8px 20px 16px}
+  nav.open{display:block}
+  nav ul{flex-direction:column;align-items:stretch;gap:2px}
+  nav a{padding:14px 12px;font-size:1.05rem}
+  nav a.cta{margin:8px 0 0;text-align:center}
+}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#232830 0%,#2b2f36 55%,#1b4f9c 140%);color:#fff;padding:72px 0 80px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;background:conic-gradient(from 0deg,var(--blue),var(--orange),var(--green),var(--maroon),var(--blue));opacity:.18;filter:blur(2px)}
+.hero .wrap{position:relative;z-index:1}
+.hero h1{color:#fff}
+.hero p.lead{font-size:1.15rem;max-width:560px;color:#dbe2ec}
+.hero .actions{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0 24px}
+.hero .meta{display:flex;flex-wrap:wrap;gap:8px 24px;font-size:.95rem;color:#c4cad3;margin:0;padding:0;list-style:none}
+.hero .meta strong{color:#fff}
+.tagline{font-family:var(--font-head);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:.85rem;color:var(--orange);margin-bottom:14px;display:block}
+
+/* Cards */
+.grid{display:grid;gap:18px}
+.cards{grid-template-columns:1fr}
+@media(min-width:600px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:960px){.cards.four{grid-template-columns:repeat(4,1fr)}}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;border-top:4px solid var(--c,var(--blue))}
+.card .ico{width:46px;height:46px;border-radius:12px;background:var(--c,var(--blue));color:#fff;display:grid;place-items:center;margin-bottom:14px}
+.card p{color:var(--muted);margin:0;font-size:.97rem}
+.soft{background:var(--soft)}
+.ph{background:#fff8e6;border:1px dashed #d9a400;color:#6b5200;border-radius:8px;padding:10px 12px;font-size:.9rem;display:block}
+.card .ph{margin-top:2px}
+
+/* Preview link */
+.more{margin-top:28px}
+
+/* CTA band */
+.band{background:var(--blue);color:#fff;text-align:center;padding:56px 0}
+.band h2{color:#fff}
+.band p{color:#e4eefc;max-width:560px;margin:0 auto 24px}
+.band .actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.band .btn-primary{background:#fff;color:var(--blue-dark)}
+.band .btn-primary:hover{background:#eaf1fc}
+
+/* About */
+.two{display:grid;gap:32px}
+@media(min-width:860px){.two{grid-template-columns:1.2fr 1fr;align-items:start}}
+.facts{background:var(--soft);border-radius:var(--radius);padding:24px;border:1px solid var(--line)}
+.facts dl{margin:0}
+.facts dt{font-family:var(--font-head);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:14px}
+.facts dt:first-child{margin-top:0}
+.facts dd{margin:2px 0 0;font-weight:500}
+
+/* Services detail */
+.svc{display:grid;gap:16px}
+.svc article{background:#fff;border:1px solid var(--line);border-left:6px solid var(--c);border-radius:var(--radius);padding:24px}
+@media(min-width:760px){.svc{grid-template-columns:repeat(2,1fr)}}
+.svc ul{margin:10px 0 0;padding-left:20px;color:var(--muted)}
+
+/* Gallery */
+.gallery{grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:760px){.gallery{grid-template-columns:repeat(3,1fr);gap:16px}}
+.tile{aspect-ratio:4/3;border-radius:var(--radius);background:linear-gradient(135deg,#e3e9f1,#cfd8e4);display:grid;place-items:center;text-align:center;color:#5b6470;font-size:.85rem;padding:12px;border:1px dashed #aab5c3}
+.tile svg{display:block;margin:0 auto 6px;opacity:.55}
+
+/* FAQ */
+.faq{max-width:780px}
+details{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:600;padding:16px 48px 16px 18px;list-style:none;position:relative;font-family:var(--font-head);font-size:1rem;color:var(--charcoal)}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:1.4rem;color:var(--blue)}
+details[open] summary::after{content:"\2212"}
+details .ans{padding:0 18px 16px}
+
+/* Contact */
+.contact{display:grid;gap:32px}
+@media(min-width:860px){.contact{grid-template-columns:1fr 1.2fr}}
+.info a{font-weight:600}
+.info li{margin-bottom:14px}
+.info ul{list-style:none;padding:0;margin:0 0 20px}
+.info .label{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-family:var(--font-head);font-weight:600}
+form{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:0 6px 24px rgba(31,35,40,.06)}
+.row{display:grid;gap:14px}
+@media(min-width:600px){.row.two-col{grid-template-columns:1fr 1fr}}
+label{display:block;font-weight:600;font-size:.9rem;margin-bottom:5px}
+input,select,textarea{width:100%;font:inherit;padding:12px 14px;border:1px solid #b8c2cf;border-radius:10px;background:#fff;color:var(--ink);min-height:48px}
+textarea{min-height:120px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:3px solid rgba(26,115,232,.35);border-color:var(--blue)}
+form .field{margin-bottom:14px}
+.note{font-size:.85rem;color:var(--muted);margin:12px 0 0}
+#formMsg{display:none;margin-top:14px;padding:12px 14px;border-radius:10px;background:#e8f5ea;border:1px solid #9fd0a6;color:#1e5a29}
+
+/* Footer */
+footer{background:var(--charcoal);color:#c4cad3;padding:36px 0;font-size:.92rem}
+footer a{color:#fff}
+footer .cols{display:flex;flex-wrap:wrap;gap:16px 40px;justify-content:space-between}
+.stripe{height:5px;background:linear-gradient(90deg,var(--blue) 0 25%,var(--orange) 25% 50%,var(--green) 50% 75%,var(--maroon) 75%)}
+
+/* Mobile call bar */
+.callbar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff;border-top:1px solid var(--line);padding:10px 14px;display:flex;gap:10px;box-shadow:0 -4px 16px rgba(0,0,0,.12)}
+.callbar .btn{flex:1;padding:12px 10px}
+.callbar .call{background:var(--green);color:#fff}
+@media(min-width:861px){.callbar{display:none}body{padding-bottom:0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <div class="wrap bar">
+    <a class="brand" href="#home" aria-label="Temp Tech Heating &amp; Cooling, home">
+      <!-- PLACEHOLDER wordmark: replace with client logo file -->
+      <svg viewBox="0 0 48 48" role="img" aria-hidden="true">
+        <path d="M24 24V4a20 20 0 0 1 20 20z" fill="#1a73e8"/>
+        <path d="M24 24h20a20 20 0 0 1-20 20z" fill="#f28c28"/>
+        <path d="M24 24v20A20 20 0 0 1 4 24z" fill="#3a9d4a"/>
+        <path d="M24 24H4A20 20 0 0 1 24 4z" fill="#7a1f2b"/>
+        <circle cx="24" cy="24" r="6" fill="#2b2f36"/>
+      </svg>
+      <span class="name">TEMP TECH<small>HEATING &amp; COOLING</small></span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav id="nav" aria-label="Main">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a class="cta" href="#contact">Get A Quote</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="stripe"></div>
+</header>
+
+<main id="main">
+
+<!-- HOME -->
+<section class="hero" id="home">
+  <div class="wrap">
+    <span class="tagline">Service &amp; Installation</span>
+    <h1>Heating &amp; cooling help from North Ridgeville, Ohio.</h1>
+    <p class="lead">Temp Tech Heating &amp; Cooling handles HVAC service and installation. Call us or request a quote and we will get back to you.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#contact">Get A Quote</a>
+      <a class="btn btn-ghost" href="tel:+12162132622">Call (216) 213-2622</a>
+    </div>
+    <ul class="meta">
+      <li><strong>Hours:</strong> Mon-Fri 7AM-5PM</li>
+      <li><strong>Based in:</strong> North Ridgeville, Ohio</li>
+    </ul>
+  </div>
+</section>
+
+<section id="services-preview">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">What we do</span>
+      <h2>HVAC services</h2>
+      <p>A quick look at the main service categories. See the full list below.</p>
+    </div>
+    <div class="grid cards four">
+      <div class="card" style="--c:var(--maroon)">
+        <div class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/></svg></div>
+        <h3>Heating</h3><p>Furnace and heating system service.</p>
+      </div>
+      <div class="card" style="--c:var(--blue)">
+        <div class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M4.9 7l14.2 10M4.9 17L19.1 7M9 3.5l3 2.5 3-2.5M9 20.5l3-2.5 3 2.5"/></svg></div>
+        <h3>Cooling</h3><p>Air conditioning service and cooling comfort.</p>
+      </div>
+      <div class="card" style="--c:var(--orange)">
+        <div class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.2-.5-.5-2.2z"/></svg></div>
+        <h3>Installation</h3><p>New system and replacement installs.</p>
+      </div>
+      <div class="card" style="--c:var(--green)">
+        <div class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></div>
+        <h3>Maintenance &amp; Repair</h3><p>Tune-ups and repairs to keep systems running.</p>
+      </div>
+    </div>
+    <p class="more"><a class="btn btn-outline" href="#services">See all services</a></p>
+  </div>
+</section>
+
+<div class="band">
+  <div class="wrap">
+    <h2>Need heating or cooling help?</h2>
+    <p>Tell us what is going on and request a quote. Prefer to talk? Call during business hours, Mon-Fri 7AM-5PM.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#contact">Get A Quote</a>
+      <a class="btn btn-ghost" href="tel:+12162132622">(216) 213-2622</a>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap two">
+    <div>
+      <span class="eyebrow">About Us</span>
+      <h2>About Temp Tech Heating &amp; Cooling</h2>
+      <p>Temp Tech Heating &amp; Cooling provides HVAC service and installation, based in North Ridgeville, Ohio.</p>
+      <span class="ph">[Placeholder – replace with client copy: company story, who owns and runs the business, what customers can expect.]</span>
+    </div>
+    <aside class="facts" aria-label="Business details">
+      <dl>
+        <dt>Business</dt><dd>Temp Tech Heating &amp; Cooling</dd>
+        <dt>Location</dt><dd>North Ridgeville, Ohio</dd>
+        <dt>Hours</dt><dd>Mon-Fri 7AM-5PM</dd>
+        <dt>Service area</dt><dd><span class="ph">[Placeholder – list towns served]</span></dd>
+        <dt>Licensing &amp; insurance</dt><dd><span class="ph">[Placeholder – add only if client confirms]</span></dd>
+      </dl>
+    </aside>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="soft" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Services</span>
+      <h2>Heating, cooling, installation and repair</h2>
+      <p>General service categories shown for this demo. The client will confirm the exact list.</p>
+    </div>
+    <div class="svc">
+      <article style="--c:var(--maroon)">
+        <h3>Heating</h3>
+        <p>Service for home heating systems.</p>
+        <span class="ph">[Placeholder – replace with client copy: heating services offered]</span>
+      </article>
+      <article style="--c:var(--blue)">
+        <h3>Cooling</h3>
+        <p>Service for air conditioning and cooling systems.</p>
+        <span class="ph">[Placeholder – replace with client copy: cooling services offered]</span>
+      </article>
+      <article style="--c:var(--orange)">
+        <h3>Installation</h3>
+        <p>Installation of new and replacement HVAC equipment.</p>
+        <span class="ph">[Placeholder – replace with client copy: equipment and brands installed]</span>
+      </article>
+      <article style="--c:var(--green)">
+        <h3>Maintenance &amp; Repair</h3>
+        <p>Routine maintenance and repair work.</p>
+        <span class="ph">[Placeholder – replace with client copy: maintenance plans, repair types, emergency availability]</span>
+      </article>
+    </div>
+    <p class="more"><a class="btn btn-primary" href="#contact">Get A Quote</a></p>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Gallery</span>
+      <h2>Our work</h2>
+      <span class="ph">[Placeholder – replace tiles with real project photos supplied by the client]</span>
+    </div>
+    <div class="grid gallery">
+      <div class="tile" role="img" aria-label="Placeholder for project photo 1"><div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 1</div></div>
+      <div class="tile" role="img" aria-label="Placeholder for project photo 2"><div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 2</div></div>
+      <div class="tile" role="img" aria-label="Placeholder for project photo 3"><div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 3</div></div>
+      <div class="tile" role="img" aria-label="Placeholder for project photo 4"><div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 4</div></div>
+      <div class="tile" role="img" aria-label="Placeholder for project photo 5"><div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 5</div></div>
+      <div class="tile" role="img" aria-label="Placeholder for project photo 6"><div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 6</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="soft" id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">FAQ</span>
+      <h2>Frequently asked questions</h2>
+      <p>Sample questions only. The client will supply the real questions and answers.</p>
+    </div>
+    <div class="faq">
+      <details><summary>What areas do you serve?</summary><div class="ans"><span class="ph">[Placeholder – replace with client copy]</span></div></details>
+      <details><summary>How do I request a quote?</summary><div class="ans"><p>Use the quote form below or call (216) 213-2622, Mon-Fri 7AM-5PM.</p></div></details>
+      <details><summary>What types of systems do you work on?</summary><div class="ans"><span class="ph">[Placeholder – replace with client copy]</span></div></details>
+      <details><summary>Do you offer maintenance plans?</summary><div class="ans"><span class="ph">[Placeholder – replace with client copy]</span></div></details>
+      <details><summary>Do you offer emergency service?</summary><div class="ans"><span class="ph">[Placeholder – replace with client copy]</span></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap contact">
+    <div class="info">
+      <span class="eyebrow">Contact</span>
+      <h2>Get A Quote</h2>
+      <p>Send us a few details or call. We are based in North Ridgeville, Ohio.</p>
+      <ul>
+        <li><span class="label">Phone</span><a href="tel:+12162132622">(216) 213-2622</a></li>
+        <li><span class="label">Email</span><a href="mailto:TempTechCle@gmail.com">TempTechCle@gmail.com</a></li>
+        <li><span class="label">Hours</span>Mon-Fri 7AM-5PM</li>
+        <li><span class="label">Location</span>North Ridgeville, Ohio</li>
+        <li><span class="label">Service area</span><span class="ph">[Placeholder – list towns served]</span></li>
+      </ul>
+    </div>
+    <form id="quoteForm" novalidate>
+      <div class="row two-col">
+        <div class="field"><label for="name">Name</label><input id="name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required></div>
+      </div>
+      <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email"></div>
+      <div class="field"><label for="service">Service needed</label>
+        <select id="service" name="service">
+          <option>Heating</option>
+          <option>Cooling</option>
+          <option>Installation</option>
+          <option>Maintenance / Repair</option>
+          <option>Not sure</option>
+        </select>
+      </div>
+      <div class="field"><label for="msg">Tell us what you need</label><textarea id="msg" name="msg"></textarea></div>
+      <button class="btn btn-primary" type="submit" style="width:100%">Get A Quote</button>
+      <p id="formMsg" role="status"></p>
+      <p class="note">Demo form: nothing is sent yet. It needs to be connected to the client's email or form service before launch.</p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap cols">
+    <div><strong style="color:#fff">Temp Tech Heating &amp; Cooling</strong><br>Service &amp; Installation<br>North Ridgeville, Ohio</div>
+    <div><a href="tel:+12162132622">(216) 213-2622</a><br><a href="mailto:TempTechCle@gmail.com">TempTechCle@gmail.com</a><br>Mon-Fri 7AM-5PM</div>
+    <div>Demo redesign. Logo and copy are placeholders.</div>
+  </div>
+</footer>
+
+<div class="callbar">
+  <a class="btn call" href="tel:+12162132622">Call Now</a>
+  <a class="btn btn-primary" href="#contact">Get A Quote</a>
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('menuBtn'),nav=document.getElementById('nav');
+  function set(o){nav.classList.toggle('open',o);btn.setAttribute('aria-expanded',o)}
+  btn.addEventListener('click',function(){set(!nav.classList.contains('open'))});
+  nav.addEventListener('click',function(e){if(e.target.tagName==='A')set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+
+  var f=document.getElementById('quoteForm'),m=document.getElementById('formMsg');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var n=f.name.value.trim(),p=f.phone.value.trim();
+    m.style.display='block';
+    if(!n||!p){
+      m.style.cssText='display:block;background:#fdecea;border:1px solid #f0a8a0;color:#8a1c12';
+      m.textContent='Please enter your name and phone number.';
+      return;
+    }
+    m.style.cssText='display:block';
+    m.textContent='Thanks, '+n+'. This is a demo, so your request was not sent. Please call (216) 213-2622.';
+    f.reset();
+  });
+})();
+</script>
+</body>
+</html>
