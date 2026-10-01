@@ -1,5 +1,5 @@
 /* The Christmas Ninjas. Vanilla JS, no dependencies.
-   Modules: Lights (master toggle), Roofline (scroll progress + nav),
+   Modules: Roofline (scroll progress + nav),
    Designer (light designer), Quote (form to mailto), plus a tiny footer helper. */
 (function () {
   'use strict';
@@ -23,35 +23,7 @@
   }
 
   /* ---------------------------------------------------------------
-     1. Lights master toggle (remembered; default on)
-     --------------------------------------------------------------- */
-  var Lights = (function () {
-    var KEY = 'cn-lights';
-    var btn = $('#lights-toggle');
-    if (!btn) { return {}; }
-    var state = $('.lights-state', btn);
-
-    function apply(on) {
-      if (on) { delete root.dataset.lights; } else { root.dataset.lights = 'off'; }
-      btn.setAttribute('aria-checked', on ? 'true' : 'false');
-      if (state) { state.textContent = on ? 'on' : 'off'; }
-    }
-    function save(on) {
-      try { localStorage.setItem(KEY, on ? 'on' : 'off'); } catch (e) { /* storage blocked: fine */ }
-    }
-    var on = true;
-    try { on = localStorage.getItem(KEY) !== 'off'; } catch (e) { on = true; }
-    apply(on);
-    btn.addEventListener('click', function () {
-      on = !on;
-      apply(on);
-      save(on);
-    });
-    return {};
-  })();
-
-  /* ---------------------------------------------------------------
-     2. Roofline scroll progress + section nav
+     1. Roofline scroll progress + section nav
      A ninja sneaks along the roofline as you scroll; bulbs switch on
      behind him. Each peak is a link to a section.
      --------------------------------------------------------------- */
@@ -77,10 +49,11 @@
       while (svg.firstChild) { svg.removeChild(svg.firstChild); }
       svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
 
-      var m = Math.max(28, Math.min(64, W * 0.06));
+      var m = W >= 760 ? Math.max(56, Math.min(80, W * 0.05)) : Math.max(28, Math.min(64, W * 0.06));
       var step = (W - 2 * m) / (N - 1);
       var e = step * 0.38;
-      var vy = H - 8;
+      var vy = H - 16;
+      var PEAK_Y = 34;
       pts = [[0, vy]];
       peakIdx = [];
       var xs = [];
@@ -88,7 +61,7 @@
         var x = m + i * step;
         xs.push(x);
         pts.push([Math.max(0, x - e), vy]);
-        pts.push([x, i % 2 ? 38 : 32]);
+        pts.push([x, PEAK_Y]);
         peakIdx.push(pts.length - 1);
         pts.push([Math.min(W, x + e), vy]);
       }
@@ -182,7 +155,7 @@
       if (force || len !== lastLen) {
         var pt = pointAt(len);
         var rot = Math.max(-22, Math.min(22, pt.angle * 57.3 * 0.6));
-        ninja.setAttribute('transform', 'translate(' + (pt.x - 19).toFixed(1) + ' ' + (pt.y - 33).toFixed(1) + ') rotate(' + rot.toFixed(1) + ' 19 33)');
+        ninja.setAttribute('transform', 'translate(' + (pt.x - 19).toFixed(1) + ' ' + (pt.y - 32).toFixed(1) + ') rotate(' + rot.toFixed(1) + ' 19 32)');
         var want = reduce ? bulbs.length : bulbLens.filter(function (l) { return l <= len + 1; }).length;
         while (lit < want) { bulbs[lit].classList.add('on'); lit++; }
         while (lit > want) { lit--; bulbs[lit].classList.remove('on'); }
@@ -217,7 +190,7 @@
   })();
 
   /* ---------------------------------------------------------------
-     3. Light designer
+     2. Light designer
      --------------------------------------------------------------- */
   var Designer = (function () {
     var app = $('#designer-app');
@@ -240,7 +213,7 @@
       christmas: { label: 'Christmas',     mode: 'holiday',   palette: 'redgreen',     zones: ['roof', 'windows', 'trees', 'shrubs', 'wreath'] },
       halloween: { label: 'Halloween',     mode: 'holiday',   palette: 'orangepurple', zones: ['roof', 'windows', 'door', 'shrubs'] },
       july4:     { label: '4th of July',   mode: 'holiday',   palette: 'rwb',          zones: ['roof', 'windows', 'door', 'shrubs'] },
-      gameday:   { label: 'Game day',      mode: 'holiday',   palette: 'custom',       zones: ['roof', 'windows', 'door'], custom: '#ff7a1a' },
+      gameday:   { label: 'Game day',      mode: 'holiday',   palette: 'orange',       zones: ['roof', 'windows', 'door'] },
       everyday:  { label: 'Everyday warm', mode: 'permanent', palette: 'warm',         zones: ['roof'] }
     };
 
@@ -249,6 +222,7 @@
     var zoneInputs = $$('input[name="zone"]', app);
     var sceneBtns = $$('[data-scene]', app);
     var customInput = $('#custom-color');
+    var customRow = $('#custom-row');
     var colorName = $('#color-name');
     var modeHint = $('#mode-hint');
     var zoneHint = $('#zone-hint');
@@ -355,9 +329,7 @@
       modeInputs.forEach(function (i) { i.checked = i.value === state.mode; });
       paletteInputs.forEach(function (i) { i.checked = i.value === state.palette; });
       customInput.value = state.custom;
-      var customPal = $('input[value="custom"]', app);
-      customPal.setAttribute('data-colors', state.custom);
-      applySwatch(customPal.nextElementSibling, [state.custom]);
+      customRow.classList.toggle('active', state.palette === 'custom');
       zoneInputs.forEach(function (i) {
         i.checked = !!state.zones[i.value];
         i.disabled = ZONES[i.value].holidayOnly && state.mode === 'permanent';
@@ -412,7 +384,7 @@
   })();
 
   /* ---------------------------------------------------------------
-     4. Quote form. No backend: validate, then open a mailto: with
+     3. Quote form. No backend: validate, then open a mailto: with
         everything prefilled. Visible call + copy fallbacks.
         (Replace with a form service later. See README.)
      --------------------------------------------------------------- */

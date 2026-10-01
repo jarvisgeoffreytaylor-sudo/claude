@@ -21,13 +21,14 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;display=swap">
   <link rel="stylesheet" href="styles.css">
+  <!-- Fonts load without blocking first paint. If the host is blocked, the fallback stack in styles.css is used. -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;display=swap"></noscript>
 
   <script>
-    /* Set before first paint so there is no flash: JS flag + remembered lights state. */
+    /* Set before first paint so the JS-only header styles do not flash. */
     document.documentElement.classList.add('js');
-    try { if (localStorage.getItem('cn-lights') === 'off') document.documentElement.dataset.lights = 'off'; } catch (e) {}
   </script>
 
   <script type="application/ld+json">
@@ -89,10 +90,6 @@
         <img src="assets/logo.png" alt="The Christmas Ninjas" width="664" height="356">
       </a>
       <div class="bar-actions">
-        <button type="button" class="lights-toggle" id="lights-toggle" role="switch" aria-checked="true" title="Turn glow and animation off to save battery">
-          <span class="lights-icon" aria-hidden="true"></span>
-          <span class="lights-label">Lights <span class="lights-state" aria-hidden="true">on</span></span>
-        </button>
         <a class="btn btn-primary btn-sm" href="tel:+14403208377"><span class="btn-long">Call </span>440-320-8377</a>
       </div>
     </div>
@@ -244,7 +241,7 @@
               <g class="zone" id="z-roof"></g>
 
               <!-- ninja sneaking along the roof -->
-              <use href="#ninja" x="276" y="50" width="62" height="57"/>
+              <use href="#ninja" x="276" y="43" width="62" height="57"/>
             </svg>
           </div>
 
@@ -272,23 +269,21 @@
             <fieldset class="colors" id="color-group">
               <legend>Light color: <span id="color-name">Warm white</span></legend>
               <div class="swatch-grid">
-                <label><input type="radio" name="palette" value="warm" data-name="Warm white" data-colors="#ffd27a" checked><span class="swatch"><span class="sr-only">Warm white</span></span></label>
-                <label><input type="radio" name="palette" value="cool" data-name="Cool white" data-colors="#cfe6ff"><span class="swatch"><span class="sr-only">Cool white</span></span></label>
-                <label><input type="radio" name="palette" value="multi" data-name="Multicolor" data-colors="#ff3b3b,#ffb02e,#35e07a,#4a9bff"><span class="swatch"><span class="sr-only">Multicolor</span></span></label>
-                <label><input type="radio" name="palette" value="red" data-name="Red" data-colors="#ff3b3b"><span class="swatch"><span class="sr-only">Red</span></span></label>
-                <label><input type="radio" name="palette" value="green" data-name="Green" data-colors="#35e07a"><span class="swatch"><span class="sr-only">Green</span></span></label>
-                <label><input type="radio" name="palette" value="blue" data-name="Blue" data-colors="#4a9bff"><span class="swatch"><span class="sr-only">Blue</span></span></label>
-                <label><input type="radio" name="palette" value="orange" data-name="Orange" data-colors="#ff8a1f"><span class="swatch"><span class="sr-only">Orange</span></span></label>
-                <label><input type="radio" name="palette" value="purple" data-name="Purple" data-colors="#b06cff"><span class="swatch"><span class="sr-only">Purple</span></span></label>
-                <label><input type="radio" name="palette" value="redgreen" data-name="Red and green" data-colors="#ff3b3b,#35e07a"><span class="swatch"><span class="sr-only">Red and green</span></span></label>
-                <label><input type="radio" name="palette" value="rwb" data-name="Red, white and blue" data-colors="#ff3b3b,#ffffff,#4a9bff"><span class="swatch"><span class="sr-only">Red, white and blue</span></span></label>
-                <label><input type="radio" name="palette" value="orangepurple" data-name="Orange and purple" data-colors="#ff8a1f,#b06cff"><span class="swatch"><span class="sr-only">Orange and purple</span></span></label>
-                <label><input type="radio" name="palette" value="custom" data-name="Custom" data-colors="#ff7a1a"><span class="swatch"><span class="sr-only">Custom color</span></span></label>
-              </div>
-              <div class="custom-row">
-                <label for="custom-color">Custom color</label>
+                <label title="Warm white"><input type="radio" name="palette" value="warm" data-name="Warm white" data-colors="#ffd27a" checked><span class="swatch"><span class="sr-only">Warm white</span></span></label>
+                <label title="Cool white"><input type="radio" name="palette" value="cool" data-name="Cool white" data-colors="#cfe6ff"><span class="swatch"><span class="sr-only">Cool white</span></span></label>
+                <label title="Multicolor"><input type="radio" name="palette" value="multi" data-name="Multicolor" data-colors="#ff3b3b,#ffb02e,#35e07a,#4a9bff"><span class="swatch"><span class="sr-only">Multicolor</span></span></label>
+                <label title="Red"><input type="radio" name="palette" value="red" data-name="Red" data-colors="#ff3b3b"><span class="swatch"><span class="sr-only">Red</span></span></label>
+                <label title="Green"><input type="radio" name="palette" value="green" data-name="Green" data-colors="#35e07a"><span class="swatch"><span class="sr-only">Green</span></span></label>
+                <label title="Blue"><input type="radio" name="palette" value="blue" data-name="Blue" data-colors="#4a9bff"><span class="swatch"><span class="sr-only">Blue</span></span></label>
+                <label title="Orange"><input type="radio" name="palette" value="orange" data-name="Orange" data-colors="#ff8a1f"><span class="swatch"><span class="sr-only">Orange</span></span></label>
+                <label title="Purple"><input type="radio" name="palette" value="purple" data-name="Purple" data-colors="#b06cff"><span class="swatch"><span class="sr-only">Purple</span></span></label>
+                <label title="Red and green"><input type="radio" name="palette" value="redgreen" data-name="Red and green" data-colors="#ff3b3b,#35e07a"><span class="swatch"><span class="sr-only">Red and green</span></span></label>
+                <label title="Red, white and blue"><input type="radio" name="palette" value="rwb" data-name="Red, white and blue" data-colors="#ff3b3b,#ffffff,#4a9bff"><span class="swatch"><span class="sr-only">Red, white and blue</span></span></label>
+                <label title="Orange and purple"><input type="radio" name="palette" value="orangepurple" data-name="Orange and purple" data-colors="#ff8a1f,#b06cff"><span class="swatch"><span class="sr-only">Orange and purple</span></span></label>
+                              </div>
+              <div class="custom-row" id="custom-row">
+                <label for="custom-color">Or pick any color</label>
                 <input type="color" id="custom-color" value="#ff7a1a">
-                <span class="hint">Pick any color, like your team's.</span>
               </div>
             </fieldset>
 
@@ -334,7 +329,7 @@
     <section class="section" id="about" aria-labelledby="about-title">
       <div class="wrap about-grid">
         <figure class="about-photo">
-          <img src="assets/team.jpg" alt="Two smiling members of the Christmas Ninjas team at night in front of a house with string lights" width="544" height="234" loading="lazy">
+          <img src="assets/team.jpg" alt="Two smiling members of the Christmas Ninjas team at night in front of a house with string lights" width="544" height="234" loading="lazy" decoding="async">
         </figure>
         <div>
           <p class="eyebrow"><span class="dots" aria-hidden="true"></span>About</p>
@@ -428,7 +423,7 @@
   <footer class="site-footer">
     <div class="wrap footer-grid">
       <div>
-        <img class="footer-logo" src="assets/logo.png" alt="The Christmas Ninjas" width="664" height="356" loading="lazy">
+        <img class="footer-logo" src="assets/logo.png" alt="The Christmas Ninjas" width="664" height="356" loading="lazy" decoding="async">
       </div>
       <div>
         <p><strong>The Christmas Ninjas</strong><br>Lights, Holiday / Permanent</p>

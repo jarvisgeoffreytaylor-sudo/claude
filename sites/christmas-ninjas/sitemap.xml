@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Add the site's home page URL as a <url><loc>...</loc></url> entry once the domain is known. See README. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>[WEBSITE URL]/</loc>
-  </url>
 </urlset>
