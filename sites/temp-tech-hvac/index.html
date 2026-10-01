@@ -369,7 +369,7 @@ legend{font-family:var(--font-head);font-weight:600;font-size:.95rem;color:#fff;
     </div>
 
     <div class="dial-wrap" aria-label="Interactive thermostat">
-      <div class="dial" id="dial" role="slider" tabindex="0" aria-label="Thermostat temperature, degrees Fahrenheit" aria-valuemin="10" aria-valuemax="100" aria-valuenow="70" aria-valuetext="70 degrees Fahrenheit">
+      <div class="dial" id="dial" role="slider" tabindex="0" aria-label="Thermostat temperature, degrees Fahrenheit" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70" aria-valuetext="70 degrees Fahrenheit">
         <svg viewBox="0 0 300 300" aria-hidden="true" focusable="false">
           <circle class="face" cx="150" cy="150" r="146"/>
           <g id="ticks"></g>
@@ -841,7 +841,7 @@ legend{font-family:var(--font-head);font-weight:600;font-size:.95rem;color:#fff;
   /* ---------- hero thermostat dial ---------- */
   var dial=document.getElementById('dial');
   if(!dial)return;
-  var MIN=10,MAX=100,hero=document.getElementById('home');
+  var MIN=0,MAX=100,hero=document.getElementById('home');
   var prog=document.getElementById('prog'),knob=document.getElementById('knob'),ticksG=document.getElementById('ticks');
   var numEl=document.getElementById('num'),numText=document.getElementById('numText');
   var msg=document.getElementById('dialMsg'),cta=document.getElementById('dialCta');
@@ -881,13 +881,13 @@ legend{font-family:var(--font-head);font-weight:600;font-size:.95rem;color:#fff;
   }
   function css(c){return 'rgb('+Math.round(c[0])+','+Math.round(c[1])+','+Math.round(c[2])+')'}
   function chan(c){return Math.round(c[0])+','+Math.round(c[1])+','+Math.round(c[2])}
-  /* accent: cool blue-teal (<=40F) > calm teal (65-72F) > soft sand (78F, keeps the blend clean) > ember amber (>=85F); clamps outside */
-  var ACC=[[40,[96,196,236]],[65,[92,194,186]],[72,[92,194,186]],[78,[217,189,122]],[85,[242,178,92]]];
-  var BG=[[40,[11,26,45]],[65,[14,26,40]],[72,[14,26,40]],[85,[26,24,22]]];
-  var BG2=[[40,[15,34,56]],[65,[18,34,52]],[72,[18,34,52]],[85,[32,28,24]]];
-  var BG3=[[40,[8,19,31]],[65,[10,18,29]],[72,[10,18,29]],[85,[18,16,14]]];
-  var SF=[[40,[22,42,69]],[65,[23,41,61]],[72,[23,41,61]],[85,[42,36,31]]];
-  var SF2=[[40,[28,53,86]],[65,[30,52,80]],[72,[30,52,80]],[85,[52,45,38]]];
+  /* accent: coldest blue (0F) > cool blue-teal (40F) > calm teal (65-72F) > soft sand (78F, keeps the blend clean) > amber (85F) > deep ember (100F); clamps outside */
+  var ACC=[[0,[84,160,240]],[40,[96,196,236]],[65,[92,194,186]],[72,[92,194,186]],[78,[217,189,122]],[85,[242,178,92]],[100,[244,146,68]]];
+  var BG=[[0,[9,22,42]],[40,[11,26,45]],[65,[14,26,40]],[72,[14,26,40]],[85,[26,24,22]],[100,[32,22,17]]];
+  var BG2=[[0,[12,29,52]],[40,[15,34,56]],[65,[18,34,52]],[72,[18,34,52]],[85,[32,28,24]],[100,[38,27,21]]];
+  var BG3=[[0,[6,15,27]],[40,[8,19,31]],[65,[10,18,29]],[72,[10,18,29]],[85,[18,16,14]],[100,[22,15,11]]];
+  var SF=[[0,[19,38,68]],[40,[22,42,69]],[65,[23,41,61]],[72,[23,41,61]],[85,[42,36,31]],[100,[50,36,28]]];
+  var SF2=[[0,[24,49,87]],[40,[28,53,86]],[65,[30,52,80]],[72,[30,52,80]],[85,[52,45,38]],[100,[62,45,34]]];
   var INK=[6,20,28],WHITE=[255,255,255],lastTheme=-99;
   function theme(v){
     if(Math.abs(v-lastTheme)<.04)return;lastTheme=v;
