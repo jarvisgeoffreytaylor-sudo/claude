@@ -41,7 +41,10 @@ window.REVIEWS_CONFIG=window.REVIEWS_CONFIG||{
   googleWriteReviewUrl:'',
   googleProfileUrl:'',
   aggregate:{rating:null,count:null},
-  reviews:[]  /* [{author:'Jane D.', rating:5, text:'...as written...', dateISO:'2026-09-14', sourceUrl:''}] */
+  /* Entry shape: {author:'Jane D.', rating:5, text:'...as written...', dateISO:'2026-09-14', sourceUrl:''}
+     An entry with sample:true is a design preview: it shows a "Sample review" badge, is never counted in the
+     aggregate, never appears in structured data, and must never be used on the live site. */
+  reviews: [] /*REVIEWS_DATA*/
 };
 </script>
 <script type="application/ld+json">
@@ -196,17 +199,24 @@ nav a.btn:hover{background:var(--accent-hi)}
 .live-back{font:inherit;color:var(--accent-text);background:none;border:0;padding:0 4px;min-height:48px;cursor:pointer;text-decoration:underline;text-underline-offset:6px}
 .dial-call a{display:inline-flex;align-items:center;min-height:48px;color:var(--accent-hi)}
 
-/* Trust line */
-.strip{padding:0 0 clamp(8px,2vw,24px)}
-.strip ul{list-style:none;margin:0 auto;padding:0;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;color:var(--muted)}
+/* Trust frame + reviews panel read as a pair: same thin accent border, same radius, soft tinted surface */
+.frame,.rv-panel{border:1px solid var(--line-accent);border-radius:var(--radius)}
+.strip{padding:clamp(8px,2vw,24px) 0 0}
+.strip .frame{list-style:none;margin:0 auto;padding:var(--s3) clamp(20px,4vw,var(--s4));display:flex;flex-direction:column;align-items:center;gap:var(--s1);text-align:center;color:var(--muted);background:rgba(var(--accent-rgb),.05)}
 .strip strong{color:#fff;font-weight:500}
-@media(min-width:560px){.strip ul{flex-direction:row;justify-content:center}.strip li+li::before{content:"";display:inline-block;width:3px;height:3px;border-radius:50%;background:var(--muted);margin:0 var(--s2);vertical-align:middle}}
+.frame .ins{display:flex;align-items:center;justify-content:center;gap:12px;text-align:left}
+.frame .ins svg{width:24px;height:24px;flex:none;color:var(--accent-text)}
+@media(min-width:760px){.strip .frame{display:grid;grid-template-columns:auto auto;justify-content:center;gap:0}.strip .frame li+li{border-left:1px solid var(--line);margin-left:var(--s4);padding-left:var(--s4)}}
 
 /* Reviews panel (compact; the empty state is one line plus the button) */
 .has-rv .section-head{margin-bottom:var(--s4)}
+/* The one featured trust moment: a lifted, edge-to-edge band between the trust line and About */
+#reviews .rv-panel{--pp:clamp(20px,4vw,48px);background:var(--surface);padding:clamp(24px,4vw,40px) var(--pp);overflow:hidden}
+.has-rv .rv-panel{padding-top:clamp(32px,5vw,56px);padding-bottom:clamp(32px,5vw,56px)}
 #reviews .section-head{margin-bottom:var(--s2)}
 #reviews .section-head h2{font-size:var(--fs-3);margin:0}
 .has-rv .section-head h2{font-size:var(--fs-2)}
+.btn-lg{min-height:56px;padding:16px 36px;font-size:1.0625rem}
 
 /* About */
 .about{max-width:var(--measure);margin:0 auto;text-align:center}
@@ -293,22 +303,34 @@ footer .demo{margin-top:var(--s4);color:#8b9bad;text-align:center}
 .stars{display:inline-flex;gap:3px;color:var(--accent-text);line-height:0}
 .stars svg{width:18px;height:18px;flex:none}
 .stars svg.off{opacity:.25}
-.rv-agg{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 12px;margin:0 0 var(--s3);color:#dbe4ed}
-.rv-agg b{font-family:var(--font-head);font-weight:500;font-size:var(--fs-2);color:#fff;line-height:1}
-.rv-wrap{position:relative;margin-bottom:26px}
-.rv-track{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;margin:0 calc(-1*var(--g));padding:4px var(--g) 14px;scroll-padding:0 var(--g);scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.rv-agg{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 16px;margin:0 0 var(--s4);color:#dbe4ed;font-size:var(--fs-3)}
+.rv-agg b{font-family:var(--font-head);font-weight:500;font-size:var(--fs-1);color:#fff;line-height:1}
+.rv-agg .stars svg{width:28px;height:28px}
+.stars svg{width:20px;height:20px}
+.rv-wrap{position:relative;margin-bottom:var(--s2)}
+.rv-track{display:flex;gap:16px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;margin:0 calc(-1*var(--pp));padding:4px var(--pp) 12px;scroll-padding:0 var(--pp);scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
 .rv-track::-webkit-scrollbar{display:none}
 .rv-track:focus-visible{outline:2px solid var(--focus);outline-offset:-2px;border-radius:var(--radius)}
-.rv-card{position:relative;flex:0 0 68%;scroll-snap-align:start;background:var(--surface);border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;gap:12px;min-width:0}
-@media(min-width:760px){.rv-card{flex-basis:calc((100% - 28px)/3)}}
-.rv-text{margin:0;color:#dbe4ed;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden;overflow-wrap:anywhere}
+.rv-card{position:relative;flex:0 0 84%;scroll-snap-align:start;background:var(--bg);border-radius:var(--radius);padding:var(--s3);display:flex;flex-direction:column;gap:12px;min-width:0}
+.rv-card::before{content:"\201C";font-family:var(--font-head);font-size:3.5rem;line-height:.5;height:1.5rem;color:var(--accent);opacity:.55}
+.rv-card .stars svg{width:22px;height:22px}
+@media(min-width:760px){.rv-card{flex-basis:calc((100% - 32px)/3)}}
+@media(min-width:900px){.rv-card:first-child{flex-basis:calc(50% - 8px)}.rv-card:first-child .rv-text{font-size:var(--fs-3);line-height:1.55;-webkit-line-clamp:7}}
+.rv-track.single .rv-card{flex:0 1 46rem;margin-inline:auto}
+.rv-text{margin:0;color:#e3eaf1;font-size:var(--fs-4);line-height:1.6;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:6;overflow:hidden;overflow-wrap:anywhere}
 .rv-card.open .rv-text{-webkit-line-clamp:unset;display:block}
 .rv-more{align-self:flex-start;font:inherit;font-size:1rem;color:var(--accent-text);background:none;border:0;padding:0;min-height:48px;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
-.rv-meta{margin-top:auto;font-size:1rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:2px 10px}
+.rv-meta{margin-top:auto;color:var(--muted);display:flex;flex-wrap:wrap;gap:2px 10px}
 .rv-meta strong{color:#fff;font-weight:500}
 .rv-meta a{color:var(--muted);display:inline-flex;align-items:center;min-height:48px}
-.rv-nav{display:none;gap:10px;margin-top:14px}
-@media(min-width:760px){.rv-nav{display:flex}}
+.rv-badge{align-self:flex-start;border:1px dashed rgba(217,193,154,.7);background:rgba(217,193,154,.1);color:var(--sand-soft);border-radius:999px;padding:6px 14px;font-size:var(--fs-5);line-height:1.3}
+.rv-dots{display:flex;justify-content:center;align-items:center;flex-wrap:wrap}
+.rv-dots button{width:48px;height:48px;border:0;background:none;cursor:pointer;display:grid;place-items:center;padding:0}
+.rv-dots button::before{content:"";width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.28);transition:background .25s,transform .25s}
+.rv-dots button[aria-current="true"]::before{background:var(--accent);transform:scale(1.35)}
+.rv-count{text-align:center;color:var(--muted)}
+.rv-nav{display:none;gap:10px;margin-top:8px;justify-content:center}
+.rv-nav.on{display:flex}
 .rv-nav button{width:48px;height:48px;border-radius:50%;border:1px solid var(--line-accent);background:transparent;color:var(--accent-text);cursor:pointer;display:grid;place-items:center}
 .rv-nav button:hover{background:rgba(var(--accent-rgb),.12)}
 
@@ -535,19 +557,23 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
 </section>
 
 <div class="strip">
-  <ul class="wrap reveal">
-    <li><strong>Fully insured.</strong> $1.5 million coverage.</li>
-    <li>Residential &amp; commercial</li>
-  </ul>
+  <div class="wrap reveal">
+    <ul class="frame">
+      <li class="ins"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span><strong>Fully insured.</strong> $1.5 million coverage.</span></li>
+      <li>Residential &amp; commercial</li>
+    </ul>
+  </div>
 </div>
 
 <!-- REVIEWS (real Google data only; see REVIEWS_CONFIG in the head) -->
 <section class="sec tight" id="reviews">
   <div class="wrap">
-    <div class="section-head reveal"><h2 id="rvTitle">Tell us how we did</h2></div>
+   <div class="rv-panel reveal">
+    <div class="section-head"><h2 id="rvTitle">Tell us how we did</h2></div>
     <div id="rvBody" class="rv-actions">
       <a class="btn btn-primary" id="rvBtn" href="https://www.google.com/maps/search/?api=1&amp;query=Temp+Tech+Heating+%26+Cooling+North+Ridgeville+Ohio" target="_blank" rel="noopener noreferrer" data-review>Leave a review</a>
     </div>
+   </div>
   </div>
 </section>
 
@@ -1212,26 +1238,29 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   function renderReviews(){
     document.querySelectorAll('a[data-review]').forEach(function(a){a.href=writeUrl()});
     var list=validReviews(),agg=validAgg();
-    if(agg){   /* structured data only for REAL aggregate values */
+    /* The aggregate comes ONLY from RC.aggregate. Sample entries (sample:true) are never counted and never reach structured data. */
+    if(agg){
       var ld=document.querySelector('script[type="application/ld+json"]');
       try{var d=JSON.parse(ld.textContent);d.aggregateRating={'@type':'AggregateRating',ratingValue:agg.rating,reviewCount:agg.count,bestRating:5,worstRating:1};ld.textContent=JSON.stringify(d)}catch(_){}
     }
+    document.getElementById('rvBtn').classList.add('btn-lg');
     if(!list.length&&!agg)return;   /* calm empty state stays: no fake content, no empty carousel, no zero stars */
     var body=document.getElementById('rvBody');
+    var allSample=list.length>0&&list.every(function(r){return r.sample===true}),anySample=list.some(function(r){return r.sample===true});
     document.getElementById('rvTitle').textContent='What customers say';
-    document.getElementById('reviews').classList.remove('tight');document.getElementById('reviews').classList.add('has-rv');
+    document.getElementById('reviews').classList.add('has-rv');
     body.className='';body.innerHTML='';
     if(agg){
-      var p=el('p','rv-agg');p.appendChild(starsEl(Math.round(agg.rating)));
-      p.appendChild(el('b','',agg.rating.toFixed(1)));
-      p.appendChild(el('span','','· '+agg.count+' Google review'+(agg.count===1?'':'s')));
+      var p=el('p','rv-agg');p.appendChild(el('b','',agg.rating.toFixed(1)));p.appendChild(starsEl(Math.round(agg.rating)));
+      p.appendChild(el('span','',agg.count+' Google review'+(agg.count===1?'':'s')));
       body.appendChild(p);
     }
     if(list.length){
-      var wrap=el('div','rv-wrap'),track=el('div','rv-track');
-      track.tabIndex=0;track.setAttribute('role','region');track.setAttribute('aria-label','Google reviews. Scroll sideways to read more.');
+      var wrap=el('div','rv-wrap'),track=el('div','rv-track'+(list.length===1?' single':''));
+      track.tabIndex=0;track.setAttribute('role','region');track.setAttribute('aria-label','Customer reviews. Scroll sideways to read more.');
       list.forEach(function(r,i){
-        var c=el('article','rv-card'),tid='rvt'+i;
+        var c=el('article','rv-card'+(r.sample===true?' is-sample':'')),tid='rvt'+i;
+        if(r.sample===true)c.appendChild(el('span','rv-badge','Sample review (design preview, not a real customer)'));
         c.appendChild(starsEl(r.rating));
         c.appendChild(el('span','sr','Rated '+r.rating+' out of 5'));
         var t=el('p','rv-text',r.text);t.id=tid;c.appendChild(t);
@@ -1241,11 +1270,15 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
         var meta=el('div','rv-meta');meta.appendChild(el('strong','',r.author.trim()));
         var dt=r.dateISO?new Date(r.dateISO):null;
         if(dt&&isFinite(dt.getTime()))meta.appendChild(el('span','',dt.toLocaleDateString('en-US',{month:'long',year:'numeric',timeZone:'UTC'})));
-        var src=httpsUrl(r.sourceUrl),g;
-        if(src){g=el('a','','Google');g.href=src;g.target='_blank';g.rel='noopener noreferrer'}else g=el('span','','Google');
-        meta.appendChild(g);c.appendChild(meta);track.appendChild(c);
+        if(r.sample!==true){   /* only real reviews carry the Google attribution */
+          var src=httpsUrl(r.sourceUrl),g;
+          if(src){g=el('a','','Google');g.href=src;g.target='_blank';g.rel='noopener noreferrer'}else g=el('span','','Google');
+          meta.appendChild(g);
+        }
+        c.appendChild(meta);track.appendChild(c);
       });
       wrap.appendChild(track);
+      var cards=[].slice.call(track.querySelectorAll('.rv-card'));
       var nav=el('div','rv-nav');
       [['Previous reviews','M15 5l-7 7 7 7',-1],['Next reviews','M9 5l7 7-7 7',1]].forEach(function(b){
         var btn=el('button');btn.type='button';btn.setAttribute('aria-label',b[0]);
@@ -1253,20 +1286,46 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
         btn.addEventListener('click',function(){track.scrollBy({left:b[2]*track.clientWidth*.8,behavior:reduce?'auto':'smooth'})});
         nav.appendChild(btn);
       });
-      wrap.appendChild(nav);body.appendChild(wrap);
-      var check=function(){track.querySelectorAll('.rv-card').forEach(function(c){
-        if(c.classList.contains('open'))return;
-        var t=c.querySelector('.rv-text'),m=c.querySelector('.rv-more');m.hidden=!(t.scrollHeight>t.clientHeight+1);
-      })};
+      /* pagination: dots for up to 8 cards, a counter beyond that */
+      var pager=el('div',cards.length>8?'rv-count':'rv-dots'),dots=[];
+      if(cards.length>8){pager.setAttribute('aria-live','polite')}
+      else cards.forEach(function(c,i){
+        var d=el('button');d.type='button';d.setAttribute('aria-label','Show review '+(i+1)+' of '+cards.length);
+        d.addEventListener('click',function(){track.scrollTo({left:c.offsetLeft-parseFloat(getComputedStyle(track).paddingLeft),behavior:reduce?'auto':'smooth'})});
+        pager.appendChild(d);dots.push(d);
+      });
+      wrap.appendChild(pager);wrap.appendChild(nav);body.appendChild(wrap);
+      var current=function(){
+        var pl=parseFloat(getComputedStyle(track).paddingLeft),best=0,bd=1e9;
+        cards.forEach(function(c,i){var dd=Math.abs(c.offsetLeft-pl-track.scrollLeft);if(dd<bd){bd=dd;best=i}});
+        if(track.scrollLeft+track.clientWidth>=track.scrollWidth-2)best=cards.length-1;
+        return best;
+      };
+      var sync=function(){
+        var i=current();
+        if(dots.length)dots.forEach(function(d,k){if(k===i)d.setAttribute('aria-current','true');else d.removeAttribute('aria-current')});
+        else pager.textContent=(i+1)+' / '+cards.length;
+      };
+      var ticking=false;
+      track.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(function(){ticking=false;sync()})}});
+      var check=function(){
+        var scrollable=track.scrollWidth>track.clientWidth+2;
+        pager.hidden=!scrollable||cards.length<2;nav.classList.toggle('on',scrollable&&cards.length>1);
+        cards.forEach(function(c){
+          if(c.classList.contains('open'))return;
+          var t=c.querySelector('.rv-text'),m=c.querySelector('.rv-more');m.hidden=!(t.scrollHeight>t.clientHeight+1);
+        });
+        sync();
+      };
       requestAnimationFrame(check);window.addEventListener('resize',check);
       if(document.fonts&&document.fonts.ready)document.fonts.ready.then(check);
     }
     var act=el('div','rv-actions');
-    var lb=el('button','btn btn-primary','Leave a review');lb.type='button';lb.setAttribute('data-review','');act.appendChild(lb);
+    var lb=el('button','btn btn-primary btn-lg','Leave a review');lb.type='button';lb.setAttribute('data-review','');act.appendChild(lb);
     var pu=profUrl();
     if(pu){var a=el('a','text-link','See all reviews on Google');a.href=pu;a.target='_blank';a.rel='noopener noreferrer';act.appendChild(a)}
     body.appendChild(act);
-    body.appendChild(el('p','rv-fine','Reviews from Google. Shown as written.'));
+    body.appendChild(el('p','rv-fine',allSample?'Design preview only. The sample above is not a real review.':'Reviews from Google. Shown as written.'+(anySample?' Cards marked as samples are design previews.':'')));
   }
   renderReviews();
 
