@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Temp Tech Heating &amp; Cooling | HVAC Service &amp; Installation in North Ridgeville, Ohio</title>
-<meta name="description" content="Temp Tech Heating &amp; Cooling provides HVAC installation, repair and maintenance, based in North Ridgeville, Ohio. Call (216) 213-2622 or schedule a visit.">
+<meta name="description" content="Temp Tech Heating &amp; Cooling provides HVAC installation, repair and maintenance, based in North Ridgeville, Ohio. Call (216) 213-2622 or request a visit.">
 <meta name="theme-color" content="#111a22">
 <script>document.documentElement.className='js';</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -141,6 +141,14 @@ nav a.btn:hover{background:var(--accent-hi)}
 .live-back{font:inherit;font-weight:500;font-size:.9rem;color:var(--accent-text);background:transparent;border:1px solid rgba(var(--accent-rgb),.45);border-radius:999px;padding:9px 18px;min-height:44px;cursor:pointer;transition:background .2s}
 .live-back:hover{background:rgba(var(--accent-rgb),.12)}
 
+/* Dial mode switch + inside read-out */
+.mode{display:flex;gap:2px;width:min(100%,340px);padding:3px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.04)}
+.mode button{flex:1;font:inherit;font-size:.82rem;line-height:1.2;color:var(--muted);background:transparent;border:0;border-radius:999px;padding:9px 8px;min-height:44px;cursor:pointer;transition:background .25s,color .25s}
+.mode button:hover{color:#fff}
+.mode button[aria-checked="true"]{background:rgba(var(--accent-rgb),.2);color:#fff}
+.dial-call{margin:-6px 0 0;font-size:.92rem;color:#c3cfdb;text-align:center}
+.dial-call a{color:var(--accent-hi);font-weight:500}
+
 /* Placeholders (marker boxes) */
 .ph{background:rgba(217,193,154,.07);border:1px dashed rgba(217,193,154,.5);color:var(--sand-soft);border-radius:10px;padding:10px 13px;font-size:.88rem;display:block;line-height:1.5}
 
@@ -262,6 +270,20 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
 .choices{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
 .days{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(62px,1fr);gap:8px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x proximity}
 .days .choice{scroll-snap-align:start}
+.wins{display:grid;gap:10px}
+.choice.none .box{opacity:.6}
+.choice.none input{cursor:not-allowed}
+.slot-msg{color:var(--sand-soft);font-size:.92rem;margin:0 0 10px}
+.slot-msg:empty{display:none}
+.slot-msg a{color:var(--sand-soft)}
+.tz-note{color:var(--muted);font-size:.82rem;margin:0 0 6px}
+.ctx{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:.88rem;color:var(--muted)}
+.ctx label{margin:0}
+.ctx-in{display:inline-flex;align-items:center;gap:6px}
+.ctx-in input{width:72px;font:inherit;padding:8px 10px;min-height:44px;border:1.5px solid rgba(255,255,255,.2);border-radius:10px;background:rgba(0,0,0,.2);color:#fff}
+.ctx-in input[aria-invalid="true"]{border-color:#e6a095}
+.ctx-remove{font:inherit;font-size:.86rem;color:var(--accent-text);background:transparent;border:1px solid rgba(var(--accent-rgb),.45);border-radius:999px;padding:8px 16px;min-height:44px;cursor:pointer;margin-left:auto}
+.ctx-remove:hover{background:rgba(var(--accent-rgb),.12)}
 .times{grid-template-columns:repeat(auto-fill,minmax(96px,1fr))}
 .choice{position:relative;display:block}
 .choice input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer;z-index:1}
@@ -331,7 +353,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#faq">FAQ</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a class="btn btn-primary" href="#contact" data-book>Schedule a visit</a></li>
+        <li><a class="btn btn-primary" href="#contact" data-book>Request a visit</a></li>
       </ul>
     </nav>
   </div>
@@ -347,13 +369,17 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
       <h1>We are Temp Tech HVAC Heating and Cooling</h1>
       <p class="lead">Expert installation, repair and maintenance for residential and commercial heating and cooling in Northeast Ohio.</p>
       <div class="actions">
-        <a class="btn btn-primary" id="dialCta" href="#contact" data-book>Schedule a visit</a>
-        <a class="phone-link" href="tel:+12162132622">or call (216) 213-2622</a>
+        <a class="btn btn-primary" id="dialCta" href="#contact" data-book>Request a visit</a>
+        <a class="phone-link" href="tel:+12162132622">Prefer to talk? (216) 213-2622</a>
       </div>
     </div>
 
     <div class="dial-wrap" aria-label="Interactive thermostat">
-      <div class="dial" id="dial" role="slider" tabindex="0" aria-label="Thermostat temperature, degrees Fahrenheit" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70" aria-valuetext="70 degrees Fahrenheit">
+      <div class="mode" id="modeSwitch" role="radiogroup" aria-label="What the dial shows">
+        <button type="button" role="radio" aria-checked="true" id="modeOut" tabindex="0">Outside (Cleveland, live)</button>
+        <button type="button" role="radio" aria-checked="false" id="modeIn" tabindex="-1">Inside my home</button>
+      </div>
+      <div class="dial" id="dial" role="slider" tabindex="0" aria-label="Thermostat, outside temperature in Cleveland, degrees Fahrenheit" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70" aria-valuetext="70 degrees Fahrenheit">
         <svg viewBox="0 0 300 300" aria-hidden="true" focusable="false">
           <circle class="face" cx="150" cy="150" r="146"/>
           <g id="ticks"></g>
@@ -366,6 +392,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
         </svg>
       </div>
       <p class="dial-msg" id="dialMsg" aria-live="polite">Comfortable. Let's keep it that way.</p>
+      <p class="dial-call" id="dialCall" hidden>No heat or cooling right now? <a href="tel:+12162132622">Call (216) 213-2622</a>.</p>
       <div class="live-row">
         <p class="live-label" id="liveLabel" hidden><span class="ldot" id="liveDot" aria-hidden="true"></span><span id="liveText"></span></p>
         <button type="button" class="live-back" id="liveBack" hidden>Back to Cleveland now</button>
@@ -470,7 +497,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     </div>
     <div class="faq reveal">
       <details><summary>What areas do you serve?</summary><div class="ans"><span class="ph">[Placeholder – replace with client copy]</span></div></details>
-      <details><summary>How do I schedule a visit?</summary><div class="ans"><p>Use the Schedule a visit button, or call (216) 213-2622, Mon-Fri 7AM-5PM.</p></div></details>
+      <details><summary>How do I request a visit?</summary><div class="ans"><p>Use the Request a visit button, or call (216) 213-2622, Mon-Fri 7AM-5PM. We call or text to confirm your time.</p></div></details>
       <details><summary>What types of systems do you work on?</summary><div class="ans"><span class="ph">[Placeholder – replace with client copy]</span></div></details>
       <details><summary>Do you offer maintenance plans?</summary><div class="ans"><span class="ph">[Placeholder – replace with client copy]</span></div></details>
       <details><summary>Do you offer emergency service?</summary><div class="ans"><span class="ph">[Placeholder – replace with client copy]</span></div></details>
@@ -483,14 +510,14 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   <div class="wrap contact">
     <div class="reveal">
       <span class="eyebrow">Contact</span>
-      <h2>Schedule a visit</h2>
-      <p class="lead-p">Choose a service and a time that suits you. Prefer to talk it through? Call us during business hours.</p>
+      <h2>Request a visit</h2>
+      <p class="lead-p">Choose a service and the day and time window that suit you. We will call or text to confirm your time.</p>
       <div class="actions">
-        <a class="btn btn-primary js-only" href="#contact" data-book>Schedule a visit</a>
-        <a class="phone-link" href="tel:+12162132622">(216) 213-2622</a>
+        <a class="btn btn-primary js-only" href="#contact" data-book>Request a visit</a>
+        <a class="phone-link" href="tel:+12162132622">Prefer to talk? (216) 213-2622</a>
       </div>
-      <p class="nojs-only" style="color:var(--muted);margin:0">Online scheduling needs JavaScript. Please call or email us.</p>
-      <p class="note">Demo: the scheduler is front-end only and nothing is sent. It must be connected to the client's email or booking service before launch.</p>
+      <p class="nojs-only" style="color:var(--muted);margin:0">Online requests need JavaScript. Please call or email us.</p>
+      <p class="note">Demo: the request form is front-end only and nothing is sent. It must be connected to the client's email, dispatch board or booking service before launch.</p>
     </div>
     <dl class="facts reveal">
       <div><dt>Phone</dt><dd><a href="tel:+12162132622">(216) 213-2622</a></dd></div>
@@ -530,7 +557,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
 
 <div class="callbar">
   <a class="btn btn-ghost" href="tel:+12162132622">Call</a>
-  <a class="btn btn-primary" href="#contact" data-book>Schedule a visit</a>
+  <a class="btn btn-primary" href="#contact" data-book>Request a visit</a>
 </div>
 
 <div class="tpill" id="tpill" role="group" aria-label="Page colour temperature">
@@ -546,15 +573,21 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     <div class="bk-head">
       <div>
         <p class="bk-demo">Demo &ndash; nothing is sent</p>
-        <h2 id="bookTitle">Schedule a visit</h2>
+        <h2 id="bookTitle">Request a visit</h2>
       </div>
-      <button type="button" class="bk-close" id="bookClose" aria-label="Close scheduler">
+      <button type="button" class="bk-close" id="bookClose" aria-label="Close request form">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>
       </button>
     </div>
     <div class="bk-progress">
       <p class="step-label" id="stepLabel">Step 1 of 3: Service</p>
       <div class="pbar" aria-hidden="true"><span id="barFill"></span></div>
+      <div class="ctx" id="ctxBox" hidden>
+        <label for="fIndoor">Reported indoor temperature</label>
+        <span class="ctx-in"><input id="fIndoor" type="number" inputmode="numeric" min="0" max="100" step="1" aria-describedby="eIndoor"><span aria-hidden="true">&deg;F</span></span>
+        <button type="button" class="ctx-remove" id="ctxRemove">Remove</button>
+      </div>
+      <p class="err" id="eIndoor"></p>
     </div>
 
     <div class="bk-body">
@@ -579,16 +612,18 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
       </div>
 
       <div data-step="2" hidden>
-        <h3 tabindex="-1">Pick a day and time</h3>
-        <p class="demo-note">Demo: slots are examples, not live availability. Mon&ndash;Fri, 7AM&ndash;5PM only.</p>
+        <h3 tabindex="-1">Pick a preferred day and window</h3>
+        <p class="demo-note">Demo: days and windows are examples, not live availability. We call or text to confirm your exact time.</p>
         <fieldset>
-          <legend>Day</legend>
+          <legend>Preferred day</legend>
           <div class="days" id="days"></div>
         </fieldset>
         <fieldset>
-          <legend>Time</legend>
-          <div class="times" id="times"></div>
+          <legend>Preferred window</legend>
+          <div class="wins" id="wins"></div>
         </fieldset>
+        <p class="slot-msg" id="slotMsg" role="status"></p>
+        <p class="tz-note" id="tzNote"></p>
         <p class="err" role="alert" id="err2"></p>
       </div>
 
@@ -598,13 +633,15 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
         <div class="fld"><label for="fPhone">Phone</label><input id="fPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required aria-describedby="ePhone"><p class="err" id="ePhone"></p></div>
         <div class="fld"><label for="fAddr">Address or ZIP code</label><input id="fAddr" name="addr" autocomplete="street-address" required aria-describedby="eAddr"><p class="err" id="eAddr"></p></div>
         <div class="fld"><label for="fNote">Note <span class="opt">(optional)</span></label><textarea id="fNote" name="note"></textarea></div>
+        <p class="err" role="alert" id="errSubmit"></p>
       </div>
 
       <div data-step="4" hidden>
         <div class="ok-ico" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-10"/></svg></div>
-        <h3 tabindex="-1">Request summary (demo)</h3>
+        <h3 tabindex="-1" id="doneTitle">Request received</h3>
+        <p id="doneMsg">We will call or text to confirm your time, and we will let you know if anything changes.</p>
         <dl class="sum" id="sum"></dl>
-        <p class="demo-note" style="margin:0 0 12px">Demo only: nothing was sent or saved. To schedule for real, call <a href="tel:+12162132622">(216) 213-2622</a>, Mon-Fri 7AM-5PM.</p>
+        <p class="demo-note" id="demoNote" style="margin:0 0 12px">Demo only: nothing was sent or saved. To request for real, call <a href="tel:+12162132622">(216) 213-2622</a>, Mon-Fri 7AM-5PM.</p>
       </div>
     </div>
 
@@ -620,6 +657,99 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   'use strict';
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* =====================================================================
+     REQUEST CONFIG  (single source of truth; see SCHEDULING.md)
+     The site collects visit REQUESTS (preferred day + window). The owner
+     confirms the real time by phone or text. Values marked REAL come from the
+     client's site; everything else is a default guess the OWNER MUST CONFIRM.
+     ===================================================================== */
+  var BOOKING_ENDPOINT='';        /* '' = demo mode: nothing is sent. Set to a URL to POST requests as JSON. */
+  var AVAILABILITY_ENDPOINT='';   /* '' = none. Optional GET returning {"requests":[{"day":"2026-10-05","window":"morning"}, ...]} */
+  var AVAILABILITY={
+    timezone:'America/New_York',  /* business timezone; days and windows are computed in this zone, whatever the visitor's device says */
+    weekdays:[1,2,3,4,5],         /* REAL: Mon-Fri (0 = Sunday ... 6 = Saturday) */
+    open:'07:00',                 /* REAL: opens 7AM  (informational; windows below sit inside these hours) */
+    close:'17:00',                /* REAL: closes 5PM */
+    windows:[                     /* what the visitor can pick. Real hours; the noon split is OWNER TO CONFIRM */
+      {id:'morning',   label:'Morning (7–12)',   start:'07:00', end:'12:00'},
+      {id:'afternoon', label:'Afternoon (12–5)', start:'12:00', end:'17:00'},
+      {id:'anytime',   label:'Anytime'}                 /* no times: open whenever any real window is open */
+    ],
+    maxWeekdays:14,               /* OWNER TO CONFIRM: how many weekdays ahead a request can be made */
+    minLeadHours:12,              /* OWNER TO CONFIRM: a window starting sooner than this shows "Call us" (same-day policy) */
+    maxPerWindow:{morning:20,afternoon:20},   /* OWNER TO CONFIRM: requests per window per day. High on purpose: the owner confirms by phone */
+    maxPerDay:40,                 /* OWNER TO CONFIRM: all requests per day, including Anytime */
+    blockedDates:[],              /* e.g. ['2026-11-26'] holidays / days off (business-timezone dates) */
+    blockedRanges:[],             /* e.g. [{start:'2026-12-24T17:00:00Z',end:'2026-12-26T12:00:00Z'}] */
+    requests:[]                   /* existing requests [{day:'YYYY-MM-DD',window:'morning'}]; filled by loadRequests() / setRequests() once a backend exists */
+  };
+
+  function two(n){return n<10?'0'+n:''+n}
+  var fmtCache={};
+  function dtf(tz){return fmtCache[tz]||(fmtCache[tz]=new Intl.DateTimeFormat('en-US',{timeZone:tz,hourCycle:'h23',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'numeric'}))}
+  function tzParts(ms,tz){var o={};dtf(tz).formatToParts(new Date(ms)).forEach(function(p){if(p.type!=='literal')o[p.type]=parseInt(p.value,10)});if(o.hour===24)o.hour=0;return o}
+  function tzOffset(ms,tz){var p=tzParts(ms,tz);return Date.UTC(p.year,p.month-1,p.day,p.hour,p.minute)-Math.floor(ms/60000)*60000}
+  function zonedToUtc(y,m,d,h,mi,tz){var g=Date.UTC(y,m-1,d,h,mi);return g-tzOffset(g-tzOffset(g,tz),tz)}
+  function hm(s){var a=String(s).split(':');return (+a[0])*60+(+a[1]||0)}
+  function at(y,m,d,str,tz){var n=hm(str);return zonedToUtc(y,m,d,Math.floor(n/60),n%60,tz)}
+  function fmtDay(ds,opts){var a=ds.split('-');opts.timeZone='UTC';return new Intl.DateTimeFormat('en-US',opts).format(new Date(Date.UTC(+a[0],+a[1]-1,+a[2])))}
+
+  /* Pure function: the next cfg.maxWeekdays bookable days, each with its request windows.
+     cfg = AVAILABILITY-shaped object, serviceId = booking service key (reserved for per-service rules), now = Date or ms.
+     Returns [{date:'YYYY-MM-DD', weekday:0-6, open:bool, reason:''|'blocked'|'full',
+               windows:[{id, label, open:bool, reason:''|'soon'|'blocked'|'full'}]}].
+     A closed window/day is still returned (the UI shows "Call us"). Days entirely inside the lead-time window are omitted. */
+  function getSlots(cfg,serviceId,now){
+    var nowMs=now instanceof Date?now.getTime():+now,tz=cfg.timezone,lead=(cfg.minLeadHours||0)*3600000;
+    var blockedDates=cfg.blockedDates||[],reqs=(cfg.requests||[]).filter(function(r){return r&&typeof r.day==='string'});
+    var ranges=(cfg.blockedRanges||[]).map(function(r){return {s:Date.parse(r.start),e:Date.parse(r.end)}}).filter(function(r){return isFinite(r.s)&&isFinite(r.e)});
+    var p=tzParts(nowMs,tz),days=[];
+    for(var off=0;days.length<cfg.maxWeekdays&&off<90;off++){
+      var dt=new Date(Date.UTC(p.year,p.month-1,p.day+off));
+      if(cfg.weekdays.indexOf(dt.getUTCDay())<0)continue;
+      var y=dt.getUTCFullYear(),m=dt.getUTCMonth()+1,d=dt.getUTCDate(),ds=y+'-'+two(m)+'-'+two(d);
+      var blockedDay=blockedDates.indexOf(ds)>=0,dayReqs=reqs.filter(function(r){return r.day===ds}),real=0,soon=0;
+      var wins=cfg.windows.map(function(w){
+        if(!w.start)return {id:w.id,label:w.label,open:false,reason:'',any:true};
+        real++;
+        var s=at(y,m,d,w.start,tz),e=at(y,m,d,w.end,tz),reason='';
+        if(s<nowMs+lead){reason='soon';soon++}
+        else if(blockedDay||ranges.some(function(r){return s<r.e&&e>r.s}))reason='blocked';
+        else{
+          var n=dayReqs.filter(function(r){return r.window===w.id}).length,cap=cfg.maxPerWindow&&cfg.maxPerWindow[w.id];
+          if((cap!==undefined&&n>=cap)||(cfg.maxPerDay&&dayReqs.length>=cfg.maxPerDay))reason='full';
+        }
+        return {id:w.id,label:w.label,open:!reason,reason:reason};
+      });
+      if(real&&soon===real)continue;
+      var anyOpen=wins.some(function(w){return !w.any&&w.open}),dayReason=anyOpen?'':(blockedDay?'blocked':'full');
+      wins.forEach(function(w){if(w.any){w.open=anyOpen;w.reason=dayReason}});
+      days.push({date:ds,weekday:dt.getUTCDay(),open:anyOpen,reason:dayReason,windows:wins});
+    }
+    return days;
+  }
+  function setRequests(list){AVAILABILITY.requests=(list||[]).filter(function(r){return r&&typeof r.day==='string'&&typeof r.window==='string'})}
+  /* Optional hook: GET AVAILABILITY_ENDPOINT -> fills AVAILABILITY.requests. Resolves true/false, never throws. */
+  function loadRequests(){
+    if(!AVAILABILITY_ENDPOINT||typeof fetch!=='function'||typeof AbortController==='undefined')return Promise.resolve(false);
+    var ac=new AbortController(),to=setTimeout(function(){ac.abort()},6000);
+    return fetch(AVAILABILITY_ENDPOINT,{signal:ac.signal,cache:'no-store'})
+      .then(function(r){if(!r.ok)throw 0;return r.json()})
+      .then(function(d){var l=Array.isArray(d)?d:(d&&d.requests);if(!Array.isArray(l))throw 0;setRequests(l);clearTimeout(to);return true})
+      .catch(function(){clearTimeout(to);return false});
+  }
+  /* POSTs the request as JSON. Demo mode (empty endpoint) sends nothing. Rejects with err.code = HTTP status where relevant. */
+  function submitBooking(payload){
+    if(!BOOKING_ENDPOINT)return Promise.resolve({ok:true,demo:true});
+    if(typeof fetch!=='function'||typeof AbortController==='undefined')return Promise.reject(new Error('unsupported'));
+    var ac=new AbortController(),to=setTimeout(function(){ac.abort()},10000);
+    return fetch(BOOKING_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:ac.signal})
+      .then(function(r){clearTimeout(to);if(!r.ok){var e=new Error('http '+r.status);e.code=r.status;throw e}return {ok:true,demo:false}})
+      .catch(function(e){clearTimeout(to);throw e});
+  }
+  window.TempTechScheduling={AVAILABILITY:AVAILABILITY,getSlots:getSlots,setRequests:setRequests,loadRequests:loadRequests,submitBooking:submitBooking,
+    setEndpoints:function(o){if(o&&typeof o.booking==='string')BOOKING_ENDPOINT=o.booking;if(o&&typeof o.availability==='string')AVAILABILITY_ENDPOINT=o.availability}};
+
   /* ---------- mobile menu ---------- */
   var mbtn=document.getElementById('menuBtn'),nav=document.getElementById('nav');
   function menu(o){nav.classList.toggle('open',o);mbtn.setAttribute('aria-expanded',o)}
@@ -634,55 +764,78 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     rv.forEach(function(el){io.observe(el)});
   }else{rv.forEach(function(el){el.classList.add('in')})}
 
-  /* ---------- booking widget (front-end only) ---------- */
+  /* ---------- booking widget ---------- */
   var dlg=document.getElementById('book'),form=document.getElementById('bookForm');
   var steps=[].slice.call(dlg.querySelectorAll('[data-step]'));
   var stepLabel=document.getElementById('stepLabel'),barFill=document.getElementById('barFill');
   var back=document.getElementById('bkBack'),next=document.getElementById('bkNext');
-  var emerg=document.getElementById('emerg'),daysEl=document.getElementById('days'),timesEl=document.getElementById('times');
-  var step=1,opener=null,canModal=typeof dlg.showModal==='function';
-  var labels=['Service','Day and time','Your details'];
-
-  function two(n){return n<10?'0'+n:''+n}
-  function fmtHour(h){return h===12?'12:00 PM':(h<12?h+':00 AM':(h-12)+':00 PM')}
-  function weekdays(){
-    var out=[],d=new Date();d.setHours(12,0,0,0);
-    while(out.length<10){d.setDate(d.getDate()+1);var w=d.getDay();if(w>0&&w<6)out.push(new Date(d))}
-    return out;
-  }
-  var dayList=weekdays(),dayMap={};
-  dayList.forEach(function(d){
-    var iso=d.getFullYear()+'-'+two(d.getMonth()+1)+'-'+two(d.getDate());
-    dayMap[iso]=d;
-    var l=document.createElement('label');l.className='choice';
-    l.innerHTML='<input type="radio" name="day" value="'+iso+'"><span class="box"><small>'+d.toLocaleDateString('en-US',{weekday:'short'})+'</small><b>'+d.getDate()+'</b><small>'+d.toLocaleDateString('en-US',{month:'short'})+'</small></span>';
-    l.querySelector('input').setAttribute('aria-label',d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}));
-    daysEl.appendChild(l);
-  });
-  function buildTimes(){
-    timesEl.innerHTML='';
-    for(var h=7;h<=16;h++){
-      var l=document.createElement('label');l.className='choice';
-      l.innerHTML='<input type="radio" name="time" value="'+h+'"><span class="box">'+fmtHour(h)+'</span>';
-      timesEl.appendChild(l);
-    }
-  }
+  var emerg=document.getElementById('emerg'),daysEl=document.getElementById('days'),winsEl=document.getElementById('wins');
+  var slotMsg=document.getElementById('slotMsg'),tzNote=document.getElementById('tzNote');
+  var ctxBox=document.getElementById('ctxBox'),fIndoor=document.getElementById('fIndoor'),errSubmit=document.getElementById('errSubmit');
+  var step=1,opener=null,canModal=typeof dlg.showModal==='function',ctxOn=false,submitting=false,lastDemo=true,slotData=[];
+  var labels=['Service','Day and window','Your details'];
 
   function val(n){var r=form.elements[n];return r?r.value:''}
+  function serviceKey(){var r=form.querySelector('input[name="service"]:checked');return r?r.getAttribute('data-key'):'unsure'}
+  function tzName(){try{var s=new Intl.DateTimeFormat('en-US',{timeZone:AVAILABILITY.timezone,timeZoneName:'long'}).format(new Date());return s.split(', ').pop()}catch(_){return AVAILABILITY.timezone}}
+
+  function currentDay(){var ds=val('day'),day=null;slotData.forEach(function(d){if(d.date===ds)day=d});return day}
+  var CALL_HTML='please call <a href="tel:+12162132622">(216) 213-2622</a>';
+  function renderWindows(keepWin){
+    var day=currentDay();
+    winsEl.innerHTML='';slotMsg.innerHTML='';
+    if(!day){slotMsg.innerHTML='No days are open for online requests right now, '+CALL_HTML+'.';return}
+    day.windows.forEach(function(w){
+      var l=document.createElement('label');l.className='choice wide'+(w.open?'':' none');
+      l.innerHTML='<input type="radio" name="window" value="'+w.id+'"'+(w.open?'':' disabled')+'><span class="box">'+w.label+(w.open?'':'<small>Call us</small>')+'</span>';
+      winsEl.appendChild(l);
+    });
+    if(!day.open)slotMsg.innerHTML='Online requests are not available for this day. Please choose another day, or '+CALL_HTML+'.';
+    if(keepWin){var r=winsEl.querySelector('input[value="'+keepWin+'"]:not([disabled])');if(r)r.checked=true}
+  }
+  function renderDays(keepWin){
+    slotData=getSlots(AVAILABILITY,serviceKey(),Date.now());
+    daysEl.innerHTML='';winsEl.innerHTML='';slotMsg.innerHTML='';
+    tzNote.textContent='Windows are in '+tzName()+'.';
+    if(!slotData.length){slotMsg.innerHTML='No days are open for online requests right now, '+CALL_HTML+'.';return}
+    var pick=null;
+    slotData.forEach(function(d){if(!pick&&d.open)pick=d.date});
+    if(!pick)pick=slotData[0].date;
+    slotData.forEach(function(d){
+      var l=document.createElement('label');l.className='choice'+(d.open?'':' none');
+      l.innerHTML='<input type="radio" name="day" value="'+d.date+'"><span class="box"><small>'+fmtDay(d.date,{weekday:'short'})+'</small><b>'+(+d.date.slice(8))+'</b><small>'+(d.open?fmtDay(d.date,{month:'short'}):'Call us')+'</small></span>';
+      var inp=l.querySelector('input');
+      inp.setAttribute('aria-label',fmtDay(d.date,{weekday:'long',month:'long',day:'numeric'})+(d.open?'':', call us'));
+      if(d.date===pick)inp.checked=true;
+      daysEl.appendChild(l);
+    });
+    renderWindows(keepWin);
+  }
+
+  function ctxState(){return typeof getContext==='function'?getContext():{indoor:null,outdoor:null}}
   function showStep(n,focus){
+    var prevWin=val('window');
     step=n;
+    if(n===2)renderDays(prevWin);
     steps.forEach(function(s){s.hidden=(+s.getAttribute('data-step')!==n)});
     if(n<=3){stepLabel.textContent='Step '+n+' of 3: '+labels[n-1];barFill.style.width=(n/3*100)+'%'}
-    else{stepLabel.textContent='Request summary';barFill.style.width='100%'}
+    else{stepLabel.textContent='Request received';barFill.style.width='100%'}
+    ctxBox.hidden=!(ctxOn&&(n===2||n===3));
     back.hidden=(n===1||n===4);
     next.hidden=(n===4)||(n===1&&val('service')==='Emergency');
-    next.textContent=n===1?'Next':n===2?'Next':'Review request';
+    next.disabled=false;
+    next.textContent=n===1?'Next':n===2?'Next':'Send request';
     if(n===4){back.hidden=false;back.textContent='Start over';next.hidden=false;next.textContent='Done'}else{back.textContent='Back'}
     if(focus!==false){var h=steps[n-1].querySelector('h3');if(h)h.focus({preventScroll:true})}
     dlg.querySelector('.bk-body').scrollTop=0;
   }
-  function clearErr(){dlg.querySelectorAll('.err').forEach(function(e){e.textContent=''});['fName','fPhone','fAddr'].forEach(function(id){document.getElementById(id).removeAttribute('aria-invalid')})}
+  function clearErr(){dlg.querySelectorAll('.err').forEach(function(e){e.textContent=''});['fName','fPhone','fAddr','fIndoor'].forEach(function(id){document.getElementById(id).removeAttribute('aria-invalid')})}
   function bad(id,eid,msg){var i=document.getElementById(id);i.setAttribute('aria-invalid','true');document.getElementById(eid).textContent=msg;return i}
+  function indoorValue(){
+    if(!ctxOn)return null;
+    var s=fIndoor.value.trim();if(s==='')return null;
+    var n=Number(s);return (isFinite(n)&&n>=0&&n<=100&&Math.round(n)===n)?n:NaN;
+  }
   function validate(n){
     clearErr();
     if(n===1){
@@ -690,53 +843,82 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
       if(val('service')==='Emergency')return false;
     }
     if(n===2){
-      if(!val('day')){document.getElementById('err2').textContent='Please choose a day.';return false}
-      if(!val('time')){document.getElementById('err2').textContent='Please choose a time.';return false}
+      var dd=currentDay();
+      if(!dd||!dd.open){document.getElementById('err2').textContent='Please choose a day that is open for online requests, or call (216) 213-2622.';return false}
+      if(!val('window')){document.getElementById('err2').textContent='Please choose a preferred window.';return false}
     }
     if(n===3){
       var first=null;
       if(!document.getElementById('fName').value.trim())first=bad('fName','eName','Please enter your name.');
       if(document.getElementById('fPhone').value.replace(/\D/g,'').length<10){var p=bad('fPhone','ePhone','Please enter a 10-digit phone number.');first=first||p}
       if(!document.getElementById('fAddr').value.trim()){var a=bad('fAddr','eAddr','Please enter your address or ZIP code.');first=first||a}
+      if(ctxOn&&isNaN(indoorValue())){var t=bad('fIndoor','eIndoor','Enter a whole number from 0 to 100, or remove it.');first=first||t}
       if(first){first.focus();return false}
     }
     return true;
   }
-  function summary(){
-    var d=dayMap[val('day')],note=document.getElementById('fNote').value.trim(),rows=[
-      ['Service',val('service')],
-      ['When',d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})+' at '+fmtHour(+val('time'))],
-      ['Name',document.getElementById('fName').value.trim()],['Phone',document.getElementById('fPhone').value.trim()],['Address / ZIP',document.getElementById('fAddr').value.trim()]
-    ];
-    if(note)rows.push(['Note',note]);
+  function buildPayload(){
+    var c=ctxState(),indoor=indoorValue(),p={
+      service:val('service'),serviceId:serviceKey(),day:val('day'),window:val('window'),timezone:AVAILABILITY.timezone,
+      name:document.getElementById('fName').value.trim(),phone:document.getElementById('fPhone').value.trim(),
+      address:document.getElementById('fAddr').value.trim(),note:document.getElementById('fNote').value.trim()
+    };
+    if(indoor!==null&&!isNaN(indoor))p.indoorTempF=indoor;
+    if(c.outdoor!==null&&c.outdoor!==undefined)p.outdoorTempF=c.outdoor;
+    return p;
+  }
+  function summary(p,demo){
+    var wl=p.window,dd=currentDay();if(dd)dd.windows.forEach(function(w){if(w.id===p.window)wl=w.label});
+    var rows=[['Service',p.service],['Preferred day',fmtDay(p.day,{weekday:'long',month:'long',day:'numeric'})],['Preferred window',wl],['Name',p.name],['Phone',p.phone],['Address / ZIP',p.address]];
+    if(p.note)rows.push(['Note',p.note]);
+    if(p.indoorTempF!==undefined)rows.push(['Indoor temperature',p.indoorTempF+'°F (reported)']);
+    if(p.outdoorTempF!==undefined)rows.push(['Outside, Cleveland',p.outdoorTempF+'°F (live reading)']);
     var dl=document.getElementById('sum');dl.innerHTML='';
     rows.forEach(function(r){var w=document.createElement('div'),t=document.createElement('dt'),dd=document.createElement('dd');t.textContent=r[0];dd.textContent=r[1];w.appendChild(t);w.appendChild(dd);dl.appendChild(w)});
+    document.getElementById('doneTitle').textContent=demo?'Request received (demo)':'Request received';
+    document.getElementById('demoNote').hidden=!demo;
   }
   function reset(){
-    form.reset();clearErr();emerg.hidden=true;
-    var d0=daysEl.querySelector('input');if(d0)d0.checked=true;   /* first weekday pre-selected so step 2 is one tap */
-    buildTimes();
+    form.reset();clearErr();emerg.hidden=true;errSubmit.textContent='';
+    daysEl.innerHTML='';winsEl.innerHTML='';slotMsg.innerHTML='';submitting=false;
+    var c=ctxState();ctxOn=c.indoor!==null&&c.indoor!==undefined;
+    fIndoor.value=ctxOn?c.indoor:'';
   }
-  function advance(){if(validate(step)){if(step===3){summary();showStep(4)}else showStep(step+1)}}
+  function advance(){if(validate(step)){if(step===3)send();else showStep(step+1)}}
+  function send(){
+    if(submitting)return;
+    var payload=buildPayload();
+    submitting=true;next.disabled=true;next.textContent='Sending…';errSubmit.textContent='';
+    submitBooking(payload).then(function(res){
+      submitting=false;lastDemo=!!res.demo;summary(payload,lastDemo);showStep(4);
+    }).catch(function(err){
+      submitting=false;next.disabled=false;next.textContent='Try again';
+      if(err&&err.code===409){
+        loadRequests().then(function(){showStep(2);document.getElementById('err2').textContent='That window just filled up. Please choose another day or window, or call (216) 213-2622.'});
+      }else errSubmit.textContent='We could not send your request. Please try again, or call (216) 213-2622.';
+    });
+  }
 
   form.addEventListener('submit',function(e){
     e.preventDefault();
     if(step===4){closeBook();return}
     advance();
   });
-  back.addEventListener('click',function(){if(step===4){reset();showStep(1)}else if(step>1){clearErr();showStep(step-1)}});
+  back.addEventListener('click',function(){if(step===4){reset();showStep(1)}else if(step>1){clearErr();errSubmit.textContent='';showStep(step-1)}});
   form.addEventListener('change',function(e){
     if(e.target.name==='service'){
       var em=e.target.value==='Emergency';emerg.hidden=!em;next.hidden=em;document.getElementById('err1').textContent='';
     }
-    if(e.target.name==='day'||e.target.name==='time')document.getElementById('err2').textContent='';
+    if(e.target.name==='day'){renderWindows();document.getElementById('err2').textContent=''}
+    if(e.target.name==='window')document.getElementById('err2').textContent='';
   });
+  document.getElementById('ctxRemove').addEventListener('click',function(){ctxOn=false;fIndoor.value='';ctxBox.hidden=true;document.getElementById('eIndoor').textContent=''});
   /* pointer/touch picks (click detail > 0) move on automatically; keyboard users use Next */
   form.addEventListener('click',function(e){
     var t=e.target;
     if(!t||t.tagName!=='INPUT'||!e.detail)return;
     if(t.name==='service'&&step===1&&t.value!=='Emergency')setTimeout(function(){if(step===1&&val('service')===t.value)advance()},220);
-    if(t.name==='time'&&step===2)setTimeout(function(){if(step===2&&val('time')===t.value)advance()},220);
+    if(t.name==='window'&&step===2)setTimeout(function(){if(step===2&&val('window')===t.value)advance()},220);
   });
 
   function openBook(opts,from){
@@ -748,6 +930,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     if(!dlg.open)dlg.showModal();
     document.documentElement.style.overflow='hidden';
     showStep(pre&&val('service')?2:1);
+    loadRequests().then(function(ok){if(ok&&dlg.open&&step===2)renderDays(val('window'))});
     return true;
   }
   function closeBook(){if(dlg.open)dlg.close()}
@@ -760,6 +943,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     if(openBook({service:t.getAttribute('data-service')},t))e.preventDefault();
     menu(false);
   });
+  loadRequests();
 
   /* ---------- hero thermostat dial ---------- */
   var dial=document.getElementById('dial');
@@ -767,9 +951,12 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   var MIN=0,MAX=100,hero=document.getElementById('home');
   var prog=document.getElementById('prog'),knob=document.getElementById('knob'),ticksG=document.getElementById('ticks');
   var numEl=document.getElementById('num'),numText=document.getElementById('numText');
-  var msg=document.getElementById('dialMsg'),cta=document.getElementById('dialCta');
+  var msg=document.getElementById('dialMsg'),cta=document.getElementById('dialCta'),callLine=document.getElementById('dialCall');
   var target=70,shown=70,lastInt=null,raf=0,dragging=false,ticks=[];
+  var mode='outside',indoorTemp=null,liveTemp=null;
   var NS='http://www.w3.org/2000/svg';
+  /* context handed to the booking widget (read at open and at submit) */
+  function getContext(){return {indoor:indoorTemp,outdoor:(liveTemp!==null&&isFinite(liveTemp))?Math.round(liveTemp):null}}
 
   for(var t=MIN;t<=MAX;t+=5){
     var th=(-135+(t-MIN)/(MAX-MIN)*270)*Math.PI/180,major=(t%10===0),r1=major?119:124,r2=133;
@@ -828,7 +1015,8 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     st.setProperty('--hero-b',css(heroB));
     if(metaTheme)metaTheme.setAttribute('content',css(bg));
   }
-  /* hero message adapts to the temperature; the button stays "Schedule a visit" and pre-selects a service */
+
+  /* ---- hero copy: outside = adapts to the temperature; inside = plain read-out of the customer's own reading ---- */
   var ZONES=[
     {max:32,key:'heat',msg:"Freezing. Let's make sure your heat is ready."},
     {max:50,key:'heat',msg:"Cold. Let's make sure your heating is ready."},
@@ -838,12 +1026,26 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     {max:999,key:'ac',msg:"Hot. Let's make sure your cooling is ready."}
   ];
   function zoneFor(n){for(var i=0;i<ZONES.length;i++)if(n<=ZONES[i].max)return i}
-  var lastZone=-1;
+  var lastZone=-1,swapT=0;
+  function setMsg(text,animate){
+    if(msg.textContent===text)return;
+    clearTimeout(swapT);
+    function apply(){msg.textContent=text;msg.classList.remove('swap')}
+    if(animate&&!reduce){msg.classList.add('swap');swapT=setTimeout(apply,160)}else apply();
+  }
   function setZone(n,animate){
     var z=zoneFor(n);if(z===lastZone)return;lastZone=z;
     var Z=ZONES[z];
-    function apply(){msg.textContent=Z.msg;cta.setAttribute('data-service',Z.key);msg.classList.remove('swap')}
-    if(animate&&!reduce){msg.classList.add('swap');setTimeout(apply,160)}else apply();
+    setMsg(Z.msg,animate);cta.textContent='Request a visit';cta.setAttribute('data-service',Z.key);callLine.hidden=true;
+  }
+  function applyInside(animate){
+    var t=indoorTemp,text,key='',label='Request a visit';
+    if(t===null)text="Set the dial to your home's current temperature.";
+    else if(t<=54){text='Your home is quite cold. Heating is likely the right visit.';key='heat';label='Request a visit for this'}
+    else if(t>=86){text='Your home is quite warm. Cooling is likely the right visit.';key='ac';label='Request a visit for this'}
+    else{text='Comfortable range. Pick the service you need, or choose “Not sure yet”.';label='Request a visit for this'}
+    setMsg(text,animate);cta.textContent=label;cta.setAttribute('data-service',key);
+    callLine.hidden=!(t!==null&&(t<=45||t>=90));
   }
 
   function draw(){
@@ -856,7 +1058,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
       var first=lastInt===null;lastInt=n;
       numEl.textContent=n;
       ticks.forEach(function(tk){tk.classList.toggle('on',+tk.dataset.t<=n)});
-      setZone(n,!first);
+      if(mode==='outside')setZone(n,!first);
       if(!first&&!reduce){
         numText.classList.remove('pulse');void numText.getBoundingClientRect();numText.classList.add('pulse');
         if(dragging&&navigator.vibrate)try{navigator.vibrate(4)}catch(_){}
@@ -925,28 +1127,32 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     }
   }
 
-  /* ---- live Cleveland temperature (Open-Meteo), preview mode and fallback ---- */
+  /* ---- live Cleveland temperature (Open-Meteo), preview mode, inside mode and fallback ---- */
   var API='https://api.open-meteo.com/v1/forecast?latitude=41.4993&longitude=-81.6944&current=temperature_2m&temperature_unit=fahrenheit';
   var FALLBACK=70,IDLE_MS=30000,REFRESH_MS=600000;
-  var liveTemp=null,state='loading',preview=false,idleT=0,inflight=false,lastFetch=0;
+  var state='loading',preview=false,idleT=0,inflight=false,lastFetch=0;
   var lbl=document.getElementById('liveLabel'),lblText=document.getElementById('liveText'),lblDot=document.getElementById('liveDot');
   var backBtn=document.getElementById('liveBack'),tpLive=document.getElementById('tpLive'),tpDot=document.getElementById('tpDot');
+  var modeOut=document.getElementById('modeOut'),modeIn=document.getElementById('modeIn');
   function clampT(v){return Math.max(MIN,Math.min(MAX,Math.round(v)))}
   function baseline(){return liveTemp!==null?clampT(liveTemp):FALLBACK}
   function syncLive(){
-    var showBack=preview&&target!==baseline(),txt=liveTemp!==null?'Back to Cleveland now':'Reset to '+FALLBACK+'°F';
+    var out=mode==='outside';
+    var showBack=out&&preview&&target!==baseline(),txt=liveTemp!==null?'Back to Cleveland now':'Reset to '+FALLBACK+'°F';
     if(lbl){
-      if(state==='ok'){lbl.hidden=false;lblText.textContent='Cleveland right now: '+Math.round(liveTemp)+'°F';lblDot.className='ldot'}
+      if(!out){lbl.hidden=false;lblDot.className='ldot off';lblText.textContent=indoorTemp!==null?'Your home: '+indoorTemp+'°F':"Turn the dial to your home's temperature"}
+      else if(state==='ok'){lbl.hidden=false;lblText.textContent='Cleveland right now: '+Math.round(liveTemp)+'°F';lblDot.className='ldot'}
       else if(state==='fail'){lbl.hidden=false;lblText.textContent='Live weather unavailable';lblDot.className='ldot off'}
       else lbl.hidden=true;
     }
     if(backBtn){backBtn.hidden=!showBack;backBtn.textContent=txt}
     if(tpLive){tpLive.hidden=!showBack;tpLive.setAttribute('aria-label',txt);tpLive.title=txt}
-    if(tpDot)tpDot.hidden=!(state==='ok'&&!preview);
+    if(tpDot)tpDot.hidden=!(out&&state==='ok'&&!preview);
     syncPill();
   }
   function userTouched(){
     clearTimeout(idleT);
+    if(mode==='inside'){indoorTemp=target;applyInside(true);syncLive();return}
     preview=target!==baseline();
     if(preview)idleT=setTimeout(backToLive,IDLE_MS);
     syncLive();
@@ -955,9 +1161,26 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     clearTimeout(idleT);preview=false;
     setTarget(baseline(),false);
   }
+  function setMode(m,focus){
+    if(m!==mode){
+      mode=m;clearTimeout(idleT);preview=false;
+      dial.setAttribute('aria-label',m==='outside'?'Thermostat, outside temperature in Cleveland, degrees Fahrenheit':"Thermostat, your home's temperature, degrees Fahrenheit");
+      if(m==='outside'){lastZone=-1;setTarget(baseline(),false);setZone(baseline(),true)}
+      else{setTarget(indoorTemp!==null?indoorTemp:FALLBACK,false);applyInside(true)}
+    }
+    [modeOut,modeIn].forEach(function(b){var on=(b===modeOut)===(mode==='outside');b.setAttribute('aria-checked',on);b.tabIndex=on?0:-1});
+    if(focus)(mode==='outside'?modeOut:modeIn).focus();
+    syncLive();
+  }
+  modeOut.addEventListener('click',function(){setMode('outside')});
+  modeIn.addEventListener('click',function(){setMode('inside')});
+  document.getElementById('modeSwitch').addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();setMode('inside',true)}
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();setMode('outside',true)}
+  });
   function onLive(t){
     liveTemp=t;state='ok';
-    if(!preview)setTarget(baseline(),false);else syncLive();
+    if(mode==='outside'&&!preview)setTarget(baseline(),false);else syncLive();
   }
   function onFail(){
     if(liveTemp===null){state='fail';syncLive()}   /* keep the last good reading if a refresh fails */
