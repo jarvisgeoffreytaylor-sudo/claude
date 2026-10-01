@@ -43,12 +43,14 @@ Helpers on `window.TempTechScheduling`: `getSlots(config, serviceId, now)` (pure
   "phone": "216-555-0100",
   "address": "44039",
   "note": "optional text",
+  "feeAcknowledged": true,
+  "serviceCallFeeUsd": 100,
   "indoorTempF": 58,
   "outdoorTempF": 41
 }
 ```
 
-`window` is `morning`, `afternoon` or `anytime`. `indoorTempF` and `outdoorTempF` are left out when not available. The server should reply `2xx` on success; `409` means the window just filled up (the form returns to step 2); any other error shows a retry message with the phone number.
+`feeAcknowledged` is always `true` (the customer ticked the service call fee box); see `PAYMENTS.md`. `window` is `morning`, `afternoon` or `anytime`. `indoorTempF` and `outdoorTempF` are left out when not available. The server should reply `2xx` on success; `409` means the window just filled up (the form returns to step 2); any other error shows a retry message with the phone number.
 
 ## Going live, simplest first
 

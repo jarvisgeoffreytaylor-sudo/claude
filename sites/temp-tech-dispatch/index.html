@@ -21,6 +21,7 @@
   --warn:#d9a07a;
   --warn-soft:rgba(201,138,98,.17);
   --warn-line:rgba(217,160,122,.50);
+  --warn-chip:#2f2a29;
   --info:#a6bddc;
   --info-soft:rgba(140,165,205,.15);
   --focus:#b9ddd7;
@@ -98,7 +99,7 @@ h1,h2,h3,p{margin:0}
 .chip.quiet{background:transparent;color:var(--muted)}
 .chip.accent{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-line)}
 .chip.strong{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.chip.warn{background:var(--warn-soft);color:var(--warn);border-color:var(--warn-line)}
+.chip.warn{background:var(--warn-chip);color:var(--warn);border-color:var(--warn-line)}
 .chip.info{background:var(--info-soft);color:var(--info);border-color:var(--line-strong)}
 .chip.ex{background:transparent;color:var(--muted);border-style:dashed}
 
@@ -248,6 +249,21 @@ textarea.input{min-height:72px;resize:vertical;font-family:inherit}
 .trow{display:flex;gap:6px;margin-top:8px}
 .trow .input{flex:1}
 .fine{font-size:12px;color:var(--muted);margin-top:6px}
+.moneybar{width:100%;min-height:52px;border-radius:12px;border:1px solid var(--line-strong);background:var(--surface-2);display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px;text-align:left}
+.moneybar .msum{flex:1;font-size:14px;line-height:1.35;min-width:0}
+.moneybar .msum b{display:block;font:600 12px var(--font-body);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.moneybar .go{font-size:13px;color:var(--muted)}
+.hgrid{display:grid;gap:6px;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));margin-top:6px}
+.mbody{margin-top:10px;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--bg)}
+.mrow{margin-top:14px}
+.mrow:first-child{margin-top:0}
+.mrow .lbl{margin-bottom:6px}
+.amt{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.amt span{font-weight:600;color:var(--muted)}
+.amt .input{max-width:160px}
+.mtotal{margin-top:14px;padding-top:10px;border-top:1px solid var(--line);font-size:14px;line-height:1.5}
+.mtotal b{font-weight:600}
+.quietamt{color:var(--muted)}
 .copied{color:var(--accent);font-size:13px;font-weight:600}
 
 /* wide layout */
@@ -362,7 +378,7 @@ function digits(p){return String(p||'').replace(/[^\d+]/g,'')}
 /* ================= state ================= */
 var S={jobs:new Map(),requests:new Map(),trucks:[{id:'t1',name:'Truck 1'},{id:'t2',name:'Truck 2'}],trucksDoc:null,
   db:null,mode:'loading',ready:{jobs:false,requests:false,trucks:false},trucksExists:false,readOnly:false,syncErr:null};
-var ui={date:T.today(),view:'timeline',tab:'board',truck:'t1',sheet:null,panel:null,parkOpen:!window.matchMedia('(max-width:759px)').matches,rl:'all',
+var ui={moneyOpen:false,mdraft:{},date:T.today(),view:'timeline',tab:'board',truck:'t1',sheet:null,panel:null,parkOpen:!window.matchMedia('(max-width:759px)').matches,rl:'all',
   callOpen:null,pick:null,msg:null,draft:null,confirmRemove:null,confirmClear:false,scrolled:false,suppressClick:false,toastActs:[],rlSheet:null};
 
 /* ---- job helpers ---- */
@@ -482,17 +498,17 @@ function seedData(){
   function J(n,o){return Object.assign({id:'ex-j'+n,example:true,status:'scheduled',cancelled:false,customer:'',phone:'',note:'',createdAt:'2000-01-01T00:00:00.000Z'},o)}
   function at(h,m,dur){return times(d,h*60+m,dur)}
   var jobs=[
-    J(1,Object.assign({address:'123 Example St',service:'Air Conditioning',source:'Phone',truck:'t1',status:'done',note:'Example job: no cooling.'},at(8,0,60))),
-    J(2,Object.assign({address:'456 Sample Ave',service:'Heating',source:'Housecall Pro',truck:'t1',status:'working',note:'Example job: furnace tune-up.'},at(9,30,120))),
-    J(3,Object.assign({address:'789 Placeholder Rd',service:'Water Heating',source:'Website',truck:'t1',customer:'Example Customer',phone:'(216) 555-0110',note:'Example job: water heater swap.'},at(12,0,60))),
+    J(1,Object.assign({address:'123 Example St',service:'Air Conditioning',source:'Phone',truck:'t1',status:'done',note:'Example job: no cooling.',fee:100,feeCollected:true,quote:380,quoteStatus:'approved',payStatus:'paid',payMethod:'Card',paidDate:d},at(8,0,60))),
+    J(2,Object.assign({address:'456 Sample Ave',service:'Heating',source:'Housecall Pro',truck:'t1',status:'working',note:'Example job: furnace tune-up.',fee:100,feeCollected:true,quote:640,quoteStatus:'quoted'},at(9,30,120))),
+    J(3,Object.assign({address:'789 Placeholder Rd',service:'Water Heating',source:'Website',truck:'t1',customer:'Example Customer',phone:'(216) 555-0110',feeAck:true,note:'Example job: water heater swap.'},at(12,0,60))),
     J(4,Object.assign({address:'12 Test Ln',service:'Indoor Air Quality',source:'Phone',truck:'t2',status:'enroute',note:'Example job: filter and humidifier.'},at(9,0,60))),
     J(5,Object.assign({address:'34 Demo Ct',service:'Air Conditioning',source:'Phone',truck:'t2',note:'Example job: noisy outdoor unit.'},at(13,0,120))),
     J(6,{address:'78 Mock Blvd',service:'Heating',source:'Phone',truck:'t1',start:null,end:null,durMin:120,note:'Example job: waiting on a part.'})
   ];
   var reqs=[
-    {id:'ex-r1',example:true,status:'new',name:'Example Customer A',phone:'(216) 555-0101',address:'100 Example Way',service:'Air Conditioning',prefDay:tom,window:'morning',temp:'86\u00b0F',note:'Example request: AC runs but the house will not cool.',createdAt:'2000-01-01T00:00:00.000Z'},
+    {id:'ex-r1',example:true,status:'new',name:'Example Customer A',phone:'(216) 555-0101',address:'100 Example Way',service:'Air Conditioning',prefDay:tom,window:'morning',feeAcknowledged:true,temp:'86\u00b0F',note:'Example request: AC runs but the house will not cool.',createdAt:'2000-01-01T00:00:00.000Z'},
     {id:'ex-r2',example:true,status:'new',name:'Example Customer B',phone:'(216) 555-0102',address:'200 Sample Blvd',service:'Heating',prefDay:after,window:'afternoon',temp:'58\u00b0F',note:'Example request: no heat since last night.',createdAt:'2000-01-01T00:00:00.000Z'},
-    {id:'ex-r3',example:true,status:'new',name:'Example Customer C',phone:'(216) 555-0103',address:'300 Placeholder Ct',service:'Indoor Air Quality',prefDay:tom,window:'anytime',temp:'',note:'Example request: filter and humidity check.',createdAt:'2000-01-01T00:00:00.000Z'}
+    {id:'ex-r3',example:true,status:'new',name:'Example Customer C',phone:'(216) 555-0103',address:'300 Placeholder Ct',service:'Indoor Air Quality',prefDay:tom,window:'anytime',feeAcknowledged:true,temp:'',note:'Example request: filter and humidity check.',createdAt:'2000-01-01T00:00:00.000Z'}
   ];
   return {jobs:jobs,requests:reqs};
 }
@@ -651,6 +667,33 @@ function renderMain(){
 }
 
 function parkedJobs(){var a=[];S.jobs.forEach(function(j){if(!j.start&&!j.cancelled)a.push(j)});return a.sort(function(a,b){return (a.createdAt||'')<(b.createdAt||'')?-1:1})}
+var QLABEL={none:'Not quoted',quoted:'Quoted',approved:'Approved by customer',declined:'Declined'};
+var PAYLABEL={unpaid:'Unpaid',invoiced:'Invoiced',paid:'Paid'};
+var METHODS=['Card','Cash','Check','Housecall Pro invoice','Pay link'];
+var DEFAULT_FEE=100;
+function usd(n){n=+n||0;var cents=Math.round(n*100),w=Math.floor(cents/100),c=cents%100;return '$'+String(w).replace(/\B(?=(\d{3})+(?!\d))/g,',')+(c?'.'+(c<10?'0':'')+c:'')}
+/* money view of a job; old docs without money fields get defaults (never written until edited) */
+function M(j){
+  var fee=(typeof j.fee==='number'&&j.fee>=0)?j.fee:DEFAULT_FEE;
+  var quote=(typeof j.quote==='number'&&j.quote>=0)?j.quote:null;
+  var m={fee:fee,feeCollected:!!j.feeCollected,quote:quote,quoteStatus:j.quoteStatus||'none',payStatus:j.payStatus||'unpaid',payMethod:j.payMethod||'',payNote:j.payNote||'',paidDate:j.paidDate||null};
+  m.approved=m.quoteStatus==='approved'?(quote||0):0;
+  m.feeDue=(!m.feeCollected&&fee>0)?fee:0;
+  m.quoteDue=(m.quoteStatus==='approved'&&m.payStatus!=='paid')?m.approved:0;
+  m.due=m.feeDue+m.quoteDue;
+  m.total=fee+m.approved;
+  m.collected=(m.feeCollected?fee:0)+(m.payStatus==='paid'?m.approved:0);
+  return m;
+}
+function moneyInfo(j){
+  if(j.cancelled)return null;
+  var m=M(j);
+  if(m.quoteStatus==='quoted')return {text:'Awaiting approval',loud:true};
+  if(m.quoteDue>0)return {text:m.payStatus==='invoiced'?'Invoiced '+usd(m.quoteDue):'Balance '+usd(m.due),loud:true};
+  if(m.feeDue>0)return {text:'Fee due',loud:j.status==='done'};
+  return null;
+}
+function dayOutstanding(jobs){var t=0;jobs.forEach(function(j){if(!j.cancelled)t+=M(j).due});return t}
 function chip(cls,t){return '<span class="chip '+cls+'">'+esc(t)+'</span>'}
 function srcChip(s){return chip(s==='Website'?'accent':s==='Housecall Pro'?'info':'quiet',s||'Phone')}
 function stChip(s){return chip(s==='done'?'quiet':s==='working'?'strong':s==='enroute'?'accent':'',statusLabel(s))}
@@ -667,6 +710,8 @@ function boardHTML(){
   if(ov)sum+=' \u00b7 <span style="color:var(--warn)">'+ov+' overlapping</span>';
   if(ah)sum+=' \u00b7 <span style="color:var(--warn)">'+ah+' after hours</span>';
   if(!T.isBiz(date))sum+=' \u00b7 <span style="color:var(--warn)">weekend, outside normal hours</span>';
+  var outst=dayOutstanding(jobs);
+  if(outst>0)sum+=' \u00b7 <span class="quietamt">Outstanding '+usd(outst)+'</span>';
   html+='<div class="toolbar"><div class="summary">'+sum+'</div><button class="btn warn" data-act="rl-day"'+(jobs.length?'':' disabled')+'>Running long</button></div>';
   html+='<div class="hint">Tap an empty slot to add. Press and hold a card to drag it.</div>';
   html+=parkingHTML(parked);
@@ -696,6 +741,7 @@ function cardHTML(j,o){
   var time=j.start?T.range(js(j),je(j)):T.dur(j.durMin||60)+' \u00b7 no time yet';
   var label=(j.service||'Service call')+', '+j.address+', '+time+', '+statusLabel(j.status)+'. Opens job actions.';
   var warnChips=(ovl?chip('warn','Overlap'):'')+(ah?chip('warn','After hours'):'');
+  var mi=moneyInfo(j),moneyChip=mi?chip(mi.loud?'warn':'quiet',mi.text):'';
   var style='',attrs=' data-job="'+esc(j.id)+'" data-drag tabindex="0" role="button" aria-label="'+esc(label)+'"';
   var compact=false;
   if(o.static)cls+=' static';
@@ -709,7 +755,7 @@ function cardHTML(j,o){
   var exChip=j.example?chip('ex','Example'):'';
   var cust=[j.customer,j.phone].filter(Boolean).join(' \u00b7 ');
   if(compact){
-    inner='<div class="c-top"><span class="c-time">'+esc(T.range(js(j),je(j)))+'</span>'+(o.lanes>1?'':stChip(j.status))+warnChips+'</div>'
+    inner='<div class="c-top"><span class="c-time">'+esc(T.range(js(j),je(j)))+'</span>'+(o.lanes>1?'':stChip(j.status))+warnChips+(mi&&mi.loud?moneyChip:'')+'</div>'
       +'<div class="c-line2">'+(j.example?'Example \u00b7 ':'')+'<b>'+esc(j.service||'Service call')+'</b> \u00b7 '+esc(j.address)+'</div>';
   }else{
     inner='<div class="c-top"><span class="c-time">'+esc(time)+'</span>'+(o.static&&o.park?'':stChip(j.status))+'</div>'
@@ -717,7 +763,7 @@ function cardHTML(j,o){
       +'<div class="c-addr">'+esc(j.address)+'</div>'
       +(cust&&!(o.lanes>1)?'<div class="c-cust">'+esc(cust)+'</div>':'')
       +(o.static&&j.note?'<div class="c-cust">'+esc(j.note)+'</div>':'')
-      +'<div class="c-chips">'+(o.lanes>1?'':srcChip(j.source))+exChip+warnChips+(j.returnNeeded?chip('warn','Return booked'):'')+'</div>';
+      +'<div class="c-chips">'+(o.lanes>1?'':srcChip(j.source))+exChip+warnChips+moneyChip+(j.returnNeeded?chip('warn','Return booked'):'')+'</div>';
   }
   return '<div class="'+cls+'"'+attrs+style+'>'+inner+'</div>';
 }
@@ -822,7 +868,7 @@ function requestsHTML(){
 }
 function reqCardHTML(r){
   var w=WINDOWS[r.window]||WINDOWS.anytime;
-  var h='<article class="rcard"><div class="meta">'+chip('accent','Website request')+(r.example?chip('ex','Example'):'')+chip('',r.service||'Service')+'</div>';
+  var h='<article class="rcard"><div class="meta">'+chip('accent','Website request')+(r.example?chip('ex','Example'):'')+chip('',r.service||'Service')+chip(r.feeAcknowledged?'accent':'quiet',r.feeAcknowledged?'Fee acknowledged':'Fee not acknowledged')+'</div>';
   h+='<h3>'+esc(r.name||'Customer')+'</h3>';
   h+='<div class="line"><span>Address</span> '+esc(r.address)+'</div>';
   h+='<div class="line"><span>Phone</span> '+esc(r.phone||'not given')+'</div>';
@@ -843,7 +889,7 @@ function openSheet(s){
   var sh=$('.sheet');if(sh)sh.focus({preventScroll:true});
 }
 function closeSheet(){
-  ui.sheet=null;ui.panel=null;ui.draft=null;ui.pick=null;ui.msg=null;ui.confirmRemove=null;ui.confirmClear=false;
+  ui.mdraft={};ui.sheet=null;ui.panel=null;ui.draft=null;ui.pick=null;ui.msg=null;ui.confirmRemove=null;ui.confirmClear=false;
   $('#sheetRoot').innerHTML='';document.body.classList.remove('locked');
   if(lastFocus&&document.contains(lastFocus)&&lastFocus.focus)try{lastFocus.focus({preventScroll:true})}catch(e){}
 }
@@ -877,7 +923,7 @@ function jobSheetHTML(j){
   var ov=overlapsOf(j),ah=afterHours(j);
   var h=sheetHead(j.service||'Service call',(parked?'No time yet':T.nice(jd(j))+' \u00b7 '+T.range(js(j),je(j)))+' \u00b7 '+tk);
   h+='<div class="sheet-body">';
-  h+='<div class="sec"><p class="addr">'+esc(j.address)+'</p><div class="chiprow">'+stChip(j.status)+srcChip(j.source)+(j.example?chip('ex','Example'):'')+(ov.length?chip('warn','Overlaps '+ov.length+' job'+(ov.length>1?'s':'')):'')+(ah?chip('warn','After hours'):'')+(j.returnNeeded?chip('warn','Return visit booked'):'')+'</div>';
+  h+='<div class="sec"><p class="addr">'+esc(j.address)+'</p><div class="chiprow">'+stChip(j.status)+srcChip(j.source)+(j.example?chip('ex','Example'):'')+(j.feeAck?chip('accent','Fee acknowledged'):'')+(ov.length?chip('warn','Overlaps '+ov.length+' job'+(ov.length>1?'s':'')):'')+(ah?chip('warn','After hours'):'')+(j.returnNeeded?chip('warn','Return visit booked'):'')+'</div>';
   if(j.customer)h+='<div class="kv"><span>'+esc(j.customer)+'</span></div>';
   if(j.phone)h+='<div class="kv"><span class="num" id="jphone">'+esc(j.phone)+'</span><span class="acts"><button class="btn sm" data-act="copy" data-text="'+esc(j.phone)+'" data-sel="jphone">Copy</button><a class="btn sm ghost" href="tel:'+esc(digits(j.phone))+'">Dial</a></span></div>';
   if(j.note)h+='<p class="fine" style="font-size:14px;color:var(--muted);margin-top:8px">'+esc(j.note)+'</p>';
@@ -885,6 +931,7 @@ function jobSheetHTML(j){
 
   h+='<div class="sec"><span class="lbl">Status</span><div class="seg">'+STATUSES.map(function(s){return '<button class="pill'+(j.status===s.id?' on':'')+'" data-act="status" data-val="'+s.id+'" aria-pressed="'+(j.status===s.id)+'">'+esc(s.label)+'</button>'}).join('')+'</div></div>';
 
+  h+=moneyHTML(j);
   if(parked){
     var nx=nextOpenAny(ui.date,j.durMin||60,null,null);
     h+='<div class="sec"><span class="lbl">Put on board</span><div class="seg c2">'
@@ -909,7 +956,8 @@ function jobSheetHTML(j){
   if(ui.panel!=='msg')h+='<button class="btn" style="width:100%" data-act="panel" data-val="msg">Copy message</button>';
   else{
     var m=ui.msg||{text:'',note:''};
-    h+='<button class="btn tplbtn" data-act="tpl" data-val="omw">On our way</button><button class="btn tplbtn" data-act="tpl" data-val="late">Running about 30 minutes behind</button><button class="btn tplbtn" data-act="tpl" data-val="move">We need to move your visit to [time]</button>';
+    h+='<button class="btn tplbtn" data-act="tpl" data-val="omw">On our way</button><button class="btn tplbtn" data-act="tpl" data-val="late">Running about 30 minutes behind</button><button class="btn tplbtn" data-act="tpl" data-val="move">We need to move your visit to [time]</button>'
+      +'<button class="btn tplbtn" data-act="tpl" data-val="fee">Service call fee reminder ('+usd(M(j).fee)+', due at the visit)</button><button class="btn tplbtn" data-act="tpl" data-val="quote">Quote ready: '+(M(j).quote!=null?usd(M(j).quote):'[amount]')+', reply YES to approve</button><button class="btn tplbtn" data-act="tpl" data-val="invoice">Invoice sent, thank you</button>';
     if(m.text||m.note){
       h+='<textarea class="input" id="msgtext" rows="4" style="margin-top:8px" aria-label="Message text">'+esc(m.text)+'</textarea><div class="trow" style="align-items:center"><button class="btn sm" data-act="copy-msg">Copy again</button><span class="'+(m.fail?'err':'copied')+'" role="status">'+esc(m.note)+'</span></div>';
     }
@@ -921,6 +969,38 @@ function jobSheetHTML(j){
   h+='<div class="sec"><span class="lbl">More</span><div class="seg c3"><button class="pill" data-act="edit">Edit details</button><button class="pill" data-act="return">Needs return visit</button><button class="pill warn" data-act="cancel">Cancel job</button></div></div>';
   h+='</div>';
   return h;
+}
+
+function mval(id,cur){return (ui.mdraft&&ui.mdraft[id]!==undefined)?ui.mdraft[id]:(cur==null?'':String(cur))}
+function mpill(k,v,label,on){return '<button class="pill" data-act="mset" data-k="'+k+'" data-v="'+esc(v)+'" aria-pressed="'+on+'">'+esc(label)+'</button>'}
+function moneyHTML(j){
+  var m=M(j),open=ui.moneyOpen;
+  var parts=[m.fee===0?'Fee waived':'Fee '+usd(m.fee)+(m.feeCollected?' collected':' due')];
+  if(m.quoteStatus!=='none')parts.push('Quote '+(m.quote!=null?usd(m.quote)+' ':'')+QLABEL[m.quoteStatus].toLowerCase());
+  if(m.payStatus!=='unpaid')parts.push(PAYLABEL[m.payStatus].toLowerCase());
+  parts.push(m.due>0?'balance '+usd(m.due):'no balance');
+  var h='<div class="sec"><button class="moneybar" data-act="money-toggle" aria-expanded="'+open+'"><span class="msum"><b>Money</b>'+esc(parts.join(' \u00b7 '))+'</span><span class="go">'+(open?'hide':'edit')+'</span></button>';
+  var help='';
+  if(m.feeDue>0)help+='<button class="btn sm" data-act="money-collect">Collect fee</button>';
+  if(m.quoteStatus==='quoted')help+='<button class="btn sm" data-act="money-approve">Quote approved</button>';
+  if(m.payStatus!=='paid'&&(m.quoteStatus==='approved'||m.payStatus==='invoiced'))help+='<button class="btn sm" data-act="money-paid">Mark paid</button>';
+  if(help)h+='<div class="hgrid">'+help+'</div>';
+  if(open){
+    h+='<div class="mbody">';
+    h+='<div class="mrow"><span class="lbl">Service call fee <em>0 = waived</em></span><div class="amt"><span>$</span><input class="input" id="m-fee" type="number" inputmode="decimal" min="0" step="any" value="'+esc(mval('m-fee',m.fee))+'" aria-label="Service call fee in dollars"></div><div class="pills">'+mpill('feeCollected','false','Not collected',!m.feeCollected)+mpill('feeCollected','true','Collected',m.feeCollected)+'<button class="pill" data-act="mset" data-k="waive" data-v="0" aria-pressed="'+(m.fee===0)+'">Waive fee</button></div></div>';
+    h+='<div class="mrow"><span class="lbl">Quote <em>optional</em></span><div class="amt"><span>$</span><input class="input" id="m-quote" type="number" inputmode="decimal" min="0" step="any" placeholder="Amount" value="'+esc(mval('m-quote',m.quote))+'" aria-label="Quote in dollars"></div><div class="pills">'+['none','quoted','approved','declined'].map(function(q){return mpill('quoteStatus',q,QLABEL[q],m.quoteStatus===q)}).join('')+'</div></div>';
+    h+='<div class="mrow"><span class="lbl">Final payment</span><div class="pills">'+['unpaid','invoiced','paid'].map(function(q){return mpill('payStatus',q,PAYLABEL[q],m.payStatus===q)}).join('')+'</div><div class="pills" style="margin-top:6px">'+METHODS.map(function(x){return mpill('payMethod',x,x,m.payMethod===x)}).join('')+'</div><input class="input" id="m-note" type="text" style="margin-top:8px" placeholder="Payment note (optional)" aria-label="Payment note" value="'+esc(mval('m-note',m.payNote))+'">'+(m.payStatus==='paid'&&m.paidDate?'<p class="fine">Paid '+esc(T.day(m.paidDate))+'</p>':'')+'</div>';
+    h+='<div class="mtotal">Total <b>'+usd(m.total)+'</b> (fee '+usd(m.fee)+(m.approved?' + approved quote '+usd(m.approved):'')+')<br>Collected <b>'+usd(m.collected)+'</b> \u00b7 Balance due <b>'+usd(m.due)+'</b></div></div>';
+  }
+  return h+'</div>';
+}
+function mset(j,patch,msg){
+  var cur=M(j),changed=false;
+  Object.keys(patch).forEach(function(k){if(cur[k]!==patch[k])changed=true});
+  if(!changed)return false;
+  var n=Object.assign({},j,patch);
+  if('payStatus' in patch)n.paidDate=patch.payStatus==='paid'?T.today():null;
+  return commit([jobChange(n)],msg||null);
 }
 
 /* ---- add / edit sheet ---- */
@@ -940,7 +1020,7 @@ function openAdd(o){
       if(best){time=best.time;truck=best.truck}
       else{time=o.range?o.range.a:DAY_START;truck=truck||(ui.truck||S.trucks[0].id)}
     }
-    d={editing:false,address:o.address||'',service:o.service||'',note:o.note||'',date:date,time:time,dur:dur,truck:truck||S.trucks[0].id,source:o.source||'Phone',name:o.name||'',phone:o.phone||'',parked:!!o.parked,req:o.req||null,dirtyFlag:!!o.req};
+    d={editing:false,address:o.address||'',service:o.service||'',note:o.note||'',date:date,time:time,dur:dur,truck:truck||S.trucks[0].id,source:o.source||'Phone',name:o.name||'',phone:o.phone||'',parked:!!o.parked,req:o.req||null,feeAck:!!o.feeAck,dirtyFlag:!!o.req};
   }
   ui.draft=d;
   openSheet({type:'add'});
@@ -955,7 +1035,7 @@ function addSheetHTML(){
   h+='<div class="sheet-body">';
   if(r){
     var w=WINDOWS[r.window]||WINDOWS.anytime;
-    h+='<div class="banner"><b>Website request</b>'+(r.example?' (example)':'')+': wants '+esc(r.prefDay?T.nice(r.prefDay):'any day')+', '+esc(w.l.toLowerCase())+'.'+(r.temp?' Indoor temp '+esc(r.temp)+'.':'')+' Suggested the first open slot.</div>';
+    h+='<div class="banner"><b>Website request</b>'+(r.example?' (example)':'')+': wants '+esc(r.prefDay?T.nice(r.prefDay):'any day')+', '+esc(w.l.toLowerCase())+'.'+(r.temp?' Indoor temp '+esc(r.temp)+'.':'')+(r.feeAcknowledged?' Customer acknowledged the service call fee.':' Fee not acknowledged yet.')+' Suggested the first open slot.</div>';
   }
   h+='<div class="fld"><label class="lbl" for="f-addr">Address <em>required</em></label><input class="input" id="f-addr" type="text" autocomplete="street-address" enterkeyhint="done" placeholder="Street address" value="'+esc(d.address)+'"><div class="err" id="f-addr-err" role="alert"></div></div>';
   h+='<div class="fld"><span class="lbl">What</span>'+pillGroup('service',SERVICES.map(function(s){return {v:s,l:s}}),d.service)+'<textarea class="input" id="f-note" rows="2" style="margin-top:8px" placeholder="Note (optional): what is wrong, gate code, etc." aria-label="Note">'+esc(d.note)+'</textarea></div>';
@@ -999,7 +1079,7 @@ function saveDraft(){
   job.truck=d.truck;
   if(d.parked){job.start=null;job.end=null;job.durMin=d.dur}
   else Object.assign(job,times(d.date,d.time,d.dur));
-  if(d.req){job.requestId=d.req.id}
+  if(d.req){job.requestId=d.req.id;job.feeAck=!!d.req.feeAcknowledged}
   var changes=[jobChange(job)];
   if(d.req)changes.push({coll:'requests',id:d.req.id,after:Object.assign({},d.req,{status:'placed',jobId:job.id})});
   var msg=d.editing?'Saved changes':d.parked?'Parked: '+(job.service||'job'):'Added '+(job.service||'job')+' '+T.range(js(job),je(job))+', '+truckName(job.truck);
@@ -1118,6 +1198,9 @@ function msgText(j,kind){
     var t=j.start?' Your new arrival time is around '+T.time(js(j)+30)+'.':'';
     return hi+' We\u2019re running about 30 minutes behind for your visit at '+j.address+'.'+t+' Sorry for the wait.';
   }
+  if(kind==='fee')return hi+' A reminder that our service call fee is '+usd(M(j).fee)+', due at the visit to '+j.address+'.';
+  if(kind==='quote'){var q=M(j).quote;return hi+' Your quote for '+j.address+' is ready: '+(q!=null?usd(q):'[amount]')+'. Reply YES to approve.'}
+  if(kind==='invoice')return hi+' We sent your invoice for '+j.address+'. Thank you!';
   var when=j.start?T.nice(jd(j))+' at '+T.time(js(j)):'[time]';
   return hi+' We need to move your visit at '+j.address+' to '+when+'. Does that work for you?';
 }
@@ -1218,11 +1301,24 @@ var ACT={
     });
   },
   'edit':function(){var j=jobOf(ui.sheet.id);if(!j)return;closeSheet();openAdd({job:j})},
+  'money-toggle':function(){ui.moneyOpen=!ui.moneyOpen;renderSheet()},
+  'mset':function(el){
+    var j=jobOf(ui.sheet.id);if(!j)return;
+    var k=el.dataset.k,v=el.dataset.v,p={};
+    if(k==='feeCollected')v=(v==='true');
+    else if(k==='waive'){k='fee';v=0}
+    else if(k==='payMethod'&&M(j).payMethod===v)v='';
+    p[k]=v;mset(j,p);
+  },
+  'money-collect':function(){var j=jobOf(ui.sheet.id);if(!j)return;var f=M(j).fee;closeSheet();mset(j,{feeCollected:true},'Fee collected '+usd(f))},
+  'money-approve':function(){var j=jobOf(ui.sheet.id);if(!j)return;closeSheet();mset(j,{quoteStatus:'approved'},'Quote approved')},
+  'money-paid':function(){var j=jobOf(ui.sheet.id);if(!j)return;closeSheet();mset(j,{payStatus:'paid'},'Marked paid')},
   'return':function(){
     var j=jobOf(ui.sheet.id);if(!j)return;
     var base=j.start?jd(j):ui.date,d=T.nextBiz(base);
     var copy=Object.assign({},j,{id:uid('j'),status:'scheduled',returnNeeded:false,cancelled:false,createdAt:new Date().toISOString(),note:(j.note?j.note+' ':'')+'Return visit.'});
     delete copy.requestId;
+    ['fee','feeCollected','quote','quoteStatus','payStatus','payMethod','payNote','paidDate','feeAck'].forEach(function(k){delete copy[k]});
     if(j.start)Object.assign(copy,times(d,js(j),j.durMin));
     var orig=Object.assign({},j,{status:'done',returnNeeded:true});
     closeSheet();
@@ -1296,7 +1392,7 @@ var ACT={
     var date=r.prefDay&&r.prefDay>=T.today()?r.prefDay:T.today();
     var service=SERVICES.indexOf(r.service)>=0?r.service:'';
     var note=[r.note,r.temp?'Indoor temp '+r.temp+'.':''].filter(Boolean).join(' ');
-    openAdd({req:r,address:r.address,service:service,note:note,name:r.name,phone:r.phone,source:'Website',date:date,range:w,dur:60});
+    openAdd({req:r,feeAck:!!r.feeAcknowledged,address:r.address,service:service,note:note,name:r.name,phone:r.phone,source:'Website',date:date,range:w,dur:60});
   }
 };
 
@@ -1345,7 +1441,7 @@ document.addEventListener('click',function(e){
   if(act){
     var fn=ACT[act.dataset.act];
     if(fn){
-      if(S.readOnly&&/^(add|add-truck-col|add-gap|rl-day|status|shift|tomorrow|park|set-truck|pick-apply|unpark-next|runlong|return|cancel|edit|save|req-place|req-decline|req-restore|restore|delete-job|clear-yes|add-truck|remove-truck-yes)$/.test(act.dataset.act)){toast('View only: you can\u2019t change the board.');return}
+      if(S.readOnly&&/^(add|add-truck-col|add-gap|rl-day|status|money-collect|money-approve|money-paid|mset|shift|tomorrow|park|set-truck|pick-apply|unpark-next|runlong|return|cancel|edit|save|req-place|req-decline|req-restore|restore|delete-job|clear-yes|add-truck|remove-truck-yes)$/.test(act.dataset.act)){toast('View only: you can\u2019t change the board.');return}
       fn(act,e);return;
     }
   }
@@ -1356,7 +1452,7 @@ document.addEventListener('click',function(e){
     openAdd({truck:col.dataset.truck,time:Math.max(0,mins),date:ui.date});
   }
 });
-function openSheetForJob(id){if(!S.jobs.get(id))return;ui.panel=null;ui.msg=null;ui.pick=null;openSheet({type:'job',id:id})}
+function openSheetForJob(id){if(!S.jobs.get(id))return;ui.moneyOpen=false;ui.mdraft={};ui.panel=null;ui.msg=null;ui.pick=null;openSheet({type:'job',id:id})}
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape'&&ui.sheet){closeSheet();return}
   if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('[data-job]')){e.preventDefault();openSheetForJob(e.target.dataset.job);return}
@@ -1381,12 +1477,23 @@ document.addEventListener('input',function(e){
     else if(el.id==='f-time'||el.id==='f-date'){readDraftFields();updateWarn()}
   }
   if(el.id==='msgtext'&&ui.msg)ui.msg.text=el.value;
+  if(el.id==='m-fee'||el.id==='m-quote'||el.id==='m-note')ui.mdraft[el.id]=el.value;
   if(el.id==='p-date'||el.id==='p-time')readPick();
   if(el.id==='datePick'&&/^\d{4}-\d{2}-\d{2}$/.test(el.value))gotoDate(el.value);
 });
 document.addEventListener('change',function(e){
   var el=e.target;
   if(el.id==='datePick'&&/^\d{4}-\d{2}-\d{2}$/.test(el.value)){gotoDate(el.value);return}
+  if((el.id==='m-fee'||el.id==='m-quote'||el.id==='m-note')&&ui.sheet&&ui.sheet.type==='job'){
+    var mj=jobOf(ui.sheet.id);delete ui.mdraft[el.id];
+    if(!mj)return;
+    var mp={},num=parseFloat(el.value);
+    if(el.id==='m-fee')mp.fee=isNaN(num)||num<0?0:Math.round(num*100)/100;
+    else if(el.id==='m-quote')mp.quote=isNaN(num)||num<0?null:Math.round(num*100)/100;
+    else mp.payNote=el.value.trim();
+    if(!mset(mj,mp))renderSheet();
+    return;
+  }
   if(el.dataset&&el.dataset.truckName){
     var v=el.value.trim()||'Truck',id=el.dataset.truckName;
     var cur=S.trucks.filter(function(t){return t.id===id})[0];

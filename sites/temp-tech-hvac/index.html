@@ -244,6 +244,11 @@ nav a.btn:hover{background:var(--accent-hi)}
 .faq .ans{padding:0 0 var(--s3);color:#cdd8e3;max-width:60ch}
 .faq .ans p{margin:0}
 .call-block{display:inline-flex;align-items:center;min-height:48px}
+.fee-note{color:var(--muted);margin:var(--s2) 0 0}
+.fee-short{margin:12px 0 0;color:var(--sand-soft)}
+.chk{display:flex;gap:12px;align-items:flex-start;min-height:48px;padding:10px 0;cursor:pointer}
+.chk input{width:24px;height:24px;margin:2px 0 0;flex:none;accent-color:var(--accent);cursor:pointer}
+.btn:disabled{opacity:.45;cursor:not-allowed}
 
 /* Closing request panel */
 .contact{max-width:var(--measure);margin:0 auto;text-align:center}
@@ -615,7 +620,8 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
       <details><summary>What if I have no heat or no cooling?</summary><div class="ans"><p>Call us directly rather than using the form. We try to accommodate all emergency needs as soon as possible.</p><p><a class="call-block" href="tel:+12162132622">Call (216) 213-2622</a></p></div></details>
       <details><summary>Where do you work?</summary><div class="ans"><p>We are based in North Ridgeville and work throughout Northeast Ohio. Not sure we cover your address? Call and we will tell you.</p></div></details>
       <details><summary>Do you work on homes and businesses?</summary><div class="ans"><p>Both. We are capable of any residential and commercial HVAC need.</p></div></details>
-      <details><summary>Do you offer estimates, and how is pricing handled?</summary><div class="ans"><p>Estimates are free on a complete system replacement. For all work, we explain your options and the pricing before work begins.</p></div></details>
+      <details><summary>Do you offer estimates, and how is pricing handled?</summary><div class="ans"><p>Estimates are free on a complete system replacement. For repairs, we explain the price and get your approval before work begins.</p></div></details>
+      <details><summary>What is the service call fee?</summary><div class="ans"><p>A <span data-fee>$100</span> service call fee covers the visit and diagnosis. We explain any repair cost and get your approval before work begins.</p></div></details>
       <details><summary>Why does maintenance matter?</summary><div class="ans"><p>Regular maintenance helps heating and cooling equipment run efficiently year-round, and it is a good moment to spot small issues before they grow.</p></div></details>
     </div>
   </div>
@@ -632,7 +638,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
         <a class="text-link" href="tel:+12162132622">Prefer to talk? (216) 213-2622</a>
       </div>
       <p class="nojs-only">Online requests need JavaScript. Please call or email us.</p>
-      <p>Day or night we handle emergency calls as a top priority.</p>
+      <p>Day or night we handle emergency calls as a top priority. Service call fee: <span data-fee>$100</span>.</p>
       <p class="note">Demo: the request form does not send anything yet.</p>
     </div>
   </div>
@@ -807,9 +813,11 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
             <label class="choice emerg"><input type="radio" name="service" value="Emergency" data-key="emerg"><span class="box">Emergency &mdash; call now</span></label>
           </div>
         </fieldset>
+        <p class="fee-note">A <span data-fee>$100</span> service call fee covers the visit and diagnosis. We explain any repair cost and get your approval before work begins.</p>
         <div class="emerg-box" id="emerg" hidden>
           <p>Day or night we handle emergency calls as a top priority. Please call us directly.</p>
           <a class="btn" href="tel:+12162132622">Call (216) 213-2622</a>
+          <p class="fee-short">Service call fee: <span data-fee>$100</span>.</p>
         </div>
         <p class="err" role="alert" id="err1"></p>
       </div>
@@ -836,6 +844,9 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
         <div class="fld"><label for="fPhone">Phone</label><input id="fPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="next" required aria-describedby="ePhone"><p class="err" id="ePhone"></p></div>
         <div class="fld"><label for="fAddr">Address or ZIP code</label><input id="fAddr" name="addr" autocomplete="street-address" autocapitalize="words" enterkeyhint="next" required aria-describedby="eAddr"><p class="err" id="eAddr"></p></div>
         <div class="fld"><label for="fNote">Note <span class="opt">(optional)</span></label><textarea id="fNote" name="note" autocomplete="off" autocapitalize="sentences" enterkeyhint="done"></textarea></div>
+        <p class="fee-note">A <span data-fee>$100</span> service call fee covers the visit and diagnosis. We explain any repair cost and get your approval before work begins.</p>
+        <label class="chk"><input type="checkbox" id="fFee"><span>I understand there is a <span data-fee>$100</span> service call fee.</span></label>
+        <p class="err" id="eFee"></p>
         <p class="err" role="alert" id="errSubmit"></p>
       </div>
 
@@ -867,6 +878,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
      client's site; everything else is a default guess the OWNER MUST CONFIRM.
      ===================================================================== */
   var BOOKING_ENDPOINT='';        /* '' = demo mode: nothing is sent. Set to a URL to POST requests as JSON. */
+  var SERVICE_CALL_FEE_USD=100;   /* REAL: the $100 service call (show-up) fee. The one place the number lives; [data-fee] spans are filled from it. */
   var FEEDBACK_ENDPOINT='';       /* '' = demo mode: private review feedback is not sent. Set to a URL to POST it as JSON. */
   var AVAILABILITY_ENDPOINT='';   /* '' = none. Optional GET returning {"requests":[{"day":"2026-10-05","window":"morning"}, ...]} */
   var AVAILABILITY={
@@ -963,6 +975,8 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   window.TempTechScheduling={AVAILABILITY:AVAILABILITY,getSlots:getSlots,setRequests:setRequests,loadRequests:loadRequests,submitBooking:submitBooking,
     setEndpoints:function(o){if(o&&typeof o.feedback==='string')FEEDBACK_ENDPOINT=o.feedback;if(o&&typeof o.booking==='string')BOOKING_ENDPOINT=o.booking;if(o&&typeof o.availability==='string')AVAILABILITY_ENDPOINT=o.availability}};
 
+  document.querySelectorAll('[data-fee]').forEach(function(e){e.textContent='$'+SERVICE_CALL_FEE_USD});
+
   /* ---------- mobile menu ---------- */
   var mbtn=document.getElementById('menuBtn'),nav=document.getElementById('nav');
   function menu(o){nav.classList.toggle('open',o);mbtn.setAttribute('aria-expanded',o)}
@@ -1036,7 +1050,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     ctxBox.hidden=!(ctxOn&&(n===2||n===3));
     back.hidden=(n===1||n===4);
     next.hidden=(n===4)||(n===1&&val('service')==='Emergency');
-    next.disabled=false;
+    next.disabled=(n===3&&!document.getElementById('fFee').checked);
     next.textContent=n===1?'Next':n===2?'Next':'Send request';
     if(n===4){back.hidden=false;back.textContent='Start over';next.hidden=false;next.textContent='Done'}else{back.textContent='Back'}
     if(focus!==false){var h=steps[n-1].querySelector('h3');if(h)h.focus({preventScroll:true})}
@@ -1062,6 +1076,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     }
     if(n===3){
       var first=null;
+      if(!document.getElementById('fFee').checked){document.getElementById('eFee').textContent='Please tick the box to confirm you understand the service call fee.';return false}
       if(!document.getElementById('fName').value.trim())first=bad('fName','eName','Please enter your name.');
       if(document.getElementById('fPhone').value.replace(/\D/g,'').length<10){var p=bad('fPhone','ePhone','Please enter a 10-digit phone number.');first=first||p}
       if(!document.getElementById('fAddr').value.trim()){var a=bad('fAddr','eAddr','Please enter your address or ZIP code.');first=first||a}
@@ -1074,7 +1089,8 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     var c=ctxState(),indoor=indoorValue(),p={
       service:val('service'),serviceId:serviceKey(),day:val('day'),window:val('window'),timezone:AVAILABILITY.timezone,
       name:document.getElementById('fName').value.trim(),phone:document.getElementById('fPhone').value.trim(),
-      address:document.getElementById('fAddr').value.trim(),note:document.getElementById('fNote').value.trim()
+      address:document.getElementById('fAddr').value.trim(),note:document.getElementById('fNote').value.trim(),
+      feeAcknowledged:true,serviceCallFeeUsd:SERVICE_CALL_FEE_USD
     };
     if(indoor!==null&&!isNaN(indoor))p.indoorTempF=indoor;
     if(c.outdoor!==null&&c.outdoor!==undefined)p.outdoorTempF=c.outdoor;
@@ -1084,6 +1100,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     var wl=p.window,dd=currentDay();if(dd)dd.windows.forEach(function(w){if(w.id===p.window)wl=w.label});
     var rows=[['Service',p.service],['Preferred day',fmtDay(p.day,{weekday:'long',month:'long',day:'numeric'})],['Preferred window',wl],['Name',p.name],['Phone',p.phone],['Address / ZIP',p.address]];
     if(p.note)rows.push(['Note',p.note]);
+    rows.push(['Service call fee','$'+p.serviceCallFeeUsd+', due at the visit. Any repair is quoted and approved by you first.']);
     if(p.indoorTempF!==undefined)rows.push(['Indoor temperature',p.indoorTempF+'°F (reported)']);
     if(p.outdoorTempF!==undefined)rows.push(['Outside, Cleveland',p.outdoorTempF+'°F (live reading)']);
     var dl=document.getElementById('sum');dl.innerHTML='';
@@ -1125,6 +1142,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     if(e.target.name==='day'){renderWindows();document.getElementById('err2').textContent=''}
     if(e.target.name==='window')document.getElementById('err2').textContent='';
   });
+  document.getElementById('fFee').addEventListener('change',function(){if(step===3&&!submitting)next.disabled=!this.checked;if(this.checked)document.getElementById('eFee').textContent=''});
   document.getElementById('ctxRemove').addEventListener('click',function(){ctxOn=false;fIndoor.value='';ctxBox.hidden=true;document.getElementById('eIndoor').textContent=''});
   /* pointer/touch picks (click detail > 0) move on automatically; keyboard users use Next */
   form.addEventListener('click',function(e){
@@ -1240,7 +1258,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     var act=el('div','rv-actions');
     var lb=el('button','btn btn-primary','Leave a review');lb.type='button';lb.setAttribute('data-review','');act.appendChild(lb);
     var pu=profUrl();
-    if(pu){var a=el('a','phone-link','See all reviews on Google');a.href=pu;a.target='_blank';a.rel='noopener noreferrer';act.appendChild(a)}
+    if(pu){var a=el('a','text-link','See all reviews on Google');a.href=pu;a.target='_blank';a.rel='noopener noreferrer';act.appendChild(a)}
     body.appendChild(act);
     body.appendChild(el('p','rv-fine','Reviews from Google. Shown as written.'));
   }
