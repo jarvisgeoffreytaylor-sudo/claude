@@ -1,6 +1,6 @@
 # Adding photos to the gallery
 
-The "Recent installs" section appears on the site only when there is at least one photo. With no photos there is no section, no gallery link and no empty frame.
+The "Recent installs" section sits right under the reviews panel and appears on the site only when there is at least one photo. With no photos there is no section, no gallery link and no empty frame.
 
 ## Three steps
 

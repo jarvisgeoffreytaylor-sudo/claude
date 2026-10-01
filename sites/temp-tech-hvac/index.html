@@ -599,7 +599,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   </div>
 </div>
 
-<!-- REVIEWS (real Google data only; see REVIEWS_CONFIG in the head) -->
+<!-- REVIEWS (real Google data only; see REVIEWS_CONFIG in the head). The photo gallery section, when photos exist, is inserted directly below this panel by script. -->
 <section class="sec tight" id="reviews">
   <div class="wrap">
    <div class="rv-panel reveal">
@@ -1662,7 +1662,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     });
     stage.addEventListener('pointercancel',function(){sw=null});
 
-    var faq=document.getElementById('faq');faq.parentNode.insertBefore(sec,faq);
+    var rev=document.getElementById('reviews');rev.parentNode.insertBefore(sec,rev.nextSibling);   /* directly under the reviews panel */
     var faqLi=[].slice.call(document.querySelectorAll('#nav li')).filter(function(li){return li.querySelector('a[href="#faq"]')})[0];
     if(faqLi){var li=el('li'),a=el('a','','Gallery');a.href='#gallery';li.appendChild(a);faqLi.parentNode.insertBefore(li,faqLi)}
   }
