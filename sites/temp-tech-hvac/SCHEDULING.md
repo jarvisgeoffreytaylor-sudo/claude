@@ -67,3 +67,11 @@ Helpers on `window.TempTechScheduling`: `getSlots(config, serviceId, now)` (pure
 ## Content to confirm before launch
 
 Service descriptions, FAQ answers, the "How we work" principles, service area wording, hours, and the insurance wording ($1.5 million coverage). Do not claim "licensed" or "bonded" until the client supplies licence details.
+
+## Google reviews and the customer review flow
+
+- `window.REVIEWS_CONFIG` (its own commented `<script>` in the `<head>`) holds **real** Google data only: `googleWriteReviewUrl` (`https://search.google.com/local/writereview?placeid=PLACE_ID`, owner supplies the Place ID), `googleProfileUrl`, `aggregate:{rating,count}` and `reviews:[{author, rating, text, dateISO, sourceUrl?}]`.
+- Copy reviews in exactly as written on Google, with the real rating, and do not cherry-pick in a misleading way. Leave everything empty until real data exists: the page then shows a calm "Tell us how we did" block with the review button, and no stars, no counts and no `aggregateRating` structured data.
+- If `googleWriteReviewUrl` is empty, the button falls back to a Google Maps search for the business, so it still works.
+- "Leave a review" opens a 3-step sheet (comfort rating, details, share). The customer's text is copied to the clipboard and Google's review page opens in a new tab. Customer-typed reviews are never shown on this site.
+- Private feedback is offered to everyone, whatever their rating; the Google option is never hidden or routed by rating (Google forbids review gating), and no incentives may be offered. Private feedback posts JSON to `FEEDBACK_ENDPOINT` (empty = demo, nothing sent): `{rating, service?, stoodOut?, message, name?, contact?, source, submittedAt}`.

@@ -148,7 +148,7 @@ nav a.btn:hover{background:var(--accent-hi)}
 }
 
 /* Hero + thermostat */
-.hero{background:linear-gradient(180deg,var(--bg),var(--hero-b));padding:clamp(40px,6vw,96px) 0 clamp(56px,8vw,112px);position:relative;overflow:hidden;display:grid;align-items:center;min-height:clamp(0px,80dvh,860px)}
+.hero{background:linear-gradient(180deg,var(--bg),var(--hero-b));padding:clamp(40px,6vw,96px) 0 clamp(56px,8vw,112px);position:relative;overflow:hidden;display:grid;align-items:center;min-height:clamp(0px,74dvh,780px)}
 .hero-grid{display:grid;gap:clamp(32px,5vw,48px);grid-template-areas:"copy" "dial"}
 .hero-copy{grid-area:copy;text-align:center}.dial-wrap{grid-area:dial}
 @media(min-width:920px){
@@ -159,6 +159,7 @@ nav a.btn:hover{background:var(--accent-hi)}
 .hero h1{margin-bottom:.45em}
 .hero p.lead{font-size:clamp(1.05rem,1rem + .5vw,1.25rem);color:#cdd8e3;max-width:46ch;margin:0 auto 34px}
 .hero .actions{display:flex;flex-wrap:wrap;gap:6px 24px;align-items:center;justify-content:center}
+@media(min-width:920px){.hero p.lead{margin-inline:0}.hero .actions{justify-content:flex-start}}
 .phone-link{display:inline-flex;align-items:center;min-height:48px;color:var(--text);font-size:1rem;text-decoration:underline;text-decoration-color:rgba(255,255,255,.35);text-underline-offset:6px;line-height:1.2}
 .phone-link:hover{text-decoration-color:#fff;color:#fff}
 .dial-wrap{display:none;justify-items:center;gap:18px}
@@ -185,7 +186,7 @@ nav a.btn:hover{background:var(--accent-hi)}
 .dial .cap{font-family:var(--font-body);font-size:11.5px;fill:#aebccb;letter-spacing:.04em}
 .dial:focus-visible{outline:none}
 .dial.kb:focus-visible .face{stroke:var(--focus);stroke-width:4}
-.live-row{display:flex;flex-direction:column;align-items:center;gap:10px;min-height:26px;text-align:center}
+.live-row{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:10px;min-height:84px;text-align:center}   /* reserves room for the label + 'Back to Cleveland now' so the dial never shifts under a finger */
 .live-label{margin:0;display:flex;align-items:center;gap:9px;font-size:1rem;color:#c3cfdb}
 .ldot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);flex:none;animation:ping 2.4s ease-out infinite}
 .ldot.off{background:#8393a4;animation:none}
@@ -391,13 +392,11 @@ dialog#review{--cr-rgb:134,184,178}
   h1{font-size:clamp(1.6rem,7vh,2.1rem)}
   .tagline{margin-bottom:10px}
   .hero p.lead{font-size:1rem;margin-bottom:18px}
-  .live-row{min-height:0}
   .sec{padding:56px 0}
 }
 @media(min-width:700px) and (max-height:500px){
   .hero-grid{grid-template-columns:1.1fr .9fr;grid-template-areas:"copy dial";align-items:center;column-gap:36px}
   .dial{width:min(240px,62vh)}
-  .dial-msg{min-height:0}
 }
 
 /* Reveal */
