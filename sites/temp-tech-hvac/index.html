@@ -4,17 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Temp Tech Heating &amp; Cooling | HVAC Service &amp; Installation in North Ridgeville, Ohio</title>
-<meta name="description" content="Temp Tech Heating &amp; Cooling provides HVAC service and installation based in North Ridgeville, Ohio. Call (216) 213-2622 or request a quote.">
-<meta name="theme-color" content="#2b2f36">
+<meta name="description" content="Temp Tech Heating &amp; Cooling provides HVAC service and installation based in North Ridgeville, Ohio. Call (216) 213-2622 or schedule a visit.">
+<meta name="theme-color" content="#0e1a28">
+<script>document.documentElement.className='js';</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HVACBusiness",
   "name": "Temp Tech Heating & Cooling",
   "slogan": "Service & Installation",
+  "areaServed": "Northeast Ohio",
   "telephone": "+12162132622",
   "email": "TempTechCle@gmail.com",
   "address": { "@type": "PostalAddress", "addressLocality": "North Ridgeville", "addressRegion": "OH", "addressCountry": "US" },
@@ -27,158 +29,273 @@
 </script>
 <style>
 :root{
-  --blue:#1a73e8; --blue-dark:#1558b0;
-  --orange:#f28c28; --green:#3a9d4a; --maroon:#7a1f2b;
-  --charcoal:#2b2f36; --ink:#1f2328; --muted:#5b6470;
-  --bg:#ffffff; --soft:#f3f6fa; --line:#dde3ea;
-  --radius:14px;
+  --bg:#0e1a28; --bg2:#122234; --bg3:#0a121d;
+  --surface:#17293d; --surface2:#1e3450;
+  --line:rgba(255,255,255,.11);
+  --text:#e8eef5; --muted:#a9b9ca;
+  --teal:#5cc2ba; --teal-hi:#7ed3cc; --ink-on-teal:#06222a;
+  --amber:#f2b25c; --amber-soft:#f5d9a6;
+  --radius:18px;
   --font-head:"Poppins",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --font-body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --ease:cubic-bezier(.22,.8,.3,1);
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:72px}
-body{margin:0;font-family:var(--font-body);color:var(--ink);background:var(--bg);line-height:1.6;padding-bottom:68px;-webkit-text-size-adjust:100%}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;font-family:var(--font-body);font-size:1.0625rem;color:var(--text);background:var(--bg);line-height:1.65;padding-bottom:78px;-webkit-text-size-adjust:100%}
 img,svg{max-width:100%}
-a{color:var(--blue-dark)}
-h1,h2,h3{font-family:var(--font-head);line-height:1.2;margin:0 0 .5em;color:var(--charcoal)}
-h1{font-size:clamp(2rem,7vw,3.4rem);font-weight:800}
-h2{font-size:clamp(1.6rem,5vw,2.3rem);font-weight:700}
-h3{font-size:1.15rem;font-weight:600}
+a{color:var(--teal-hi)}
+h1,h2,h3{font-family:var(--font-head);line-height:1.15;margin:0 0 .5em;color:#fff;font-weight:600}
+h1{font-size:clamp(2.3rem,6.4vw,4rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.8rem,4.6vw,2.8rem);letter-spacing:-.01em}
+h3{font-size:1.2rem}
 p{margin:0 0 1em}
-.wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 20px}
-section{padding:64px 0}
-.eyebrow{font-family:var(--font-head);font-weight:600;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:.6em;display:block}
-.section-head{max-width:640px;margin-bottom:36px}
-.skip{position:absolute;left:-999px;top:0;background:#fff;padding:10px 14px;z-index:100}
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 22px}
+.sec{padding:clamp(64px,10vw,112px) 0}
+.alt{background:var(--bg2)}
+.eyebrow{font-family:var(--font-head);font-weight:600;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:.9em;display:block}
+.section-head{max-width:680px;margin-bottom:clamp(32px,5vw,52px)}
+.section-head p{color:var(--muted);font-size:1.12rem}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-999px;top:0;background:#fff;color:#000;padding:10px 14px;z-index:200}
 .skip:focus{left:8px;top:8px}
-:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.js-only{display:none}.js .js-only{display:block}.js .nojs-only{display:none}
 
 /* Buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--font-head);font-weight:600;font-size:1rem;text-decoration:none;border:2px solid transparent;border-radius:999px;padding:13px 26px;cursor:pointer;transition:background .15s,transform .15s;min-height:48px}
-.btn-primary{background:var(--blue);color:#fff}
-.btn-primary:hover{background:var(--blue-dark)}
-.btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}
-.btn-ghost:hover{background:rgba(255,255,255,.12)}
-.btn-outline{border-color:var(--blue);color:var(--blue-dark);background:#fff}
-.btn-outline:hover{background:var(--soft)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--font-head);font-weight:600;font-size:1rem;text-decoration:none;border:2px solid transparent;border-radius:999px;padding:13px 28px;cursor:pointer;transition:background .2s,transform .2s var(--ease),border-color .2s;min-height:52px;line-height:1.2;text-align:center}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--teal);color:var(--ink-on-teal)}
+.btn-primary:hover{background:var(--teal-hi)}
+.btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.07)}
+.btn svg{flex:none}
 
 /* Header */
-header.site{position:sticky;top:0;z-index:50;background:var(--charcoal);color:#fff;box-shadow:0 2px 10px rgba(0,0,0,.2)}
-.bar{display:flex;align-items:center;justify-content:space-between;height:64px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff}
+header.site{position:sticky;top:0;z-index:50;background:rgba(14,26,40,.88);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:68px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:#fff}
 .brand svg{width:40px;height:40px;flex:none}
-.brand .name{font-family:var(--font-head);font-weight:800;font-size:1.05rem;letter-spacing:.04em;line-height:1}
-.brand .name small{display:block;font-weight:600;font-size:.62rem;letter-spacing:.14em;color:#c4cad3;margin-top:3px}
-nav ul{list-style:none;margin:0;padding:0;display:flex;gap:4px;align-items:center}
-nav a{color:#e8ecf1;text-decoration:none;font-weight:500;font-size:.95rem;padding:10px 12px;border-radius:8px;display:block}
-nav a:hover{background:rgba(255,255,255,.1)}
-nav a.cta{background:var(--blue);color:#fff;font-weight:600;margin-left:8px}
-nav a.cta:hover{background:var(--blue-dark)}
-.menu-btn{display:none;background:none;border:0;color:#fff;padding:10px;cursor:pointer;border-radius:8px}
+.brand .name{font-family:var(--font-head);font-weight:700;font-size:1.05rem;letter-spacing:.06em;line-height:1}
+.brand .name small{display:block;font-weight:500;font-size:.6rem;letter-spacing:.2em;color:var(--muted);margin-top:4px}
+nav ul{list-style:none;margin:0;padding:0;display:flex;gap:2px;align-items:center}
+nav a{color:var(--text);text-decoration:none;font-weight:500;font-size:.95rem;padding:10px 13px;border-radius:10px;display:block}
+nav a:hover{background:rgba(255,255,255,.08)}
+nav a.btn{margin-left:10px;padding:10px 22px;min-height:46px;color:var(--ink-on-teal)}
+nav a.btn:hover{background:var(--teal-hi)}
+.menu-btn{display:none;background:none;border:0;color:#fff;padding:12px;cursor:pointer;border-radius:10px}
 .menu-btn svg{display:block}
-@media(max-width:860px){
+@media(max-width:900px){
   .menu-btn{display:block}
-  nav{position:absolute;left:0;right:0;top:64px;background:var(--charcoal);display:none;border-top:1px solid rgba(255,255,255,.12);padding:8px 20px 16px}
+  nav{position:absolute;left:0;right:0;top:68px;background:var(--bg);display:none;border-bottom:1px solid var(--line);padding:8px 22px 20px}
   nav.open{display:block}
   nav ul{flex-direction:column;align-items:stretch;gap:2px}
-  nav a{padding:14px 12px;font-size:1.05rem}
-  nav a.cta{margin:8px 0 0;text-align:center}
+  nav a{padding:15px 12px;font-size:1.1rem}
+  nav a.btn{margin:10px 0 0}
 }
 
-/* Hero */
-.hero{background:linear-gradient(135deg,#232830 0%,#2b2f36 55%,#1b4f9c 140%);color:#fff;padding:72px 0 80px;position:relative;overflow:hidden}
-.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;background:conic-gradient(from 0deg,var(--blue),var(--orange),var(--green),var(--maroon),var(--blue));opacity:.18;filter:blur(2px)}
-.hero .wrap{position:relative;z-index:1}
-.hero h1{color:#fff}
-.hero p.lead{font-size:1.15rem;max-width:560px;color:#dbe2ec}
-.hero .actions{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0 24px}
-.hero .meta{display:flex;flex-wrap:wrap;gap:8px 24px;font-size:.95rem;color:#c4cad3;margin:0;padding:0;list-style:none}
-.hero .meta strong{color:#fff}
-.tagline{font-family:var(--font-head);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:.85rem;color:var(--orange);margin-bottom:14px;display:block}
+/* Hero + thermostat */
+.hero{--bgA:#0e1a28;--bgB:#15303f;--glow-a:rgba(92,194,186,.30);--accent:#5cc2ba;
+  background:radial-gradient(70% 80% at 80% 45%,var(--glow-a) 0%,transparent 65%),linear-gradient(135deg,var(--bgA),var(--bgB));
+  padding:clamp(48px,8vw,96px) 0 clamp(56px,9vw,104px);position:relative;overflow:hidden}
+.hero-grid{display:grid;gap:36px;grid-template-areas:"copy" "dial" "cta"}
+.hero-copy{grid-area:copy}.hero-cta{grid-area:cta}.dial-wrap{grid-area:dial}
+@media(min-width:920px){
+  .hero-grid{grid-template-columns:1.1fr .9fr;grid-template-areas:"copy dial" "cta dial";align-items:center;column-gap:56px;row-gap:28px}
+  .hero-copy{align-self:end}.hero-cta{align-self:start}
+}
+.tagline{font-family:var(--font-head);font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-size:.8rem;color:var(--accent);margin-bottom:18px;display:block}
+.hero h1{margin-bottom:.35em}
+.hero p.lead{font-size:clamp(1.1rem,2.4vw,1.35rem);color:#d3deea;max-width:520px;margin:0}
+.dial-msg{display:none;font-family:var(--font-head);font-weight:500;font-size:clamp(1.3rem,3.4vw,1.8rem);line-height:1.25;color:#fff;margin:0 0 22px;min-height:2.5em;max-width:520px;transition:opacity .25s}
+.dial-msg.swap{opacity:0}
+.js .dial-msg{display:block}
+.hero .actions{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 26px}
+.hero .meta{display:flex;flex-wrap:wrap;gap:6px 26px;font-size:.95rem;color:#c0cddb;margin:0;padding:0;list-style:none}
+.hero .meta strong{color:#fff;font-weight:600}
+.dial-wrap{display:none;justify-items:center}
+.js .dial-wrap{display:grid}
+.dial{position:relative;width:min(290px,76vw);aspect-ratio:1;border-radius:50%;touch-action:none;cursor:grab;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+.dial.drag{cursor:grabbing}
+@media(min-width:920px){.dial{width:min(410px,100%)}}
+.dial::before{content:"";position:absolute;inset:-22%;border-radius:50%;background:radial-gradient(closest-side,var(--glow-a),transparent);pointer-events:none}
+.dial svg{position:relative;width:100%;height:100%;display:block;overflow:visible}
+.dial .face{fill:rgba(8,16,26,.55);stroke:rgba(255,255,255,.14);stroke-width:1.5}
+.dial .disc{fill:rgba(255,255,255,.04);stroke:rgba(255,255,255,.08)}
+.dial .track{stroke:rgba(255,255,255,.12)}
+.dial .prog{stroke:var(--accent)}
+.dial .tk{stroke:rgba(255,255,255,.22);stroke-width:2;stroke-linecap:round;transition:stroke .2s}
+.dial .tk.maj{stroke-width:3}
+.dial .tk.on{stroke:var(--accent)}
+.dial .knob{fill:#fff;stroke:var(--accent);stroke-width:5}
+.dial #numText{font-family:var(--font-head);font-weight:600;fill:#fff;transform-box:fill-box;transform-origin:center}
+.dial #numText.pulse{animation:pulse .28s var(--ease)}
+@keyframes pulse{from{transform:scale(1.07)}to{transform:scale(1)}}
+.dial .cap{font-family:var(--font-body);font-size:11.5px;fill:#b9c8d8;letter-spacing:.04em}
+.dial:focus-visible{outline:none}
+.dial.kb:focus-visible .face{stroke:var(--amber);stroke-width:4}
 
 /* Cards */
-.grid{display:grid;gap:18px}
+.grid{display:grid;gap:20px}
 .cards{grid-template-columns:1fr}
 @media(min-width:600px){.cards{grid-template-columns:repeat(2,1fr)}}
-@media(min-width:960px){.cards.four{grid-template-columns:repeat(4,1fr)}}
-.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;border-top:4px solid var(--c,var(--blue))}
-.card .ico{width:46px;height:46px;border-radius:12px;background:var(--c,var(--blue));color:#fff;display:grid;place-items:center;margin-bottom:14px}
-.card p{color:var(--muted);margin:0;font-size:.97rem}
-.soft{background:var(--soft)}
-.ph{background:#fff8e6;border:1px dashed #d9a400;color:#6b5200;border-radius:8px;padding:10px 12px;font-size:.9rem;display:block}
-.card .ph{margin-top:2px}
-
-/* Preview link */
-.more{margin-top:28px}
+@media(min-width:980px){.cards.four{grid-template-columns:repeat(4,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:28px;transition:transform .3s var(--ease),border-color .3s,background .3s}
+.card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.22);background:var(--surface2)}
+.card .ico{width:50px;height:50px;border-radius:14px;background:rgba(92,194,186,.14);color:var(--teal);display:grid;place-items:center;margin-bottom:18px}
+.card.heat .ico{background:rgba(242,178,92,.14);color:var(--amber)}
+.card h3{margin:0}
+.ph{background:rgba(242,178,92,.09);border:1px dashed rgba(242,178,92,.65);color:var(--amber-soft);border-radius:10px;padding:10px 13px;font-size:.9rem;display:block;line-height:1.45}
+.more{margin-top:34px}
 
 /* CTA band */
-.band{background:var(--blue);color:#fff;text-align:center;padding:56px 0}
-.band h2{color:#fff}
-.band p{color:#e4eefc;max-width:560px;margin:0 auto 24px}
+.band{background:linear-gradient(120deg,#12384a,#164a55 60%,#1a4a4c);border-top:1px solid var(--line);border-bottom:1px solid var(--line);text-align:center;padding:clamp(52px,8vw,84px) 0}
+.band p{color:#d3e4e8;font-size:1.25rem;margin:0 auto 28px;max-width:560px}
 .band .actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
-.band .btn-primary{background:#fff;color:var(--blue-dark)}
-.band .btn-primary:hover{background:#eaf1fc}
 
 /* About */
-.two{display:grid;gap:32px}
-@media(min-width:860px){.two{grid-template-columns:1.2fr 1fr;align-items:start}}
-.facts{background:var(--soft);border-radius:var(--radius);padding:24px;border:1px solid var(--line)}
+.two{display:grid;gap:44px}
+@media(min-width:900px){.two{grid-template-columns:1.2fr 1fr;align-items:start;gap:64px}}
+.lede{font-family:var(--font-head);font-weight:500;font-size:1.25rem;color:var(--teal-hi);margin-bottom:1.2em}
+.checks{list-style:none;padding:0;margin:0 0 22px}
+.checks li{position:relative;padding-left:34px;margin-bottom:14px;color:#d6e0eb}
+.checks li::before{content:"";position:absolute;left:0;top:.3em;width:20px;height:20px;border-radius:50%;background:var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2306222a' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center/13px no-repeat}
+.facts{background:var(--surface);border-radius:var(--radius);padding:30px;border:1px solid var(--line)}
 .facts dl{margin:0}
-.facts dt{font-family:var(--font-head);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:14px}
+.facts dt{font-family:var(--font-head);font-weight:600;font-size:.74rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-top:18px}
 .facts dt:first-child{margin-top:0}
-.facts dd{margin:2px 0 0;font-weight:500}
+.facts dd{margin:4px 0 0}
+.trust{margin-top:56px;background:var(--surface);border-radius:var(--radius);padding:clamp(24px,4vw,40px);border:1px solid var(--line);border-left:5px solid var(--amber)}
+.trust p{margin:0;font-size:1.15rem;color:#dbe5ef;max-width:780px}
 
 /* Services detail */
-.svc{display:grid;gap:16px}
-.svc article{background:#fff;border:1px solid var(--line);border-left:6px solid var(--c);border-radius:var(--radius);padding:24px}
+.svc{display:grid;gap:20px}
 @media(min-width:760px){.svc{grid-template-columns:repeat(2,1fr)}}
-.svc ul{margin:10px 0 0;padding-left:20px;color:var(--muted)}
+.svc article{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:28px;border-top:3px solid var(--teal)}
+.svc article.heat{border-top-color:var(--amber)}
+.svc h3{margin-bottom:.8em}
+.tags{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:10px}
+.tags li{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 18px;font-size:.95rem;color:#d6e0eb}
+.sub-h{margin-top:48px;font-size:1.1rem}
 
 /* Gallery */
-.gallery{grid-template-columns:repeat(2,1fr);gap:12px}
-@media(min-width:760px){.gallery{grid-template-columns:repeat(3,1fr);gap:16px}}
-.tile{aspect-ratio:4/3;border-radius:var(--radius);background:linear-gradient(135deg,#e3e9f1,#cfd8e4);display:grid;place-items:center;text-align:center;color:#5b6470;font-size:.85rem;padding:12px;border:1px dashed #aab5c3}
-.tile svg{display:block;margin:0 auto 6px;opacity:.55}
+.gallery{grid-template-columns:1fr;gap:28px}
+@media(min-width:760px){.gallery{grid-template-columns:repeat(3,1fr)}}
+.gallery figure{margin:0}
+.gallery figcaption{margin-top:14px;color:#d6e0eb}
+.tile{aspect-ratio:4/3;border-radius:var(--radius);background:linear-gradient(135deg,var(--surface),var(--surface2));display:grid;place-items:center;text-align:center;color:var(--muted);font-size:.88rem;padding:12px;border:1px dashed rgba(255,255,255,.25)}
+.tile svg{display:block;margin:0 auto 8px;opacity:.6}
 
 /* FAQ */
-.faq{max-width:780px}
-details{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
-summary{cursor:pointer;font-weight:600;padding:16px 48px 16px 18px;list-style:none;position:relative;font-family:var(--font-head);font-size:1rem;color:var(--charcoal)}
+.faq{max-width:800px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:12px;transition:border-color .2s}
+details[open]{border-color:rgba(92,194,186,.45)}
+summary{cursor:pointer;font-weight:500;padding:20px 54px 20px 22px;list-style:none;position:relative;font-family:var(--font-head);font-size:1.05rem;color:#fff;min-height:56px}
 summary::-webkit-details-marker{display:none}
-summary::after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:1.4rem;color:var(--blue)}
+summary::after{content:"+";position:absolute;right:22px;top:50%;transform:translateY(-50%);font-size:1.5rem;color:var(--teal);line-height:1}
 details[open] summary::after{content:"\2212"}
-details .ans{padding:0 18px 16px}
+details .ans{padding:0 22px 22px;color:#d6e0eb}
+details .ans p{margin:0}
 
 /* Contact */
-.contact{display:grid;gap:32px}
-@media(min-width:860px){.contact{grid-template-columns:1fr 1.2fr}}
+.contact{display:grid;gap:44px}
+@media(min-width:900px){.contact{grid-template-columns:1fr 1fr;gap:64px;align-items:start}}
+.info ul{list-style:none;padding:0;margin:0}
+.info li{margin-bottom:20px}
 .info a{font-weight:600}
-.info li{margin-bottom:14px}
-.info ul{list-style:none;padding:0;margin:0 0 20px}
-.info .label{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-family:var(--font-head);font-weight:600}
-form{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:0 6px 24px rgba(31,35,40,.06)}
-.row{display:grid;gap:14px}
-@media(min-width:600px){.row.two-col{grid-template-columns:1fr 1fr}}
-label{display:block;font-weight:600;font-size:.9rem;margin-bottom:5px}
-input,select,textarea{width:100%;font:inherit;padding:12px 14px;border:1px solid #b8c2cf;border-radius:10px;background:#fff;color:var(--ink);min-height:48px}
-textarea{min-height:120px;resize:vertical}
-input:focus,select:focus,textarea:focus{outline:3px solid rgba(26,115,232,.35);border-color:var(--blue)}
-form .field{margin-bottom:14px}
-.note{font-size:.85rem;color:var(--muted);margin:12px 0 0}
-#formMsg{display:none;margin-top:14px;padding:12px 14px;border-radius:10px;background:#e8f5ea;border:1px solid #9fd0a6;color:#1e5a29}
+.info .label{display:block;font-size:.74rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-family:var(--font-head);font-weight:600;margin-bottom:2px}
+.book-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(26px,4vw,40px)}
+.book-card p{color:var(--muted)}
+.book-card .btn{width:100%}
+.note{font-size:.88rem;color:var(--muted);margin:14px 0 0}
 
 /* Footer */
-footer{background:var(--charcoal);color:#c4cad3;padding:36px 0;font-size:.92rem}
-footer a{color:#fff}
-footer .cols{display:flex;flex-wrap:wrap;gap:16px 40px;justify-content:space-between}
-.stripe{height:5px;background:linear-gradient(90deg,var(--blue) 0 25%,var(--orange) 25% 50%,var(--green) 50% 75%,var(--maroon) 75%)}
+footer.site-foot{background:var(--bg3);color:var(--muted);padding:56px 0 30px;font-size:.95rem;border-top:1px solid var(--line)}
+footer.site-foot a{color:#fff}
+.fgrid{display:grid;gap:34px}
+@media(min-width:760px){.fgrid{grid-template-columns:repeat(3,1fr)}}
+.fh{display:block;color:#fff;font-family:var(--font-head);font-weight:600;margin-bottom:10px}
+.flist{list-style:none;margin:0;padding:0}
+.flist li{margin-bottom:5px}
+footer.site-foot p{margin:0 0 12px}
+footer .demo{margin-top:34px;font-size:.82rem;color:#8798ab;border-top:1px solid var(--line);padding-top:20px}
 
 /* Mobile call bar */
-.callbar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff;border-top:1px solid var(--line);padding:10px 14px;display:flex;gap:10px;box-shadow:0 -4px 16px rgba(0,0,0,.12)}
-.callbar .btn{flex:1;padding:12px 10px}
-.callbar .call{background:var(--green);color:#fff}
-@media(min-width:861px){.callbar{display:none}body{padding-bottom:0}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+.callbar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(10,18,29,.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px}
+.callbar .btn{flex:1;padding:12px 10px;min-height:54px}
+@media(min-width:901px){.callbar{display:none}body{padding-bottom:0}}
+
+/* Reveal */
+.js .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.js .reveal.in{opacity:1;transform:none}
+
+/* Booking dialog */
+dialog#book{border:1px solid var(--line);padding:0;background:var(--surface);color:var(--text);border-radius:24px;width:min(660px,calc(100% - 24px));max-width:none;max-height:calc(100dvh - 24px);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+dialog#book[open]{animation:dlg .35s var(--ease);display:block}
+dialog#book::backdrop{background:rgba(4,9,16,.72);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+@keyframes dlg{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
+@media(max-width:600px){dialog#book{width:100%;height:100dvh;max-height:none;border-radius:0;border:0;margin:0}}
+.book{display:flex;flex-direction:column;height:100%;max-height:calc(100dvh - 24px)}
+@media(max-width:600px){.book{max-height:100dvh}}
+.bk-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:22px 22px 8px}
+.bk-head h2{font-size:1.4rem;margin:0}
+.bk-demo{display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-soft);background:rgba(242,178,92,.12);border:1px solid rgba(242,178,92,.4);border-radius:999px;padding:3px 11px;margin:0 0 8px}
+.bk-close{flex:none;width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:transparent;color:#fff;cursor:pointer;display:grid;place-items:center}
+.bk-close:hover{background:rgba(255,255,255,.08)}
+.bk-progress{padding:6px 22px 14px}
+.step-label{font-size:.88rem;color:var(--muted);margin:0 0 8px}
+.pbar{height:5px;background:rgba(255,255,255,.1);border-radius:9px;overflow:hidden}
+.pbar span{display:block;height:100%;width:33%;background:var(--teal);border-radius:9px;transition:width .4s var(--ease)}
+.bk-body{padding:6px 22px 22px;overflow-y:auto;flex:1;min-height:0}
+.bk-body h3{font-size:1.3rem;margin:6px 0 16px;outline:none}
+fieldset{border:0;margin:0 0 18px;padding:0;min-width:0}
+legend{font-family:var(--font-head);font-weight:600;font-size:.95rem;color:#fff;margin-bottom:10px;padding:0}
+.choices,.days,.times{display:grid;gap:10px}
+.choices{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.days{grid-template-columns:repeat(auto-fill,minmax(88px,1fr))}
+.times{grid-template-columns:repeat(auto-fill,minmax(98px,1fr))}
+.choice{position:relative;display:block}
+.choice input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer;z-index:1}
+.choice .box{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:2px;min-height:58px;padding:10px 12px;border:1.5px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03);font-weight:500;line-height:1.25;transition:border-color .2s,background .2s,transform .2s var(--ease)}
+.choice:hover .box{border-color:rgba(255,255,255,.3)}
+.choice input:checked + .box{border-color:var(--teal);background:rgba(92,194,186,.16);color:#fff}
+.choice input:focus-visible + .box{outline:3px solid var(--amber);outline-offset:2px}
+.choice .box small{font-size:.78rem;color:var(--muted);font-weight:400}
+.choice .box b{font-family:var(--font-head);font-weight:600;font-size:1.15rem}
+.choice.wide{grid-column:1/-1}
+.choice.emerg input:checked + .box,.choice.emerg .box{border-color:rgba(242,178,92,.55)}
+.choice.emerg input:checked + .box{background:rgba(242,178,92,.14)}
+.emerg-box{border:1px solid rgba(242,178,92,.5);background:rgba(242,178,92,.09);border-radius:14px;padding:18px;margin:4px 0 8px}
+.emerg-box p{margin:0 0 12px;color:var(--amber-soft)}
+.emerg-box .btn{width:100%;background:var(--amber);color:#2a1a05}
+.emerg-box .btn:hover{background:#f7c27d}
+.demo-note{font-size:.9rem;color:var(--amber-soft);margin:-6px 0 18px}
+.times-hint{color:var(--muted);margin:0;font-size:.95rem}
+.fld{margin-bottom:16px}
+.fld label{display:block;font-weight:600;font-size:.92rem;margin-bottom:6px}
+.fld input,.fld textarea{width:100%;font:inherit;padding:13px 15px;border:1.5px solid rgba(255,255,255,.22);border-radius:12px;background:rgba(0,0,0,.22);color:#fff;min-height:54px}
+.fld textarea{min-height:100px;resize:vertical}
+.fld input:focus,.fld textarea:focus{outline:3px solid var(--amber);outline-offset:1px;border-color:transparent}
+.fld input[aria-invalid="true"]{border-color:#ff9b8f}
+.err{color:#ffb3a8;font-size:.92rem;margin:6px 0 0;min-height:0}
+.err:empty{display:none}
+.opt{font-weight:400;color:var(--muted)}
+.bk-foot{display:flex;gap:12px;padding:16px 22px calc(16px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:rgba(0,0,0,.12)}
+.bk-foot .btn{flex:1}
+.bk-foot #bkBack{flex:0 0 auto;min-width:110px}
+.sum{margin:0 0 18px;padding:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.sum div{display:grid;grid-template-columns:110px 1fr;gap:10px;padding:13px 16px;border-bottom:1px solid var(--line)}
+.sum div:last-child{border-bottom:0}
+.sum dt{color:var(--muted);font-size:.9rem}
+.sum dd{margin:0;font-weight:500;overflow-wrap:anywhere}
+.ok-ico{width:54px;height:54px;border-radius:50%;background:var(--teal);color:var(--ink-on-teal);display:grid;place-items:center;margin-bottom:12px}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  .js .reveal{opacity:1;transform:none}
+}
 </style>
 </head>
 <body>
@@ -188,12 +305,12 @@ footer .cols{display:flex;flex-wrap:wrap;gap:16px 40px;justify-content:space-bet
   <div class="wrap bar">
     <a class="brand" href="#home" aria-label="Temp Tech Heating &amp; Cooling, home">
       <!-- PLACEHOLDER wordmark: replace with client logo file -->
-      <svg viewBox="0 0 48 48" role="img" aria-hidden="true">
-        <path d="M24 24V4a20 20 0 0 1 20 20z" fill="#1a73e8"/>
-        <path d="M24 24h20a20 20 0 0 1-20 20z" fill="#f28c28"/>
-        <path d="M24 24v20A20 20 0 0 1 4 24z" fill="#3a9d4a"/>
-        <path d="M24 24H4A20 20 0 0 1 24 4z" fill="#7a1f2b"/>
-        <circle cx="24" cy="24" r="6" fill="#2b2f36"/>
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M24 24V4a20 20 0 0 1 20 20z" fill="#4f8fe0"/>
+        <path d="M24 24h20a20 20 0 0 1-20 20z" fill="#e89a45"/>
+        <path d="M24 24v20A20 20 0 0 1 4 24z" fill="#4fae6a"/>
+        <path d="M24 24H4A20 20 0 0 1 24 4z" fill="#8c3a47"/>
+        <circle cx="24" cy="24" r="6" fill="#0e1a28"/>
       </svg>
       <span class="name">TEMP TECH<small>HEATING &amp; COOLING</small></span>
     </a>
@@ -208,157 +325,201 @@ footer .cols{display:flex;flex-wrap:wrap;gap:16px 40px;justify-content:space-bet
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#faq">FAQ</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a class="cta" href="#contact">Get A Quote</a></li>
+        <li><a class="btn btn-primary" href="#contact" data-book>Get A Quote</a></li>
       </ul>
     </nav>
   </div>
-  <div class="stripe"></div>
 </header>
 
 <main id="main">
 
 <!-- HOME -->
 <section class="hero" id="home">
-  <div class="wrap">
-    <span class="tagline">Service &amp; Installation</span>
-    <h1>We are Temp Tech HVAC Heating and Cooling</h1>
-    <p class="lead">Expert Installation, Repair &amp; Maintenance</p>
-    <div class="actions">
-      <a class="btn btn-primary" href="#contact">Get A Quote</a>
-      <a class="btn btn-ghost" href="tel:+12162132622">Call (216) 213-2622</a>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="tagline">Service &amp; Installation</span>
+      <h1>We are Temp Tech HVAC Heating and Cooling</h1>
+      <p class="lead">Expert Installation, Repair &amp; Maintenance</p>
     </div>
-    <ul class="meta">
-      <li><strong>Hours:</strong> Mon-Fri 7AM-5PM</li>
-      <li><strong>Based in:</strong> North Ridgeville, Ohio</li>
-    </ul>
+
+    <div class="dial-wrap" aria-label="Interactive thermostat">
+      <div class="dial" id="dial" role="slider" tabindex="0" aria-label="Thermostat temperature, degrees Fahrenheit" aria-valuemin="50" aria-valuemax="90" aria-valuenow="72" aria-valuetext="72 degrees Fahrenheit">
+        <svg viewBox="0 0 300 300" aria-hidden="true" focusable="false">
+          <circle class="face" cx="150" cy="150" r="146"/>
+          <g id="ticks"></g>
+          <path class="track" d="M73.63 226.37 A108 108 0 1 1 226.37 226.37" fill="none" stroke-width="10" stroke-linecap="round"/>
+          <path class="prog" id="prog" d="M73.63 226.37 A108 108 0 1 1 226.37 226.37" fill="none" stroke-width="10" stroke-linecap="round" pathLength="100" stroke-dasharray="55 100"/>
+          <g id="knob"><circle class="knob" cx="150" cy="42" r="13"/></g>
+          <circle class="disc" cx="150" cy="150" r="82"/>
+          <text id="numText" x="150" y="168" text-anchor="middle" font-size="74"><tspan id="num">72</tspan><tspan font-size="26" dy="-24" dx="2">°F</tspan></text>
+          <text class="cap" x="150" y="202" text-anchor="middle">Drag or tap to set</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="hero-cta">
+      <p class="dial-msg" id="dialMsg" aria-live="polite">Comfortable? Keep it that way.</p>
+      <div class="actions">
+        <a class="btn btn-primary" id="dialCta" href="#contact" data-book>Get A Quote</a>
+        <a class="btn btn-ghost" href="tel:+12162132622">Call (216) 213-2622</a>
+      </div>
+      <ul class="meta">
+        <li><strong>Hours:</strong> Mon-Fri 7AM-5PM</li>
+        <li><strong>Based in:</strong> North Ridgeville, Ohio</li>
+      </ul>
+    </div>
   </div>
 </section>
 
-<section id="services-preview">
+<section class="sec" id="services-preview">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">What we do</span>
       <h2>HVAC services</h2>
-      <p>A quick look at the main service categories. See the full list below.</p>
+      <p>Temp Tech is committed to performing expert quality heating and cooling, maintenance and installation throughout Northeast, Ohio.</p>
     </div>
     <div class="grid cards four">
-      <div class="card" style="--c:var(--maroon)">
-        <div class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/></svg></div>
-        <h3>Heating</h3><p>Furnace and heating system service.</p>
+      <div class="card reveal">
+        <div class="ico" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2v20M4.9 7l14.2 10M4.9 17L19.1 7M9 3.5l3 2.5 3-2.5M9 20.5l3-2.5 3 2.5"/></svg></div>
+        <h3>Air Conditioning Installs and Repairs</h3>
       </div>
-      <div class="card" style="--c:var(--blue)">
-        <div class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M4.9 7l14.2 10M4.9 17L19.1 7M9 3.5l3 2.5 3-2.5M9 20.5l3-2.5 3 2.5"/></svg></div>
-        <h3>Cooling</h3><p>Air conditioning service and cooling comfort.</p>
+      <div class="card heat reveal">
+        <div class="ico" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/></svg></div>
+        <h3>Heating Installs and Repairs</h3>
       </div>
-      <div class="card" style="--c:var(--orange)">
-        <div class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.2-.5-.5-2.2z"/></svg></div>
-        <h3>Installation</h3><p>New system and replacement installs.</p>
+      <div class="card reveal">
+        <div class="ico" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h11a3 3 0 1 0-3-3M3 12h16a3 3 0 1 1-3 3M3 16h8a3 3 0 1 1-3 3"/></svg></div>
+        <h3>Indoor Air Quality</h3>
       </div>
-      <div class="card" style="--c:var(--green)">
-        <div class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></div>
-        <h3>Maintenance &amp; Repair</h3><p>Tune-ups and repairs to keep systems running.</p>
+      <div class="card heat reveal">
+        <div class="ico" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></div>
+        <h3>Water Heating Solutions</h3>
       </div>
     </div>
-    <p class="more"><a class="btn btn-outline" href="#services">See all services</a></p>
+    <p class="more"><a class="btn btn-ghost" href="#services">See all services</a></p>
   </div>
 </section>
 
 <div class="band">
-  <div class="wrap">
-    <h2>Need heating or cooling help?</h2>
-    <p>Tell us what is going on and request a quote. Prefer to talk? Call during business hours, Mon-Fri 7AM-5PM.</p>
+  <div class="wrap reveal">
+    <h2>Free Estimates on Complete System Replacement</h2>
+    <p>Call now for a free quote! (216) 213-2622</p>
     <div class="actions">
-      <a class="btn btn-primary" href="#contact">Get A Quote</a>
-      <a class="btn btn-ghost" href="tel:+12162132622">(216) 213-2622</a>
+      <a class="btn btn-primary" href="tel:+12162132622">Call (216) 213-2622</a>
+      <a class="btn btn-ghost" href="#contact" data-book>Get A Quote</a>
     </div>
   </div>
 </div>
 
 <!-- ABOUT -->
-<section id="about">
+<section class="sec" id="about">
   <div class="wrap two">
-    <div>
+    <div class="reveal">
       <span class="eyebrow">About Us</span>
-      <h2>About Temp Tech Heating &amp; Cooling</h2>
-      <p>Temp Tech Heating &amp; Cooling provides HVAC service and installation, based in North Ridgeville, Ohio.</p>
-      <span class="ph">[Placeholder – replace with client copy: company story, who owns and runs the business, what customers can expect.]</span>
+      <h2>We are Temp Tech HVAC Heating and Cooling</h2>
+      <p class="lede">Expert Installation, Repair &amp; Maintenance</p>
+      <ul class="checks">
+        <li>Trusted, skilled technicians for professional HVAC installations that ensure optimal performance.</li>
+        <li>Prompt, reliable repairs to restore your heating and cooling systems.</li>
+        <li>Comprehensive maintenance services that keep HVAC equipment running efficiently year-round.</li>
+        <li>Exceptional customer service and transparent pricing.</li>
+        <li>Peace of mind knowing your comfort is our top priority.</li>
+      </ul>
+      <span class="ph">[Placeholder – replace with client copy: owner / company story, if the client wants to add it]</span>
     </div>
-    <aside class="facts" aria-label="Business details">
+    <aside class="facts reveal" aria-label="Business details">
       <dl>
         <dt>Business</dt><dd>Temp Tech Heating &amp; Cooling</dd>
         <dt>Location</dt><dd>North Ridgeville, Ohio</dd>
         <dt>Hours</dt><dd>Mon-Fri 7AM-5PM</dd>
-        <dt>Service area</dt><dd><span class="ph">[Placeholder – list towns served]</span></dd>
-        <dt>Licensing &amp; insurance</dt><dd><span class="ph">[Placeholder – add only if client confirms]</span></dd>
+        <dt>Service area</dt><dd>Northeast, Ohio<br><span class="ph" style="margin-top:8px">[Placeholder – list towns served]</span></dd>
+        <dt>License numbers</dt><dd><span class="ph">[Placeholder – add license / bond / insurance details only if client supplies them]</span></dd>
       </dl>
     </aside>
+  </div>
+  <div class="wrap">
+    <div class="trust reveal">
+      <h3>Looking for a reliable HVAC solution?</h3>
+      <p>We take pride in being a trusted reputable HVAC company that is licensed, bonded &amp; insured. Capable of any Residential &amp; Commercial HVAC needs!</p>
+    </div>
   </div>
 </section>
 
 <!-- SERVICES -->
-<section class="soft" id="services">
+<section class="sec alt" id="services">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">Services</span>
-      <h2>Heating, cooling, installation and repair</h2>
-      <p>General service categories shown for this demo. The client will confirm the exact list.</p>
+      <h2>Heating, cooling, air quality and water heating</h2>
+      <p>Temp Tech is committed to performing expert quality heating and cooling, maintenance and installation throughout Northeast, Ohio.</p>
     </div>
     <div class="svc">
-      <article style="--c:var(--maroon)">
-        <h3>Heating</h3>
-        <p>Service for home heating systems.</p>
-        <span class="ph">[Placeholder – replace with client copy: heating services offered]</span>
+      <article class="reveal">
+        <h3>Air Conditioning Installs and Repairs</h3>
+        <span class="ph">[Placeholder – replace with client copy]</span>
       </article>
-      <article style="--c:var(--blue)">
-        <h3>Cooling</h3>
-        <p>Service for air conditioning and cooling systems.</p>
-        <span class="ph">[Placeholder – replace with client copy: cooling services offered]</span>
+      <article class="heat reveal">
+        <h3>Heating Installs and Repairs</h3>
+        <span class="ph">[Placeholder – replace with client copy]</span>
       </article>
-      <article style="--c:var(--orange)">
-        <h3>Installation</h3>
-        <p>Installation of new and replacement HVAC equipment.</p>
-        <span class="ph">[Placeholder – replace with client copy: equipment and brands installed]</span>
+      <article class="reveal">
+        <h3>Indoor Air Quality</h3>
+        <span class="ph">[Placeholder – replace with client copy]</span>
       </article>
-      <article style="--c:var(--green)">
-        <h3>Maintenance &amp; Repair</h3>
-        <p>Routine maintenance and repair work.</p>
-        <span class="ph">[Placeholder – replace with client copy: maintenance plans, repair types, emergency availability]</span>
+      <article class="heat reveal">
+        <h3>Water Heating Solutions</h3>
+        <span class="ph">[Placeholder – replace with client copy]</span>
       </article>
     </div>
-    <p class="more"><a class="btn btn-primary" href="#contact">Get A Quote</a></p>
+    <h3 class="sub-h reveal">We also work on</h3>
+    <ul class="tags reveal">
+      <li>Air Conditioning Repair &amp; Replacement</li>
+      <li>Heating/Furnace Repair &amp; Replacement</li>
+      <li>Humidifiers and Air Purifiers</li>
+      <li>Water Heaters</li>
+      <li>Boilers</li>
+      <li>Mini Splits</li>
+    </ul>
+    <p class="more"><a class="btn btn-primary" href="#contact" data-book>Get A Quote</a></p>
   </div>
 </section>
 
 <!-- GALLERY -->
-<section id="gallery">
+<section class="sec" id="gallery">
   <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Gallery</span>
-      <h2>Our work</h2>
+    <div class="section-head reveal">
+      <span class="eyebrow">Unmatched craftsmanship</span>
+      <h2>Dependable service regardless of weather or time</h2>
       <span class="ph">[Placeholder – replace tiles with real project photos supplied by the client]</span>
     </div>
     <div class="grid gallery">
-      <div class="tile" role="img" aria-label="Placeholder for project photo 1"><div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 1</div></div>
-      <div class="tile" role="img" aria-label="Placeholder for project photo 2"><div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 2</div></div>
-      <div class="tile" role="img" aria-label="Placeholder for project photo 3"><div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 3</div></div>
-      <div class="tile" role="img" aria-label="Placeholder for project photo 4"><div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 4</div></div>
-      <div class="tile" role="img" aria-label="Placeholder for project photo 5"><div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 5</div></div>
-      <div class="tile" role="img" aria-label="Placeholder for project photo 6"><div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 6</div></div>
+      <figure class="reveal">
+        <div class="tile" role="img" aria-label="Placeholder for project photo 1"><div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 1</div></div>
+        <figcaption>Day or night we handle emergency calls as a top priority</figcaption>
+      </figure>
+      <figure class="reveal">
+        <div class="tile" role="img" aria-label="Placeholder for project photo 2"><div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 2</div></div>
+        <figcaption>Rain or shine we make sure your job gets done</figcaption>
+      </figure>
+      <figure class="reveal">
+        <div class="tile" role="img" aria-label="Placeholder for project photo 3"><div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 3</div></div>
+        <figcaption>We are licensed, bonded, and insured through the state of Ohio</figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section class="soft" id="faq">
+<section class="sec alt" id="faq">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">FAQ</span>
       <h2>Frequently asked questions</h2>
       <p>Sample questions only. The client will supply the real questions and answers.</p>
     </div>
-    <div class="faq">
+    <div class="faq reveal">
       <details><summary>What areas do you serve?</summary><div class="ans"><span class="ph">[Placeholder – replace with client copy]</span></div></details>
-      <details><summary>How do I request a quote?</summary><div class="ans"><p>Use the quote form below or call (216) 213-2622, Mon-Fri 7AM-5PM.</p></div></details>
+      <details><summary>How do I request a quote?</summary><div class="ans"><p>Call (216) 213-2622, Mon-Fri 7AM-5PM, or use the Get A Quote button.</p></div></details>
       <details><summary>What types of systems do you work on?</summary><div class="ans"><span class="ph">[Placeholder – replace with client copy]</span></div></details>
       <details><summary>Do you offer maintenance plans?</summary><div class="ans"><span class="ph">[Placeholder – replace with client copy]</span></div></details>
       <details><summary>Do you offer emergency service?</summary><div class="ans"><span class="ph">[Placeholder – replace with client copy]</span></div></details>
@@ -367,12 +528,12 @@ footer .cols{display:flex;flex-wrap:wrap;gap:16px 40px;justify-content:space-bet
 </section>
 
 <!-- CONTACT -->
-<section id="contact">
+<section class="sec" id="contact">
   <div class="wrap contact">
-    <div class="info">
+    <div class="info reveal">
       <span class="eyebrow">Contact</span>
       <h2>Get A Quote</h2>
-      <p>Send us a few details or call. We are based in North Ridgeville, Ohio.</p>
+      <p style="color:var(--muted)">Call, email, or pick a time online. We are based in North Ridgeville, Ohio.</p>
       <ul>
         <li><span class="label">Phone</span><a href="tel:+12162132622">(216) 213-2622</a></li>
         <li><span class="label">Email</span><a href="mailto:TempTechCle@gmail.com">TempTechCle@gmail.com</a></li>
@@ -381,66 +542,369 @@ footer .cols{display:flex;flex-wrap:wrap;gap:16px 40px;justify-content:space-bet
         <li><span class="label">Service area</span><span class="ph">[Placeholder – list towns served]</span></li>
       </ul>
     </div>
-    <form id="quoteForm" novalidate>
-      <div class="row two-col">
-        <div class="field"><label for="name">Name</label><input id="name" name="name" autocomplete="name" required></div>
-        <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required></div>
-      </div>
-      <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email"></div>
-      <div class="field"><label for="service">Service needed</label>
-        <select id="service" name="service">
-          <option>Heating</option>
-          <option>Cooling</option>
-          <option>Installation</option>
-          <option>Maintenance / Repair</option>
-          <option>Not sure</option>
-        </select>
-      </div>
-      <div class="field"><label for="msg">Tell us what you need</label><textarea id="msg" name="msg"></textarea></div>
-      <button class="btn btn-primary" type="submit" style="width:100%">Get A Quote</button>
-      <p id="formMsg" role="status"></p>
-      <p class="note">Demo form: nothing is sent yet. It needs to be connected to the client's email or form service before launch.</p>
-    </form>
+    <div class="book-card reveal">
+      <h3>Schedule a visit in 3 steps</h3>
+      <p>Pick a service, choose a day and time, and leave your details.</p>
+      <a class="btn btn-primary js-only" href="#contact" data-book>Schedule / Get A Quote</a>
+      <p class="nojs-only" style="margin:0">Online scheduling needs JavaScript. Please call <a href="tel:+12162132622">(216) 213-2622</a> or email <a href="mailto:TempTechCle@gmail.com">TempTechCle@gmail.com</a>.</p>
+      <p class="note">Demo: the scheduler is front-end only and nothing is sent. It must be connected to the client's email or booking service before launch.</p>
+    </div>
   </div>
 </section>
 
 </main>
 
-<footer>
-  <div class="wrap cols">
-    <div><strong style="color:#fff">Temp Tech Heating &amp; Cooling</strong><br>Service &amp; Installation<br>North Ridgeville, Ohio</div>
-    <div><a href="tel:+12162132622">(216) 213-2622</a><br><a href="mailto:TempTechCle@gmail.com">TempTechCle@gmail.com</a><br>Mon-Fri 7AM-5PM</div>
-    <div>Demo redesign. Logo and copy are placeholders.</div>
+<footer class="site-foot">
+  <div class="wrap fgrid">
+    <div>
+      <strong class="fh">About</strong>
+      <p>We have experience servicing all brands and are a trusted company within the community.</p>
+      <p><strong style="color:#fff">Temp Tech Heating &amp; Cooling</strong><br>Service &amp; Installation<br>North Ridgeville, Ohio</p>
+    </div>
+    <div>
+      <strong class="fh">Services</strong>
+      <ul class="flist">
+        <li>Air Conditioning Repair &amp; Replacement</li>
+        <li>Heating/Furnace Repair &amp; Replacement</li>
+        <li>Humidifiers and Air Purifiers</li>
+        <li>Water Heaters</li>
+        <li>Boilers</li>
+        <li>Mini Splits</li>
+      </ul>
+    </div>
+    <div>
+      <strong class="fh">Working Hours</strong>
+      <p>We work 5 days a week, and try to accommodate all emergency needs ASAP.<br>Monday&ndash;Friday: 7:00AM&ndash;5:00PM</p>
+      <p><a href="tel:+12162132622">(216) 213-2622</a><br><a href="mailto:TempTechCle@gmail.com">TempTechCle@gmail.com</a></p>
+    </div>
   </div>
+  <div class="wrap"><p class="demo">Demo redesign. Logo, photos and some copy are placeholders.</p></div>
 </footer>
 
 <div class="callbar">
-  <a class="btn call" href="tel:+12162132622">Call Now</a>
-  <a class="btn btn-primary" href="#contact">Get A Quote</a>
+  <a class="btn btn-ghost" href="tel:+12162132622">Call Now</a>
+  <a class="btn btn-primary" href="#contact" data-book>Get A Quote</a>
 </div>
+
+<!-- BOOKING WIDGET (demo, front-end only) -->
+<dialog id="book" aria-labelledby="bookTitle">
+  <form class="book" id="bookForm" novalidate>
+    <div class="bk-head">
+      <div>
+        <p class="bk-demo">Demo &ndash; nothing is sent</p>
+        <h2 id="bookTitle">Schedule service or get a quote</h2>
+      </div>
+      <button type="button" class="bk-close" id="bookClose" aria-label="Close scheduler">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>
+      </button>
+    </div>
+    <div class="bk-progress">
+      <p class="step-label" id="stepLabel">Step 1 of 3: Service</p>
+      <div class="pbar" aria-hidden="true"><span id="barFill"></span></div>
+    </div>
+
+    <div class="bk-body">
+      <div data-step="1">
+        <h3 tabindex="-1">What do you need?</h3>
+        <fieldset>
+          <legend class="sr">Service</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="service" value="Air Conditioning" data-key="ac"><span class="box">Air Conditioning</span></label>
+            <label class="choice"><input type="radio" name="service" value="Heating / Furnace" data-key="heat"><span class="box">Heating / Furnace</span></label>
+            <label class="choice"><input type="radio" name="service" value="Maintenance tune-up" data-key="tune"><span class="box">Maintenance tune&#8209;up</span></label>
+            <label class="choice"><input type="radio" name="service" value="Water heater" data-key="water"><span class="box">Water heater</span></label>
+            <label class="choice"><input type="radio" name="service" value="Indoor air quality" data-key="iaq"><span class="box">Indoor air quality</span></label>
+            <label class="choice"><input type="radio" name="service" value="Other" data-key="other"><span class="box">Other</span></label>
+            <label class="choice wide emerg"><input type="radio" name="service" value="Emergency" data-key="emerg"><span class="box">Emergency &mdash; call now</span></label>
+          </div>
+        </fieldset>
+        <div class="emerg-box" id="emerg" hidden>
+          <p>Day or night we handle emergency calls as a top priority. Please call us directly.</p>
+          <a class="btn" href="tel:+12162132622">Call (216) 213-2622</a>
+        </div>
+        <p class="err" role="alert" id="err1"></p>
+      </div>
+
+      <div data-step="2" hidden>
+        <h3 tabindex="-1">Pick a day and time</h3>
+        <p class="demo-note">Demo: slots are examples, not live availability. Mon&ndash;Fri, 7AM&ndash;5PM only.</p>
+        <fieldset>
+          <legend>Day</legend>
+          <div class="days" id="days"></div>
+        </fieldset>
+        <fieldset>
+          <legend>Time</legend>
+          <p class="times-hint" id="timesHint">Choose a day to see times.</p>
+          <div class="times" id="times"></div>
+        </fieldset>
+        <p class="err" role="alert" id="err2"></p>
+      </div>
+
+      <div data-step="3" hidden>
+        <h3 tabindex="-1">Your details</h3>
+        <div class="fld"><label for="fName">Name</label><input id="fName" name="name" autocomplete="name" required aria-describedby="eName"><p class="err" id="eName"></p></div>
+        <div class="fld"><label for="fPhone">Phone</label><input id="fPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required aria-describedby="ePhone"><p class="err" id="ePhone"></p></div>
+        <div class="fld"><label for="fAddr">Address or ZIP code</label><input id="fAddr" name="addr" autocomplete="street-address" required aria-describedby="eAddr"><p class="err" id="eAddr"></p></div>
+        <div class="fld"><label for="fNote">Note <span class="opt">(optional)</span></label><textarea id="fNote" name="note"></textarea></div>
+      </div>
+
+      <div data-step="4" hidden>
+        <div class="ok-ico" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-10"/></svg></div>
+        <h3 tabindex="-1">Request summary (demo)</h3>
+        <dl class="sum" id="sum"></dl>
+        <p class="demo-note" style="margin:0 0 12px">Demo only: nothing was sent or saved. To schedule for real, call <a href="tel:+12162132622">(216) 213-2622</a>, Mon-Fri 7AM-5PM.</p>
+      </div>
+    </div>
+
+    <div class="bk-foot">
+      <button type="button" class="btn btn-ghost" id="bkBack">Back</button>
+      <button type="submit" class="btn btn-primary" id="bkNext">Next</button>
+    </div>
+  </form>
+</dialog>
 
 <script>
 (function(){
-  var btn=document.getElementById('menuBtn'),nav=document.getElementById('nav');
-  function set(o){nav.classList.toggle('open',o);btn.setAttribute('aria-expanded',o)}
-  btn.addEventListener('click',function(){set(!nav.classList.contains('open'))});
-  nav.addEventListener('click',function(e){if(e.target.tagName==='A')set(false)});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+  'use strict';
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var f=document.getElementById('quoteForm'),m=document.getElementById('formMsg');
-  f.addEventListener('submit',function(e){
-    e.preventDefault();
-    var n=f.name.value.trim(),p=f.phone.value.trim();
-    m.style.display='block';
-    if(!n||!p){
-      m.style.cssText='display:block;background:#fdecea;border:1px solid #f0a8a0;color:#8a1c12';
-      m.textContent='Please enter your name and phone number.';
-      return;
-    }
-    m.style.cssText='display:block';
-    m.textContent='Thanks, '+n+'. This is a demo, so your request was not sent. Please call (216) 213-2622.';
-    f.reset();
+  /* ---------- mobile menu ---------- */
+  var mbtn=document.getElementById('menuBtn'),nav=document.getElementById('nav');
+  function menu(o){nav.classList.toggle('open',o);mbtn.setAttribute('aria-expanded',o)}
+  mbtn.addEventListener('click',function(){menu(!nav.classList.contains('open'))});
+  nav.addEventListener('click',function(e){if(e.target.closest('a'))menu(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')menu(false)});
+
+  /* ---------- scroll reveal ---------- */
+  var rv=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window&&!reduce){
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}})},{threshold:.12});
+    rv.forEach(function(el){io.observe(el)});
+  }else{rv.forEach(function(el){el.classList.add('in')})}
+
+  /* ---------- booking widget (front-end only) ---------- */
+  var dlg=document.getElementById('book'),form=document.getElementById('bookForm');
+  var steps=[].slice.call(dlg.querySelectorAll('[data-step]'));
+  var stepLabel=document.getElementById('stepLabel'),barFill=document.getElementById('barFill');
+  var back=document.getElementById('bkBack'),next=document.getElementById('bkNext');
+  var emerg=document.getElementById('emerg'),daysEl=document.getElementById('days'),timesEl=document.getElementById('times'),timesHint=document.getElementById('timesHint');
+  var step=1,opener=null,canModal=typeof dlg.showModal==='function';
+  var labels=['Service','Day and time','Your details'];
+
+  function two(n){return n<10?'0'+n:''+n}
+  function fmtHour(h){return h===12?'12:00 PM':(h<12?h+':00 AM':(h-12)+':00 PM')}
+  function weekdays(){
+    var out=[],d=new Date();d.setHours(12,0,0,0);
+    while(out.length<10){d.setDate(d.getDate()+1);var w=d.getDay();if(w>0&&w<6)out.push(new Date(d))}
+    return out;
+  }
+  var dayList=weekdays(),dayMap={};
+  dayList.forEach(function(d){
+    var iso=d.getFullYear()+'-'+two(d.getMonth()+1)+'-'+two(d.getDate());
+    dayMap[iso]=d;
+    var l=document.createElement('label');l.className='choice';
+    var wk=d.toLocaleDateString('en-US',{weekday:'short'}),md=d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    l.innerHTML='<input type="radio" name="day" value="'+iso+'"><span class="box"><small>'+wk+'</small><b>'+d.getDate()+'</b><small>'+d.toLocaleDateString('en-US',{month:'short'})+'</small></span>';
+    l.querySelector('input').setAttribute('aria-label',d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}));
+    daysEl.appendChild(l);
   });
+  function buildTimes(){
+    timesEl.innerHTML='';
+    for(var h=7;h<=16;h++){
+      var l=document.createElement('label');l.className='choice';
+      l.innerHTML='<input type="radio" name="time" value="'+h+'"><span class="box">'+fmtHour(h)+'</span>';
+      timesEl.appendChild(l);
+    }
+    timesHint.hidden=true;
+  }
+  daysEl.addEventListener('change',function(){if(!timesEl.children.length)buildTimes()});
+
+  function val(n){var r=form.elements[n];return r?r.value:''}
+  function showStep(n,focus){
+    step=n;
+    steps.forEach(function(s){s.hidden=(+s.getAttribute('data-step')!==n)});
+    if(n<=3){stepLabel.textContent='Step '+n+' of 3: '+labels[n-1];barFill.style.width=(n/3*100)+'%'}
+    else{stepLabel.textContent='All steps complete';barFill.style.width='100%'}
+    back.hidden=(n===1||n===4);
+    next.hidden=(n===4)||(n===1&&val('service')==='Emergency');
+    next.textContent=n===1?'Next: pick a time':n===2?'Next: your details':'Request this time';
+    if(n===4){back.hidden=false;back.textContent='Start over';next.hidden=false;next.textContent='Done'}else{back.textContent='Back'}
+    if(focus!==false){var h=steps[n-1].querySelector('h3');if(h)h.focus({preventScroll:true})}
+    dlg.querySelector('.bk-body').scrollTop=0;
+  }
+  function clearErr(){dlg.querySelectorAll('.err').forEach(function(e){e.textContent=''});['fName','fPhone','fAddr'].forEach(function(id){document.getElementById(id).removeAttribute('aria-invalid')})}
+  function bad(id,eid,msg){var i=document.getElementById(id);i.setAttribute('aria-invalid','true');document.getElementById(eid).textContent=msg;return i}
+  function validate(n){
+    clearErr();
+    if(n===1){
+      if(!val('service')){document.getElementById('err1').textContent='Please choose a service.';return false}
+      if(val('service')==='Emergency')return false;
+    }
+    if(n===2){
+      if(!val('day')){document.getElementById('err2').textContent='Please choose a day.';return false}
+      if(!val('time')){document.getElementById('err2').textContent='Please choose a time.';return false}
+    }
+    if(n===3){
+      var first=null;
+      if(!document.getElementById('fName').value.trim())first=bad('fName','eName','Please enter your name.');
+      if(document.getElementById('fPhone').value.replace(/\D/g,'').length<10){var p=bad('fPhone','ePhone','Please enter a 10-digit phone number.');first=first||p}
+      if(!document.getElementById('fAddr').value.trim()){var a=bad('fAddr','eAddr','Please enter your address or ZIP code.');first=first||a}
+      if(first){first.focus();return false}
+    }
+    return true;
+  }
+  function summary(){
+    var d=dayMap[val('day')],rows=[
+      ['Service',val('service')],
+      ['When',d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})+' at '+fmtHour(+val('time'))],
+      ['Name',document.getElementById('fName').value.trim()],['Phone',document.getElementById('fPhone').value.trim()],['Address / ZIP',document.getElementById('fAddr').value.trim()]
+    ];
+    if(document.getElementById('fNote').value.trim())rows.push(['Note',document.getElementById('fNote').value.trim()]);
+    var dl=document.getElementById('sum');dl.innerHTML='';
+    rows.forEach(function(r){var w=document.createElement('div'),t=document.createElement('dt'),dd=document.createElement('dd');t.textContent=r[0];dd.textContent=r[1];w.appendChild(t);w.appendChild(dd);dl.appendChild(w)});
+  }
+  function reset(){form.reset();timesEl.innerHTML='';timesHint.hidden=false;emerg.hidden=true;clearErr()}
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(step===4){closeBook();return}
+    if(!validate(step))return;
+    if(step===3){summary();showStep(4)}else showStep(step+1);
+  });
+  back.addEventListener('click',function(){if(step===4){reset();showStep(1)}else if(step>1){clearErr();showStep(step-1)}});
+  form.addEventListener('change',function(e){
+    if(e.target.name==='service'){
+      var em=e.target.value==='Emergency';emerg.hidden=!em;next.hidden=em;document.getElementById('err1').textContent='';
+    }
+    if(e.target.name==='day'||e.target.name==='time')document.getElementById('err2').textContent='';
+  });
+
+  function openBook(opts,from){
+    if(!canModal)return false;
+    opener=from||document.activeElement;
+    reset();
+    var pre=opts&&opts.service;
+    if(pre){var r=form.querySelector('input[name="service"][data-key="'+pre+'"]');if(r)r.checked=true}
+    if(!dlg.open)dlg.showModal();
+    document.documentElement.style.overflow='hidden';
+    showStep(pre&&val('service')?2:1);
+    return true;
+  }
+  function closeBook(){if(dlg.open)dlg.close()}
+  dlg.addEventListener('close',function(){document.documentElement.style.overflow='';if(opener&&opener.focus)opener.focus()});
+  dlg.addEventListener('click',function(e){if(e.target===dlg)closeBook()});
+  document.getElementById('bookClose').addEventListener('click',closeBook);
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-book]');
+    if(!t)return;
+    if(openBook({service:t.getAttribute('data-service')},t))e.preventDefault();
+    menu(false);
+  });
+
+  /* ---------- hero thermostat dial ---------- */
+  var dial=document.getElementById('dial');
+  if(!dial)return;
+  var MIN=50,MAX=90,hero=document.getElementById('home');
+  var prog=document.getElementById('prog'),knob=document.getElementById('knob'),ticksG=document.getElementById('ticks');
+  var numEl=document.getElementById('num'),numText=document.getElementById('numText');
+  var msg=document.getElementById('dialMsg'),cta=document.getElementById('dialCta');
+  var target=72,shown=72,lastInt=null,raf=0,dragging=false,zoneKey='',ticks=[];
+  var NS='http://www.w3.org/2000/svg';
+
+  for(var t=MIN;t<=MAX;t+=2){
+    var th=(-135+(t-MIN)/(MAX-MIN)*270)*Math.PI/180,major=(t%10===0),r1=major?119:124,r2=133;
+    var ln=document.createElementNS(NS,'line');
+    ln.setAttribute('x1',150+r1*Math.sin(th));ln.setAttribute('y1',150-r1*Math.cos(th));
+    ln.setAttribute('x2',150+r2*Math.sin(th));ln.setAttribute('y2',150-r2*Math.cos(th));
+    ln.setAttribute('class','tk'+(major?' maj':''));ln.dataset.t=t;
+    ticksG.appendChild(ln);ticks.push(ln);
+  }
+
+  /* cold (50F) / neutral (70F) / warm (90F) palettes: [bgA,bgB,glow,accent] */
+  var PAL=[
+    [[11,39,64],[15,74,94],[63,193,208],[111,211,224]],
+    [[14,26,40],[21,48,63],[92,194,186],[92,194,186]],
+    [[42,22,12],[90,50,22],[242,166,90],[242,178,92]]
+  ];
+  function mix(a,b,k){return [a[0]+(b[0]-a[0])*k,a[1]+(b[1]-a[1])*k,a[2]+(b[2]-a[2])*k]}
+  function rgb(c,a){return 'rgba('+Math.round(c[0])+','+Math.round(c[1])+','+Math.round(c[2])+','+(a===undefined?1:a)+')'}
+  function palette(v){
+    var t=(v-MIN)/(MAX-MIN),i=t<.5?0:1,k=t<.5?t*2:(t-.5)*2,o=[];
+    for(var j=0;j<4;j++)o.push(mix(PAL[i][j],PAL[i+1][j],k));
+    return o;
+  }
+  var ZONES=[
+    {max:60,key:'heat',msg:"Cold house? Let's get your heat running.",cta:'Schedule heating service'},
+    {max:67,key:'heat',msg:"Feeling a chill? Let's check your heating.",cta:'Schedule heating service'},
+    {max:74,key:'tune',msg:'Comfortable? Keep it that way.',cta:'Schedule a tune-up'},
+    {max:77,key:'ac',msg:"Getting warm? Let's check your cooling.",cta:'Schedule cooling service'},
+    {max:99,key:'ac',msg:"Too warm? Let's fix your cooling.",cta:'Schedule cooling service'}
+  ];
+  function zoneFor(n){for(var i=0;i<ZONES.length;i++)if(n<=ZONES[i].max)return i}
+  var lastZone=-1;
+  function setZone(n,animate){
+    var z=zoneFor(n);if(z===lastZone)return;lastZone=z;
+    var Z=ZONES[z];
+    function apply(){msg.textContent=Z.msg;cta.textContent=Z.cta;cta.setAttribute('data-service',Z.key);msg.classList.remove('swap')}
+    if(animate&&!reduce){msg.classList.add('swap');setTimeout(apply,160)}else apply();
+  }
+
+  function draw(){
+    var th=-135+(shown-MIN)/(MAX-MIN)*270,pct=(shown-MIN)/(MAX-MIN)*100;
+    knob.setAttribute('transform','rotate('+th.toFixed(2)+' 150 150)');
+    prog.setAttribute('stroke-dasharray',pct.toFixed(2)+' 100');
+    var p=palette(shown);
+    hero.style.setProperty('--bgA',rgb(p[0]));hero.style.setProperty('--bgB',rgb(p[1]));
+    hero.style.setProperty('--glow-a',rgb(p[2],.34));hero.style.setProperty('--accent',rgb(p[3]));
+    var n=Math.round(shown);
+    if(n!==lastInt){
+      var first=lastInt===null;lastInt=n;
+      numEl.textContent=n;
+      ticks.forEach(function(tk){tk.classList.toggle('on',+tk.dataset.t<=n)});
+      setZone(n,!first);
+      if(!first&&!reduce){
+        numText.classList.remove('pulse');void numText.getBoundingClientRect();numText.classList.add('pulse');
+        if(dragging&&navigator.vibrate)try{navigator.vibrate(4)}catch(_){}
+      }
+    }
+  }
+  function loop(){
+    var d=target-shown;
+    if(Math.abs(d)<.02){shown=target;draw();raf=0;return}
+    shown+=d*.2;draw();raf=requestAnimationFrame(loop);
+  }
+  function setTarget(v){
+    v=Math.max(MIN,Math.min(MAX,Math.round(v)));
+    target=v;
+    dial.setAttribute('aria-valuenow',v);dial.setAttribute('aria-valuetext',v+' degrees Fahrenheit');
+    if(reduce){shown=v;draw()}else if(!raf)raf=requestAnimationFrame(loop);
+  }
+  function fromPoint(x,y){
+    var r=dial.getBoundingClientRect(),dx=x-(r.left+r.width/2),dy=y-(r.top+r.height/2);
+    var th=Math.atan2(dx,-dy)*180/Math.PI;
+    if(th>135||th<-135)th=target>=70?135:-135;
+    setTarget(MIN+(th+135)/270*(MAX-MIN));
+  }
+  dial.addEventListener('pointerdown',function(e){
+    dragging=true;dial.classList.add('drag');dial.classList.remove('kb');
+    try{dial.setPointerCapture(e.pointerId)}catch(_){}
+    dial.focus({preventScroll:true});
+    fromPoint(e.clientX,e.clientY);e.preventDefault();
+  });
+  dial.addEventListener('pointermove',function(e){if(dragging)fromPoint(e.clientX,e.clientY)});
+  function end(){dragging=false;dial.classList.remove('drag')}
+  dial.addEventListener('pointerup',end);dial.addEventListener('pointercancel',end);
+  dial.addEventListener('keydown',function(e){
+    dial.classList.add('kb');
+    var k=e.key,d=0;
+    if(k==='ArrowRight'||k==='ArrowUp')d=1;else if(k==='ArrowLeft'||k==='ArrowDown')d=-1;
+    else if(k==='PageUp')d=5;else if(k==='PageDown')d=-5;
+    else if(k==='Home'){e.preventDefault();return setTarget(MIN)}
+    else if(k==='End'){e.preventDefault();return setTarget(MAX)}
+    else return;
+    e.preventDefault();setTarget(target+d);
+  });
+  shown=target;draw();
 })();
 </script>
 </body>
