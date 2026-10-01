@@ -10,14 +10,40 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Temp Tech Heating &amp; Cooling | HVAC Service &amp; Installation in North Ridgeville, Ohio</title>
 <meta name="description" content="Temp Tech Heating &amp; Cooling provides HVAC installation, repair and maintenance, based in North Ridgeville, Ohio. Call (216) 213-2622 or request a visit.">
 <meta name="theme-color" content="#111a22">
 <script>document.documentElement.className='js';</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Inter:wght@400;500;600&display=swap"></noscript>
+<script>
+/* =====================================================================
+   REVIEWS CONFIG  (owner fills this with REAL Google data only)
+   - Never invent reviews, ratings, counts or names. Leave empty until real.
+   - To add reviews: open the Google Business Profile reviews, and copy each review
+     exactly as written (same text, same rating) into `reviews`. Do not edit the
+     wording and do not pick only the flattering ones in a misleading way.
+     author = first name + initial (e.g. "Jane D."), rating = whole number 1-5,
+     dateISO = "2026-09-14", sourceUrl = link to the review on Google (optional).
+   - aggregate = the real average and total shown on the Google profile, e.g.
+     {rating:4.9, count:38}. Used for the "4.9 . 38 Google reviews" line and the
+     aggregateRating structured data. Leave both null if unknown.
+   - googleWriteReviewUrl = "https://search.google.com/local/writereview?placeid=PLACE_ID"
+     (owner supplies the Place ID). If empty, the button falls back to a Google Maps
+     search for the business so it still works.
+   - Reviews are shown with Google attribution ("Reviews from Google").
+   (A test harness may define window.REVIEWS_CONFIG before this runs; production does not.)
+   ===================================================================== */
+window.REVIEWS_CONFIG=window.REVIEWS_CONFIG||{
+  googleWriteReviewUrl:'',
+  googleProfileUrl:'',
+  aggregate:{rating:null,count:null},
+  reviews:[]  /* [{author:'Jane D.', rating:5, text:'...as written...', dateISO:'2026-09-14', sourceUrl:''}] */
+};
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -59,6 +85,7 @@
   --text:#e6ecf2; --muted:#a3b2c1;
   --sand:#d9c19a; --sand-soft:#e8d8bb;
   --radius:16px;
+  --pl:max(24px,env(safe-area-inset-left)); --pr:max(24px,env(safe-area-inset-right));
   --font-head:"Poppins",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --font-body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --ease:cubic-bezier(.22,.8,.3,1);
@@ -66,7 +93,7 @@
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth;scroll-padding-top:76px}
-body{margin:0;font-family:var(--font-body);font-size:1.03rem;color:var(--text);background:var(--bg);line-height:1.7;padding-bottom:80px;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--font-body);font-size:1.03rem;color:var(--text);background:var(--bg);line-height:1.7;padding-bottom:calc(84px + env(safe-area-inset-bottom));-webkit-text-size-adjust:100%}
 img,svg{max-width:100%}
 a{color:var(--accent-hi)}
 h1,h2,h3{font-family:var(--font-head);line-height:1.2;margin:0 0 .5em;color:#fff;font-weight:500}
@@ -74,7 +101,7 @@ h1{font-size:clamp(2.2rem,5.4vw,3.6rem);letter-spacing:-.015em}
 h2{font-size:clamp(1.7rem,3.8vw,2.4rem);letter-spacing:-.01em}
 h3{font-size:1.1rem}
 p{margin:0 0 1em}
-.wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 24px}
+.wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 var(--pr) 0 var(--pl)}
 .sec{padding:clamp(72px,12vw,140px) 0}
 .eyebrow{font-family:var(--font-head);font-weight:500;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-text);margin-bottom:1.1em;display:block}
 .section-head{max-width:640px;margin-bottom:clamp(36px,6vw,64px)}
@@ -127,13 +154,14 @@ nav a.btn:hover{background:var(--accent-hi)}
 .hero h1{margin-bottom:.45em}
 .hero p.lead{font-size:clamp(1.05rem,2vw,1.2rem);color:#cdd8e3;max-width:500px;margin:0 0 34px}
 .hero .actions{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center}
-.phone-link{color:var(--text);text-decoration:none;font-size:.98rem;border-bottom:1px solid rgba(255,255,255,.3);padding:6px 0;line-height:1.2}
-.phone-link:hover{border-color:#fff;color:#fff}
+.phone-link{display:inline-flex;align-items:center;min-height:48px;color:var(--text);font-size:1rem;text-decoration:underline;text-decoration-color:rgba(255,255,255,.35);text-underline-offset:6px;line-height:1.2}
+.phone-link:hover{text-decoration-color:#fff;color:#fff}
 .dial-wrap{display:none;justify-items:center;gap:18px}
 .js .dial-wrap{display:grid}
 .dial-msg{font-family:var(--font-head);font-weight:400;font-size:1.12rem;line-height:1.4;color:#e3eaf1;margin:0;text-align:center;min-height:3.2em;max-width:340px;transition:opacity .25s}
 .dial-msg.swap{opacity:0}
-.dial{position:relative;width:min(280px,74vw);aspect-ratio:1;border-radius:50%;touch-action:none;cursor:grab;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+.dial{position:relative;width:min(280px,74vw);aspect-ratio:1;border-radius:50%;touch-action:pan-y;cursor:grab;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+.knob-hit{position:absolute;width:60px;height:60px;transform:translate(-50%,-50%);border-radius:50%;touch-action:none;cursor:grab;z-index:2;left:50%;top:50%}
 .dial.drag{cursor:grabbing}
 @media(min-width:920px){.dial{width:min(380px,100%)}}
 .dial::before{content:"";position:absolute;inset:-18%;border-radius:50%;background:radial-gradient(closest-side,rgba(var(--accent-rgb),.15),transparent);pointer-events:none}
@@ -153,20 +181,20 @@ nav a.btn:hover{background:var(--accent-hi)}
 .dial:focus-visible{outline:none}
 .dial.kb:focus-visible .face{stroke:var(--focus);stroke-width:4}
 .live-row{display:flex;flex-direction:column;align-items:center;gap:10px;min-height:26px;text-align:center}
-.live-label{margin:0;display:flex;align-items:center;gap:9px;font-size:.92rem;color:#c3cfdb}
+.live-label{margin:0;display:flex;align-items:center;gap:9px;font-size:1rem;color:#c3cfdb}
 .ldot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);flex:none;animation:ping 2.4s ease-out infinite}
 .ldot.off{background:#8393a4;animation:none}
 @keyframes ping{0%{box-shadow:0 0 0 0 rgba(var(--accent-rgb),.5)}70%,100%{box-shadow:0 0 0 8px rgba(var(--accent-rgb),0)}}
-.live-back{font:inherit;font-weight:500;font-size:.9rem;color:var(--accent-text);background:transparent;border:1px solid rgba(var(--accent-rgb),.45);border-radius:999px;padding:9px 18px;min-height:44px;cursor:pointer;transition:background .2s}
+.live-back{font:inherit;font-weight:500;font-size:.9rem;color:var(--accent-text);background:transparent;border:1px solid rgba(var(--accent-rgb),.45);border-radius:999px;padding:9px 20px;min-height:48px;cursor:pointer;transition:background .2s}
 .live-back:hover{background:rgba(var(--accent-rgb),.12)}
 
 /* Dial mode switch + inside read-out */
 .mode{display:flex;gap:2px;width:min(100%,340px);padding:3px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.04)}
-.mode button{flex:1;font:inherit;font-size:.82rem;line-height:1.2;color:var(--muted);background:transparent;border:0;border-radius:999px;padding:9px 8px;min-height:44px;cursor:pointer;transition:background .25s,color .25s}
+.mode button{flex:1;font:inherit;font-size:.92rem;line-height:1.2;color:var(--muted);background:transparent;border:0;border-radius:999px;padding:9px 8px;min-height:48px;cursor:pointer;transition:background .25s,color .25s}
 .mode button:hover{color:#fff}
 .mode button[aria-checked="true"]{background:rgba(var(--accent-rgb),.2);color:#fff}
-.dial-call{margin:-6px 0 0;font-size:.92rem;color:#c3cfdb;text-align:center}
-.dial-call a{color:var(--accent-hi);font-weight:500}
+.dial-call{margin:-6px 0 0;font-size:1rem;color:#c3cfdb;text-align:center;display:flex;flex-direction:column;align-items:center}
+.dial-call a{display:inline-flex;align-items:center;min-height:48px;color:var(--accent-hi);font-weight:500}
 
 
 /* About */
@@ -179,7 +207,7 @@ nav a.btn:hover{background:var(--accent-hi)}
 .facts dt{font-family:var(--font-head);font-weight:500;font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:3px}
 .facts dd{margin:0}
 .disc{margin-top:28px;max-width:560px}
-.disc>summary{display:inline-flex;align-items:center;gap:10px;cursor:pointer;color:var(--accent-text);font-weight:500;font-size:.98rem;list-style:none;padding:10px 0;min-height:44px}
+.disc>summary{display:inline-flex;align-items:center;gap:10px;cursor:pointer;color:var(--accent-text);font-weight:500;font-size:1rem;list-style:none;padding:10px 0;min-height:48px}
 .disc>summary::-webkit-details-marker{display:none}
 .disc>summary::after{content:"+";font-size:1.3rem;line-height:1;transition:transform .25s var(--ease)}
 .disc[open]>summary::after{content:"\2212"}
@@ -199,7 +227,7 @@ nav a.btn:hover{background:var(--accent-hi)}
 
 /* Trust strip + how we work */
 .strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0}
-.strip ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 40px;color:var(--muted);font-size:.92rem;text-align:center}
+.strip ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 40px;color:var(--muted);font-size:1rem;text-align:center}
 .strip strong{color:#fff;font-weight:500}
 .how{margin:34px 0 4px;max-width:560px}
 .how h3{font-size:.74rem;font-family:var(--font-head);font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-text);margin-bottom:14px}
@@ -215,10 +243,10 @@ nav a.btn:hover{background:var(--accent-hi)}
 .work figure{margin:0}
 .art{aspect-ratio:1;border-radius:var(--radius);background:rgba(var(--accent-rgb),.06);display:grid;place-items:center;padding:clamp(18px,3vw,34px);color:var(--accent-text);border:1px solid var(--line)}
 .art svg{width:100%;height:100%;max-width:150px}
-.work figcaption{margin-top:12px;color:var(--muted);font-size:.95rem;text-align:center}
+.work figcaption{margin-top:12px;color:var(--muted);font-size:1rem;text-align:center}
 .promises{list-style:none;margin:clamp(36px,6vw,60px) 0 0;padding:0;display:grid;gap:10px 40px;color:#cdd8e3}
 @media(min-width:860px){.promises{grid-template-columns:repeat(3,1fr)}}
-.promises li{padding-top:14px;border-top:1px solid var(--line);font-size:.97rem}
+.promises li{padding-top:14px;border-top:1px solid var(--line);font-size:1rem}
 
 /* FAQ */
 .faq{max-width:760px}
@@ -237,32 +265,33 @@ nav a.btn:hover{background:var(--accent-hi)}
 .contact .lead-p{color:var(--muted);font-size:1.08rem;max-width:460px;margin-bottom:30px}
 .contact .actions{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center}
 .contact .note{font-size:.84rem;color:var(--muted);margin:22px 0 0;max-width:460px}
-.contact .facts a{font-weight:500}
+.contact .facts a{font-weight:500;display:inline-flex;align-items:center;min-height:48px}
 
 /* Footer */
-footer.site-foot{background:var(--bg3);color:var(--muted);padding:64px 0 32px;font-size:.93rem;border-top:1px solid var(--line)}
+footer.site-foot{background:var(--bg3);color:var(--muted);padding:64px 0 32px;font-size:1rem;border-top:1px solid var(--line)}
 footer.site-foot a{color:#e3eaf1;text-decoration:none}
 footer.site-foot a:hover{text-decoration:underline}
+footer.site-foot .fgrid a{display:inline-flex;align-items:center;min-height:48px}
 .fgrid{display:grid;gap:36px}
 @media(min-width:760px){.fgrid{grid-template-columns:repeat(3,1fr)}}
 .fh{display:block;color:#fff;font-family:var(--font-head);font-weight:500;margin-bottom:12px}
 .flist{list-style:none;margin:0;padding:0}
-.flist li{margin-bottom:6px}
+.flist li{margin:0}
 footer.site-foot p{margin:0 0 12px}
 footer .demo{margin-top:40px;font-size:.8rem;color:#8191a2;border-top:1px solid var(--line);padding-top:20px}
 
 /* Mobile bar */
-.callbar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(var(--bg3-rgb),.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px}
+.callbar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(var(--bg3-rgb),.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:10px var(--pr) calc(10px + env(safe-area-inset-bottom)) var(--pl);display:flex;gap:10px}
 .callbar .btn{padding:12px 10px;min-height:54px}
 .callbar .btn-ghost{flex:0 0 38%}
 .callbar .btn-primary{flex:1}
 @media(min-width:1001px){.callbar{display:none}body{padding-bottom:0}}
 
 /* Compact temperature control */
-.tpill{position:fixed;right:14px;bottom:calc(92px + env(safe-area-inset-bottom));z-index:55;display:flex;align-items:center;gap:2px;padding:4px;border-radius:999px;background:rgba(var(--bg3-rgb),.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--line-accent);box-shadow:0 8px 24px rgba(0,0,0,.35);opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .3s var(--ease),transform .3s var(--ease),visibility 0s .3s}
+.tpill{position:fixed;right:14px;bottom:calc(92px + env(safe-area-inset-bottom));right:max(14px,env(safe-area-inset-right));z-index:55;display:flex;align-items:center;gap:2px;padding:4px;border-radius:999px;background:rgba(var(--bg3-rgb),.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--line-accent);box-shadow:0 8px 24px rgba(0,0,0,.35);opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .3s var(--ease),transform .3s var(--ease),visibility 0s .3s}
 .tpill.show{opacity:1;visibility:visible;transform:none;transition:opacity .3s var(--ease),transform .3s var(--ease)}
 @media(min-width:1001px){.tpill{right:22px;bottom:22px}}
-.tp-btn{width:46px;height:46px;border-radius:50%;border:0;background:rgba(var(--accent-rgb),.12);color:var(--accent-text);cursor:pointer;display:grid;place-items:center;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;transition:background .2s}
+.tp-btn{width:48px;height:48px;border-radius:50%;border:0;background:rgba(var(--accent-rgb),.12);color:var(--accent-text);cursor:pointer;display:grid;place-items:center;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;transition:background .2s}
 .tp-btn:hover{background:rgba(var(--accent-rgb),.24)}
 .tp-btn[aria-disabled="true"]{opacity:.4;cursor:default}
 .tp-val{display:flex;align-items:center;gap:6px;min-width:84px;justify-content:center;font-family:var(--font-head);font-weight:500;font-size:.98rem;color:#fff;padding:0 4px}
@@ -270,28 +299,112 @@ footer .demo{margin-top:40px;font-size:.8rem;color:#8191a2;border-top:1px solid 
 .tp-val .ldot{width:7px;height:7px}
 .tp-live{background:transparent;border:1px solid rgba(var(--accent-rgb),.45);margin-left:2px}
 
+/* Reviews */
+.rv-actions{display:flex;flex-wrap:wrap;gap:6px 24px;align-items:center}
+.rv-fine{margin:18px 0 0;color:var(--muted);font-size:.95rem}
+.stars{display:inline-flex;gap:3px;color:var(--accent-text);line-height:0}
+.stars svg{width:18px;height:18px;flex:none}
+.stars svg.off{opacity:.25}
+.rv-agg{display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;margin:0 0 26px;font-size:1.05rem;color:#dbe4ed}
+.rv-agg b{font-family:var(--font-head);font-weight:500;font-size:1.7rem;color:#fff;line-height:1}
+.rv-wrap{position:relative;margin-bottom:26px}
+.rv-track{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;margin:0 calc(-1*var(--pr)) 0 calc(-1*var(--pl));padding:4px var(--pr) 14px var(--pl);scroll-padding:0 var(--pl);scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.rv-track::-webkit-scrollbar{display:none}
+.rv-track:focus-visible{outline:2px solid var(--focus);outline-offset:-2px;border-radius:var(--radius)}
+.rv-card{position:relative;flex:0 0 68%;scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;gap:12px;min-width:0}
+@media(min-width:760px){.rv-card{flex-basis:calc((100% - 28px)/3)}}
+.rv-text{margin:0;color:#dbe4ed;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden;overflow-wrap:anywhere}
+.rv-card.open .rv-text{-webkit-line-clamp:unset;display:block}
+.rv-more{align-self:flex-start;font:inherit;font-size:1rem;color:var(--accent-text);background:none;border:0;padding:0;min-height:48px;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+.rv-meta{margin-top:auto;font-size:.95rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:2px 10px}
+.rv-meta strong{color:#fff;font-weight:500}
+.rv-meta a{color:var(--muted)}
+.rv-nav{display:none;gap:10px;margin-top:14px}
+@media(min-width:760px){.rv-nav{display:flex}}
+.rv-nav button{width:48px;height:48px;border-radius:50%;border:1px solid var(--line-accent);background:transparent;color:var(--accent-text);cursor:pointer;display:grid;place-items:center}
+.rv-nav button:hover{background:rgba(var(--accent-rgb),.12)}
+
+/* Review sheet: comfort-rating mini thermostat */
+dialog#review{--cr-rgb:134,184,178}
+.cr-glow{position:absolute;left:50%;top:-30px;width:70%;height:90px;transform:translateX(-50%);border-radius:50%;background:rgb(var(--cr-rgb));opacity:.16;filter:blur(40px);pointer-events:none;transition:background-color .45s}
+.cr{touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:pointer;margin:6px 0;-webkit-tap-highlight-color:transparent}
+.cr:focus-visible{outline:2px solid var(--focus);outline-offset:4px;border-radius:20px}
+.cr-track{position:relative;height:80px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid var(--line);overflow:hidden}
+.cr-fill{position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(var(--cr-rgb),.26);border-right:2px solid rgb(var(--cr-rgb));transition:width .3s var(--ease),background-color .4s,border-color .4s}
+.cr-segs{position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,1fr)}
+.cr-segs span{display:grid;place-items:center;font-family:var(--font-head);font-size:1.3rem;color:#d3dde7;border-left:1px solid var(--line)}
+.cr-segs span:first-child{border-left:0}
+.cr-knob{position:absolute;top:50%;left:10%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:#fff;border:4px solid rgb(var(--cr-rgb));box-shadow:0 0 0 7px rgba(var(--cr-rgb),.2);opacity:0;transition:left .3s var(--ease),border-color .4s,box-shadow .4s}
+.cr.set .cr-knob{opacity:1}
+.cr-ends{display:flex;justify-content:space-between;gap:12px;font-size:.95rem;color:var(--muted);margin-top:10px}
+.cr-read{display:flex;align-items:center;flex-wrap:wrap;gap:6px 16px;margin-top:20px}
+.cr-read .stars{color:rgb(var(--cr-rgb));gap:5px}
+.cr-read .stars svg{width:30px;height:30px}
+.cr-read p{margin:0;font-size:1.05rem}
+.cr-read b{font-family:var(--font-head);font-weight:500;font-size:1.6rem;color:#fff}
+.chips{border:0;margin:0 0 22px;padding:0}
+.chip-row{display:flex;flex-wrap:wrap;gap:10px}
+.chip{position:relative;display:block}
+.chip input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer;z-index:1}
+.chip span{display:inline-flex;align-items:center;min-height:48px;padding:10px 18px;border:1.5px solid var(--line);border-radius:999px;font-size:1rem;line-height:1.2;transition:border-color .2s,background-color .2s}
+.chip input:checked + span{border-color:rgb(var(--cr-rgb));background:rgba(var(--cr-rgb),.16);color:#fff}
+.chip input:focus-visible + span{outline:2px solid var(--focus);outline-offset:2px}
+.hint{margin:6px 0 0;font-size:.95rem;color:var(--muted)}
+.rv-preview{border:1px solid var(--line);border-radius:14px;padding:16px;margin:0 0 18px}
+.rv-preview .stars{color:rgb(var(--cr-rgb));margin-bottom:8px}
+.rv-preview p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;user-select:text;-webkit-user-select:text}
+.rv-steps{margin:14px 0 0;color:var(--muted);font-size:1rem}
+.rv-status{margin:12px 0 0;font-size:1rem;color:#dbe4ed}
+.rv-status:empty{display:none}
+.rv-status a{color:var(--accent-hi)}
+.rv-fallback textarea{width:100%;font:inherit;padding:12px;border-radius:12px;border:1.5px solid rgba(255,255,255,.25);background:rgba(0,0,0,.2);color:#fff;min-height:110px}
+.rv-private{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.rv-private .btn{width:100%}
+.rv-google{width:100%}
+.call-block{display:inline-flex;align-items:center;min-height:48px;font-weight:500}
+
+/* Landscape phones: compact chrome, two-column hero */
+@media(max-height:500px){
+  header.site{position:static}
+  .callbar .btn{min-height:48px;padding:8px 10px}
+  .callbar{padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+  .bk-head{padding:12px 18px 2px}.bk-progress{padding:2px 18px 6px}.bk-body{padding:4px 18px 14px}.bk-demo{display:none}
+  .bk-foot{padding-top:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+  .hero{padding:28px 0 40px}
+  .sec{padding:56px 0}
+}
+@media(min-width:700px) and (max-height:500px){
+  .hero-grid{grid-template-columns:1.1fr .9fr;grid-template-areas:"copy dial";align-items:center;column-gap:36px}
+  .dial{width:min(240px,62vh)}
+  .dial-msg{min-height:0}
+}
+
 /* Reveal */
 .js .reveal{opacity:0;transform:translateY(14px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .js .reveal.in{opacity:1;transform:none}
 
 /* Booking dialog */
-dialog#book{border:1px solid var(--line);padding:0;background:var(--surface);color:var(--text);border-radius:22px;width:min(640px,calc(100% - 24px));max-width:none;max-height:calc(100dvh - 24px);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)}
-dialog#book[open]{animation:dlg .35s var(--ease);display:block}
-dialog#book::backdrop{background:rgba(5,9,14,.7);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+dialog.sheet{border:1px solid var(--line);padding:0;background:var(--surface);color:var(--text);border-radius:22px;width:min(640px,calc(100% - 24px));max-width:none;max-height:calc(100dvh - 24px);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+dialog.sheet[open]{animation:dlg .35s var(--ease);display:block}
+dialog.sheet::backdrop{background:rgba(5,9,14,.7);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
 @keyframes dlg{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
-@media(max-width:600px){dialog#book{width:100%;height:100dvh;max-height:none;border-radius:0;border:0;margin:0}}
-.book{display:flex;flex-direction:column;height:100%;max-height:calc(100dvh - 24px)}
-@media(max-width:600px){.book{max-height:100dvh}}
-.bk-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:22px 22px 6px}
+@media(max-width:600px){
+  dialog.sheet{width:100%;max-height:94dvh;margin:auto 0 0;border-radius:22px 22px 0 0;border-bottom:0}
+  dialog.sheet[open]{animation:sheet .38s var(--ease)}
+}
+@keyframes sheet{from{transform:translateY(60px);opacity:.5}to{transform:none;opacity:1}}
+.book{display:flex;flex-direction:column;max-height:calc(100dvh - 24px);position:relative}
+@media(max-width:600px){.book{max-height:94dvh}}
+.bk-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:20px 22px 6px;position:relative}
 .bk-head h2{font-size:1.3rem;margin:0}
 .bk-demo{display:inline-block;font-size:.68rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--sand-soft);background:rgba(217,193,154,.1);border:1px solid rgba(217,193,154,.35);border-radius:999px;padding:3px 11px;margin:0 0 8px}
 .bk-close{flex:none;width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:transparent;color:#fff;cursor:pointer;display:grid;place-items:center}
 .bk-close:hover{background:rgba(255,255,255,.07)}
 .bk-progress{padding:6px 22px 14px}
-.step-label{font-size:.86rem;color:var(--muted);margin:0 0 8px}
+.step-label{font-size:.95rem;color:var(--muted);margin:0 0 8px}
 .pbar{height:3px;background:rgba(255,255,255,.1);border-radius:9px;overflow:hidden}
 .pbar span{display:block;height:100%;width:33%;background:var(--accent);border-radius:9px;transition:width .4s var(--ease)}
-.bk-body{padding:6px 22px 22px;overflow-y:auto;flex:1;min-height:0}
+.bk-body{padding:6px 22px 22px;overflow-y:auto;flex:1;min-height:0;overscroll-behavior:contain;position:relative}
 .bk-body h3{font-size:1.25rem;margin:6px 0 16px;outline:none}
 fieldset{border:0;margin:0 0 18px;padding:0;min-width:0}
 legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;margin-bottom:10px;padding:0}
@@ -302,16 +415,16 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
 .wins{display:grid;gap:10px}
 .choice.none .box{opacity:.6}
 .choice.none input{cursor:not-allowed}
-.slot-msg{color:var(--sand-soft);font-size:.92rem;margin:0 0 10px}
+.slot-msg{color:var(--sand-soft);font-size:1rem;margin:0 0 10px}
 .slot-msg:empty{display:none}
 .slot-msg a{color:var(--sand-soft)}
-.tz-note{color:var(--muted);font-size:.82rem;margin:0 0 6px}
-.ctx{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:.88rem;color:var(--muted)}
+.tz-note{color:var(--muted);font-size:.9rem;margin:0 0 6px}
+.ctx{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:.95rem;color:var(--muted)}
 .ctx label{margin:0}
 .ctx-in{display:inline-flex;align-items:center;gap:6px}
-.ctx-in input{width:72px;font:inherit;padding:8px 10px;min-height:44px;border:1.5px solid rgba(255,255,255,.2);border-radius:10px;background:rgba(0,0,0,.2);color:#fff}
+.ctx-in input{width:72px;font:inherit;padding:8px 10px;min-height:48px;border:1.5px solid rgba(255,255,255,.2);border-radius:10px;background:rgba(0,0,0,.2);color:#fff}
 .ctx-in input[aria-invalid="true"]{border-color:#e6a095}
-.ctx-remove{font:inherit;font-size:.86rem;color:var(--accent-text);background:transparent;border:1px solid rgba(var(--accent-rgb),.45);border-radius:999px;padding:8px 16px;min-height:44px;cursor:pointer;margin-left:auto}
+.ctx-remove{font:inherit;font-size:.86rem;color:var(--accent-text);background:transparent;border:1px solid rgba(var(--accent-rgb),.45);border-radius:999px;padding:8px 18px;min-height:48px;cursor:pointer;margin-left:auto}
 .ctx-remove:hover{background:rgba(var(--accent-rgb),.12)}
 .times{grid-template-columns:repeat(auto-fill,minmax(96px,1fr))}
 .choice{position:relative;display:block}
@@ -329,7 +442,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
 .emerg-box p{margin:0 0 12px;color:var(--sand-soft)}
 .emerg-box .btn{width:100%;background:var(--sand);color:#241a0c}
 .emerg-box .btn:hover{background:#e6d2b0}
-.demo-note{font-size:.88rem;color:var(--sand-soft);margin:-6px 0 16px}
+.demo-note{font-size:1rem;color:var(--sand-soft);margin:-6px 0 16px}
 .fld{margin-bottom:16px}
 .fld label{display:block;font-weight:500;font-size:.9rem;margin-bottom:6px}
 .fld input,.fld textarea{width:100%;font:inherit;padding:13px 15px;border:1.5px solid rgba(255,255,255,.2);border-radius:12px;background:rgba(0,0,0,.2);color:#fff;min-height:54px}
@@ -339,7 +452,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
 .err{color:#f0b3a9;font-size:.9rem;margin:6px 0 0}
 .err:empty{display:none}
 .opt{font-weight:400;color:var(--muted)}
-.bk-foot{display:flex;gap:12px;padding:16px 22px calc(16px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+.bk-foot{display:flex;gap:12px;padding:14px max(22px,env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom)) max(22px,env(safe-area-inset-left));border-top:1px solid var(--line);background:var(--surface)}
 .bk-foot .btn{flex:1}
 .bk-foot #bkBack{flex:0 0 auto;min-width:110px}
 .sum{margin:0 0 18px;padding:0;border-top:1px solid var(--line)}
@@ -419,6 +532,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
           <text id="numText" x="150" y="168" text-anchor="middle" font-size="74"><tspan id="num">70</tspan><tspan font-size="26" dy="-24" dx="2">°F</tspan></text>
           <text class="cap" x="150" y="202" text-anchor="middle">Drag or tap to set</text>
         </svg>
+        <div class="knob-hit" id="knobHit" aria-hidden="true"></div>
       </div>
       <p class="dial-msg" id="dialMsg" aria-live="polite">Comfortable. Let's keep it that way.</p>
       <p class="dial-call" id="dialCall" hidden>No heat or cooling right now? <a href="tel:+12162132622">Call (216) 213-2622</a>.</p>
@@ -528,6 +642,20 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   </div>
 </section>
 
+<!-- REVIEWS (real Google data only; see REVIEWS_CONFIG in the head) -->
+<section class="sec" id="reviews">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Reviews</span>
+      <h2 id="rvTitle">Tell us how we did</h2>
+      <p id="rvLead">Your experience matters to us. A few honest words are always appreciated.</p>
+    </div>
+    <div id="rvBody" class="rv-actions">
+      <a class="btn btn-primary" id="rvBtn" href="https://www.google.com/maps/search/?api=1&amp;query=Temp+Tech+Heating+%26+Cooling+North+Ridgeville+Ohio" target="_blank" rel="noopener noreferrer" data-review>Leave a review</a>
+    </div>
+  </div>
+</section>
+
 <!-- FAQ -->
 <section class="sec" id="faq">
   <div class="wrap">
@@ -538,7 +666,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     </div>
     <div class="faq reveal">
       <details><summary>How does requesting a visit work?</summary><div class="ans"><p>Choose a service and the day and time window that suit you, then leave your details. We call or text to confirm your time, and we will let you know if anything changes.</p></div></details>
-      <details><summary>What if I have no heat or no cooling?</summary><div class="ans"><p>Call us directly at <a href="tel:+12162132622">(216) 213-2622</a>. We work Monday to Friday, 7AM to 5PM, and we try to accommodate all emergency needs as soon as possible.</p></div></details>
+      <details><summary>What if I have no heat or no cooling?</summary><div class="ans"><p>Call us directly rather than using the form. We work Monday to Friday, 7AM to 5PM, and we try to accommodate all emergency needs as soon as possible.</p><p><a class="call-block" href="tel:+12162132622">Call (216) 213-2622</a></p></div></details>
       <details><summary>Where do you work?</summary><div class="ans"><p>We are based in North Ridgeville and work throughout Northeast Ohio. Not sure we cover your address? Call and we will tell you.</p></div></details>
       <details><summary>Do you work on homes and businesses?</summary><div class="ans"><p>Both. We are capable of any residential and commercial HVAC need.</p></div></details>
       <details><summary>Do you offer estimates, and how is pricing handled?</summary><div class="ans"><p>Estimates are free on a complete system replacement. For all work, we explain your options and the pricing before work begins.</p></div></details>
@@ -593,7 +721,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     <div>
       <strong class="fh">Working Hours</strong>
       <p>We work 5 days a week, and try to accommodate all emergency needs ASAP.<br>Monday&ndash;Friday: 7:00AM&ndash;5:00PM</p>
-      <p><a href="tel:+12162132622">(216) 213-2622</a><br><a href="mailto:TempTechCle@gmail.com">TempTechCle@gmail.com</a></p>
+      <p><a href="tel:+12162132622">(216) 213-2622</a><br><a href="mailto:TempTechCle@gmail.com">TempTechCle@gmail.com</a><br><a href="https://www.google.com/maps/search/?api=1&amp;query=Temp+Tech+Heating+%26+Cooling+North+Ridgeville+Ohio" target="_blank" rel="noopener noreferrer" data-review>Leave a review</a></p>
     </div>
   </div>
   <div class="wrap"><p class="demo">Demo redesign of the Temp Tech Heating &amp; Cooling website.</p></div>
@@ -611,8 +739,105 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   <button type="button" class="tp-btn tp-live" id="tpLive" aria-label="Back to Cleveland now" title="Back to Cleveland now" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
 </div>
 
+<!-- REVIEW SHEET (customer review flow; nothing typed here is shown on this website) -->
+<dialog id="review" class="sheet" aria-labelledby="rvDlgTitle">
+  <form class="book" id="rvForm" novalidate>
+    <div class="cr-glow" aria-hidden="true"></div>
+    <div class="bk-head">
+      <div><h2 id="rvDlgTitle">Leave a review</h2></div>
+      <button type="button" class="bk-close" id="rvClose" aria-label="Close review form">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>
+      </button>
+    </div>
+    <div class="bk-progress">
+      <p class="step-label" id="rvStepLabel">Step 1 of 3: Rating</p>
+      <div class="pbar" aria-hidden="true"><span id="rvBar"></span></div>
+    </div>
+
+    <div class="bk-body">
+      <div data-rstep="1">
+        <h3 tabindex="-1">How comfortable are you now?</h3>
+        <div class="cr" id="cr" role="slider" tabindex="0" aria-label="Comfort rating, 1 to 5" aria-valuemin="1" aria-valuemax="5" aria-valuetext="Not rated yet">
+          <div class="cr-track" id="crTrack">
+            <div class="cr-fill" id="crFill"></div>
+            <div class="cr-segs" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+            <div class="cr-knob" id="crKnob"></div>
+          </div>
+        </div>
+        <div class="cr-ends" aria-hidden="true"><span>Still uncomfortable</span><span>Perfectly comfortable</span></div>
+        <div class="cr-read">
+          <span class="stars" id="crStars" aria-hidden="true"></span>
+          <p><b id="crNum">&ndash;</b> out of 5 &middot; <span id="crLabel">Tap or slide to rate</span></p>
+        </div>
+        <p class="hint">This is a standard 1 to 5 star rating.</p>
+      </div>
+
+      <div data-rstep="2" hidden>
+        <h3 tabindex="-1">Tell us a little more</h3>
+        <fieldset class="chips">
+          <legend>What did we help with?</legend>
+          <div class="chip-row" id="rvSvc">
+            <label class="chip"><input type="radio" name="rvsvc" value="Air Conditioning"><span>Air Conditioning</span></label>
+            <label class="chip"><input type="radio" name="rvsvc" value="Heating"><span>Heating</span></label>
+            <label class="chip"><input type="radio" name="rvsvc" value="Indoor Air Quality"><span>Indoor Air Quality</span></label>
+            <label class="chip"><input type="radio" name="rvsvc" value="Water Heating"><span>Water Heating</span></label>
+            <label class="chip"><input type="radio" name="rvsvc" value="Not sure"><span>Not sure</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="chips">
+          <legend>What stood out? <span class="opt">(optional ideas to write about)</span></legend>
+          <div class="chip-row" id="rvTags">
+            <label class="chip"><input type="checkbox" name="rvtag" value="On time"><span>On time</span></label>
+            <label class="chip"><input type="checkbox" name="rvtag" value="Clear pricing"><span>Clear pricing</span></label>
+            <label class="chip"><input type="checkbox" name="rvtag" value="Clean work"><span>Clean work</span></label>
+            <label class="chip"><input type="checkbox" name="rvtag" value="Friendly"><span>Friendly</span></label>
+            <label class="chip"><input type="checkbox" name="rvtag" value="Explained options"><span>Explained options</span></label>
+          </div>
+        </fieldset>
+        <div class="fld"><label for="rvText">Your review</label><textarea id="rvText" rows="5" maxlength="1500" autocomplete="off" autocapitalize="sentences" spellcheck="true" enterkeyhint="done" aria-describedby="rvHint"></textarea><p class="hint" id="rvHint"></p></div>
+        <div class="fld"><label for="rvName">First name <span class="opt">(optional)</span></label><input id="rvName" maxlength="40" autocomplete="given-name" autocapitalize="words" enterkeyhint="done"></div>
+      </div>
+
+      <div data-rstep="3" hidden>
+        <h3 tabindex="-1">Share it</h3>
+        <div class="rv-preview"><span class="stars" id="pvStars" aria-hidden="true"></span><p id="pvText"></p></div>
+        <button type="button" class="btn btn-primary rv-google" id="rvGoogle">Post on Google</button>
+        <p class="rv-steps">We copy your words and open Google in a new tab.<br>Paste them into the review box and tap Post.</p>
+        <p class="rv-status" id="rvStatus" role="status"></p>
+        <div class="rv-fallback" id="rvFallback" hidden>
+          <label for="rvFallbackText" class="sr">Your review text, to copy</label>
+          <textarea id="rvFallbackText" readonly></textarea>
+        </div>
+        <p class="hint">Reviews are posted on Google, not on this website.</p>
+        <div class="rv-private">
+          <button type="button" class="btn btn-ghost" id="rvPrivateBtn" aria-expanded="false" aria-controls="rvPrivate">Send private feedback to Temp Tech instead</button>
+          <div id="rvPrivate" hidden>
+            <p class="hint" style="margin:14px 0">This goes to the Temp Tech team only. It is not posted anywhere.</p>
+            <p class="demo-note" id="pfDemo">Demo: private feedback is not sent yet.</p>
+            <div class="fld"><label for="pfMsg">Your message</label><textarea id="pfMsg" maxlength="1500" autocomplete="off" autocapitalize="sentences"></textarea></div>
+            <div class="fld"><label for="pfContact">Phone or email <span class="opt">(optional, if you would like a reply)</span></label><input id="pfContact" autocomplete="off" autocapitalize="off" inputmode="text" maxlength="120"></div>
+            <button type="button" class="btn btn-primary" id="pfSend">Send privately</button>
+            <p class="err" id="pfErr" role="alert"></p>
+          </div>
+        </div>
+      </div>
+
+      <div data-rstep="4" hidden>
+        <div class="ok-ico" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5 9-10"/></svg></div>
+        <h3 tabindex="-1" id="rvThanksTitle">Thank you</h3>
+        <p id="rvThanksMsg">Thank you for taking the time. We appreciate it.</p>
+      </div>
+    </div>
+
+    <div class="bk-foot">
+      <button type="button" class="btn btn-ghost" id="rvBack">Back</button>
+      <button type="submit" class="btn btn-primary" id="rvNext" disabled>Next</button>
+    </div>
+  </form>
+</dialog>
+
 <!-- BOOKING WIDGET (demo, front-end only) -->
-<dialog id="book" aria-labelledby="bookTitle">
+<dialog id="book" class="sheet" aria-labelledby="bookTitle">
   <form class="book" id="bookForm" novalidate>
     <div class="bk-head">
       <div>
@@ -673,10 +898,10 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
 
       <div data-step="3" hidden>
         <h3 tabindex="-1">Your details</h3>
-        <div class="fld"><label for="fName">Name</label><input id="fName" name="name" autocomplete="name" required aria-describedby="eName"><p class="err" id="eName"></p></div>
-        <div class="fld"><label for="fPhone">Phone</label><input id="fPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required aria-describedby="ePhone"><p class="err" id="ePhone"></p></div>
-        <div class="fld"><label for="fAddr">Address or ZIP code</label><input id="fAddr" name="addr" autocomplete="street-address" required aria-describedby="eAddr"><p class="err" id="eAddr"></p></div>
-        <div class="fld"><label for="fNote">Note <span class="opt">(optional)</span></label><textarea id="fNote" name="note"></textarea></div>
+        <div class="fld"><label for="fName">Name</label><input id="fName" name="name" autocomplete="name" autocapitalize="words" enterkeyhint="next" required aria-describedby="eName"><p class="err" id="eName"></p></div>
+        <div class="fld"><label for="fPhone">Phone</label><input id="fPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="next" required aria-describedby="ePhone"><p class="err" id="ePhone"></p></div>
+        <div class="fld"><label for="fAddr">Address or ZIP code</label><input id="fAddr" name="addr" autocomplete="street-address" autocapitalize="words" enterkeyhint="next" required aria-describedby="eAddr"><p class="err" id="eAddr"></p></div>
+        <div class="fld"><label for="fNote">Note <span class="opt">(optional)</span></label><textarea id="fNote" name="note" autocomplete="off" autocapitalize="sentences" enterkeyhint="done"></textarea></div>
         <p class="err" role="alert" id="errSubmit"></p>
       </div>
 
@@ -708,6 +933,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
      client's site; everything else is a default guess the OWNER MUST CONFIRM.
      ===================================================================== */
   var BOOKING_ENDPOINT='';        /* '' = demo mode: nothing is sent. Set to a URL to POST requests as JSON. */
+  var FEEDBACK_ENDPOINT='';       /* '' = demo mode: private review feedback is not sent. Set to a URL to POST it as JSON. */
   var AVAILABILITY_ENDPOINT='';   /* '' = none. Optional GET returning {"requests":[{"day":"2026-10-05","window":"morning"}, ...]} */
   var AVAILABILITY={
     timezone:'America/New_York',  /* business timezone; days and windows are computed in this zone, whatever the visitor's device says */
@@ -791,8 +1017,17 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
       .then(function(r){clearTimeout(to);if(!r.ok){var e=new Error('http '+r.status);e.code=r.status;throw e}return {ok:true,demo:false}})
       .catch(function(e){clearTimeout(to);throw e});
   }
+  /* Private feedback (review flow). Same pattern as submitBooking: demo when the endpoint is empty. */
+  function submitFeedback(payload){
+    if(!FEEDBACK_ENDPOINT)return Promise.resolve({ok:true,demo:true});
+    if(typeof fetch!=='function'||typeof AbortController==='undefined')return Promise.reject(new Error('unsupported'));
+    var ac=new AbortController(),to=setTimeout(function(){ac.abort()},10000);
+    return fetch(FEEDBACK_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:ac.signal})
+      .then(function(r){clearTimeout(to);if(!r.ok){var e=new Error('http '+r.status);e.code=r.status;throw e}return {ok:true,demo:false}})
+      .catch(function(e){clearTimeout(to);throw e});
+  }
   window.TempTechScheduling={AVAILABILITY:AVAILABILITY,getSlots:getSlots,setRequests:setRequests,loadRequests:loadRequests,submitBooking:submitBooking,
-    setEndpoints:function(o){if(o&&typeof o.booking==='string')BOOKING_ENDPOINT=o.booking;if(o&&typeof o.availability==='string')AVAILABILITY_ENDPOINT=o.availability}};
+    setEndpoints:function(o){if(o&&typeof o.feedback==='string')FEEDBACK_ENDPOINT=o.feedback;if(o&&typeof o.booking==='string')BOOKING_ENDPOINT=o.booking;if(o&&typeof o.availability==='string')AVAILABILITY_ENDPOINT=o.availability}};
 
   /* ---------- mobile menu ---------- */
   var mbtn=document.getElementById('menuBtn'),nav=document.getElementById('nav');
@@ -971,14 +1206,14 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     reset();
     var pre=opts&&opts.service;
     if(pre){var r=form.querySelector('input[name="service"][data-key="'+pre+'"]');if(r)r.checked=true}
-    if(!dlg.open)dlg.showModal();
+    if(!dlg.open){pushDlg('book');dlg.showModal()}
     document.documentElement.style.overflow='hidden';
     showStep(pre&&val('service')?2:1);
     loadRequests().then(function(ok){if(ok&&dlg.open&&step===2)renderDays(val('window'))});
     return true;
   }
   function closeBook(){if(dlg.open)dlg.close()}
-  dlg.addEventListener('close',function(){document.documentElement.style.overflow='';if(opener&&opener.focus)opener.focus()});
+  dlg.addEventListener('close',function(){document.documentElement.style.overflow='';if(opener&&opener.focus)opener.focus();dlgClosed()});
   dlg.addEventListener('click',function(e){if(e.target===dlg)closeBook()});
   document.getElementById('bookClose').addEventListener('click',closeBook);
   document.addEventListener('click',function(e){
@@ -989,11 +1224,280 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   });
   loadRequests();
 
+  /* ---------- Esc and the phone Back button close open sheets ---------- */
+  var histOpen=null,byPop=false;
+  function pushDlg(id){try{history.pushState({ttDlg:id},'');histOpen=id}catch(_){histOpen=null}}
+  function dlgClosed(){if(histOpen&&!byPop){var id=histOpen;histOpen=null;try{if(history.state&&history.state.ttDlg===id)history.back()}catch(_){}}}
+  window.addEventListener('popstate',function(){
+    if(!histOpen)return;
+    var d=document.getElementById(histOpen);histOpen=null;byPop=true;
+    try{if(d&&d.open)d.close()}finally{byPop=false}
+  });
+
+  /* ======================= REVIEWS (real Google data only, from REVIEWS_CONFIG) ======================= */
+  var RC=window.REVIEWS_CONFIG||{};
+  var G_SEARCH='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent('Temp Tech Heating & Cooling North Ridgeville Ohio');
+  function httpsUrl(u){return (typeof u==='string'&&/^https:\/\/[^\s]+$/i.test(u))?u:''}
+  function writeUrl(){return httpsUrl(RC.googleWriteReviewUrl)||G_SEARCH}
+  function profUrl(){return httpsUrl(RC.googleProfileUrl)}
+  function validReviews(){
+    return (Array.isArray(RC.reviews)?RC.reviews:[]).filter(function(r){
+      return r&&typeof r.author==='string'&&r.author.trim()&&typeof r.text==='string'&&r.text.trim()&&Number.isInteger(r.rating)&&r.rating>=1&&r.rating<=5;
+    });
+  }
+  function validAgg(){var a=RC.aggregate;return (a&&typeof a.rating==='number'&&isFinite(a.rating)&&a.rating>=1&&a.rating<=5&&Number.isInteger(a.count)&&a.count>0)?a:null}
+  var STAR='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z" fill="currentColor"/></svg>';
+  function fillStars(el,n){var h='';for(var i=1;i<=5;i++)h+=i<=n?STAR:STAR.replace('<svg','<svg class="off"');el.innerHTML=h;return el}
+  function starsEl(n){var s=document.createElement('span');s.className='stars';s.setAttribute('aria-hidden','true');return fillStars(s,n)}
+  function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e}
+
+  function renderReviews(){
+    document.querySelectorAll('a[data-review]').forEach(function(a){a.href=writeUrl()});
+    var list=validReviews(),agg=validAgg();
+    if(agg){   /* structured data only for REAL aggregate values */
+      var ld=document.querySelector('script[type="application/ld+json"]');
+      try{var d=JSON.parse(ld.textContent);d.aggregateRating={'@type':'AggregateRating',ratingValue:agg.rating,reviewCount:agg.count,bestRating:5,worstRating:1};ld.textContent=JSON.stringify(d)}catch(_){}
+    }
+    if(!list.length&&!agg)return;   /* calm empty state stays: no fake content, no empty carousel, no zero stars */
+    var body=document.getElementById('rvBody');
+    document.getElementById('rvTitle').textContent='What customers say';
+    document.getElementById('rvLead').textContent='Reviews from Google, shown as written.';
+    body.className='';body.innerHTML='';
+    if(agg){
+      var p=el('p','rv-agg');p.appendChild(starsEl(Math.round(agg.rating)));
+      p.appendChild(el('b','',agg.rating.toFixed(1)));
+      p.appendChild(el('span','','· '+agg.count+' Google review'+(agg.count===1?'':'s')));
+      body.appendChild(p);
+    }
+    if(list.length){
+      var wrap=el('div','rv-wrap'),track=el('div','rv-track');
+      track.tabIndex=0;track.setAttribute('role','region');track.setAttribute('aria-label','Google reviews. Scroll sideways to read more.');
+      list.forEach(function(r,i){
+        var c=el('article','rv-card'),tid='rvt'+i;
+        c.appendChild(starsEl(r.rating));
+        c.appendChild(el('span','sr','Rated '+r.rating+' out of 5'));
+        var t=el('p','rv-text',r.text);t.id=tid;c.appendChild(t);
+        var more=el('button','rv-more','Read more');more.type='button';more.hidden=true;more.setAttribute('aria-expanded','false');more.setAttribute('aria-controls',tid);
+        more.addEventListener('click',function(){var o=c.classList.toggle('open');more.textContent=o?'Show less':'Read more';more.setAttribute('aria-expanded',o)});
+        c.appendChild(more);
+        var meta=el('div','rv-meta');meta.appendChild(el('strong','',r.author.trim()));
+        var dt=r.dateISO?new Date(r.dateISO):null;
+        if(dt&&isFinite(dt.getTime()))meta.appendChild(el('span','',dt.toLocaleDateString('en-US',{month:'long',year:'numeric',timeZone:'UTC'})));
+        var src=httpsUrl(r.sourceUrl),g;
+        if(src){g=el('a','','Google');g.href=src;g.target='_blank';g.rel='noopener noreferrer'}else g=el('span','','Google');
+        meta.appendChild(g);c.appendChild(meta);track.appendChild(c);
+      });
+      wrap.appendChild(track);
+      var nav=el('div','rv-nav');
+      [['Previous reviews','M15 5l-7 7 7 7',-1],['Next reviews','M9 5l7 7-7 7',1]].forEach(function(b){
+        var btn=el('button');btn.type='button';btn.setAttribute('aria-label',b[0]);
+        btn.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+b[1]+'"/></svg>';
+        btn.addEventListener('click',function(){track.scrollBy({left:b[2]*track.clientWidth*.8,behavior:reduce?'auto':'smooth'})});
+        nav.appendChild(btn);
+      });
+      wrap.appendChild(nav);body.appendChild(wrap);
+      var check=function(){track.querySelectorAll('.rv-card').forEach(function(c){
+        if(c.classList.contains('open'))return;
+        var t=c.querySelector('.rv-text'),m=c.querySelector('.rv-more');m.hidden=!(t.scrollHeight>t.clientHeight+1);
+      })};
+      requestAnimationFrame(check);window.addEventListener('resize',check);
+      if(document.fonts&&document.fonts.ready)document.fonts.ready.then(check);
+    }
+    var act=el('div','rv-actions');
+    var lb=el('button','btn btn-primary','Leave a review');lb.type='button';lb.setAttribute('data-review','');act.appendChild(lb);
+    var pu=profUrl();
+    if(pu){var a=el('a','phone-link','See all reviews on Google');a.href=pu;a.target='_blank';a.rel='noopener noreferrer';act.appendChild(a)}
+    body.appendChild(act);
+    body.appendChild(el('p','rv-fine','Reviews from Google. Shown as written.'));
+  }
+  renderReviews();
+
+  /* ======================= REVIEW FLOW (bottom sheet on phones) ======================= */
+  var rdlg=document.getElementById('review'),rform=document.getElementById('rvForm');
+  var rsteps=[].slice.call(rdlg.querySelectorAll('[data-rstep]')),rLabel=document.getElementById('rvStepLabel'),rBar=document.getElementById('rvBar');
+  var rBack=document.getElementById('rvBack'),rNext=document.getElementById('rvNext');
+  var rcan=typeof rdlg.showModal==='function',rstep=1,ropener=null,thanksVariant='google';
+  var R={rating:0,svc:'',tags:[],text:'',name:''};
+  var DRAFT='tt-review-draft',rLabels=['Rating','Details','Share'];
+  function saveDraft(){try{sessionStorage.setItem(DRAFT,JSON.stringify(R))}catch(_){}}
+  function loadDraft(){
+    try{
+      var d=JSON.parse(sessionStorage.getItem(DRAFT)||'null');
+      if(d&&typeof d==='object'){
+        R.rating=(Number.isInteger(d.rating)&&d.rating>=1&&d.rating<=5)?d.rating:0;
+        R.svc=typeof d.svc==='string'?d.svc:'';
+        R.tags=Array.isArray(d.tags)?d.tags.filter(function(x){return typeof x==='string'}):[];
+        R.text=typeof d.text==='string'?d.text.slice(0,1500):'';
+        R.name=typeof d.name==='string'?d.name.slice(0,40):'';
+      }
+    }catch(_){}
+  }
+  function clearDraft(){try{sessionStorage.removeItem(DRAFT)}catch(_){}}
+
+  /* comfort rating: a mini thermostat that is also a normal 1-5 star rating */
+  var cr=document.getElementById('cr'),crTrack=document.getElementById('crTrack'),crFill=document.getElementById('crFill'),crKnob=document.getElementById('crKnob');
+  var crStars=document.getElementById('crStars'),crNum=document.getElementById('crNum'),crLabel=document.getElementById('crLabel');
+  var CR_LABELS=['Tap or slide to rate','Still uncomfortable','Not quite there','Okay','Comfortable','Perfectly comfortable'];
+  var CR_TEMPS=[65,8,36,65,76,88];   /* existing colour tokens: dusty steel blue (1) toward mist-teal (3) and soft copper (5) */
+  var crDrag=false;
+  function crRgb(v){try{return chan(sample(ACC,CR_TEMPS[v]))}catch(_){return '134,184,178'}}
+  function paintCR(){
+    var v=R.rating;
+    rdlg.style.setProperty('--cr-rgb',crRgb(v));
+    cr.classList.toggle('set',v>0);
+    crFill.style.width=(v/5*100)+'%';crKnob.style.left=(v?(v-.5)/5*100:10)+'%';
+    if(v){cr.setAttribute('aria-valuenow',v);cr.setAttribute('aria-valuetext',v+' out of 5, '+CR_LABELS[v])}
+    else{cr.removeAttribute('aria-valuenow');cr.setAttribute('aria-valuetext','Not rated yet')}
+    fillStars(crStars,v);crNum.textContent=v||'–';crLabel.textContent=CR_LABELS[v];
+    if(rstep===1)rNext.disabled=!v;
+  }
+  function setCR(v,user){
+    v=Math.max(1,Math.min(5,Math.round(v)));
+    if(v===R.rating)return;
+    R.rating=v;paintCR();saveDraft();
+    if(user){try{if(navigator.vibrate)navigator.vibrate(8)}catch(_){}}
+  }
+  function crFromX(x){var r=crTrack.getBoundingClientRect();setCR(Math.floor((x-r.left)/r.width*5)+1,true)}
+  cr.addEventListener('pointerdown',function(e){crDrag=true;try{cr.setPointerCapture(e.pointerId)}catch(_){}cr.focus({preventScroll:true});crFromX(e.clientX)});
+  cr.addEventListener('pointermove',function(e){if(crDrag)crFromX(e.clientX)});
+  ['pointerup','pointercancel'].forEach(function(ev){cr.addEventListener(ev,function(){crDrag=false})});
+  cr.addEventListener('keydown',function(e){
+    var k=e.key,v=R.rating||0;
+    if(k==='ArrowRight'||k==='ArrowUp')setCR(v?v+1:3,true);
+    else if(k==='ArrowLeft'||k==='ArrowDown')setCR(v?v-1:3,true);
+    else if(k==='Home')setCR(1,true);else if(k==='End')setCR(5,true);
+    else if(/^[1-5]$/.test(k))setCR(+k,true);
+    else return;
+    e.preventDefault();
+  });
+
+  function hintText(){
+    var n=R.text.trim().length,tags=R.tags.map(function(t){return t.toLowerCase()});
+    var lead=tags.length?'You picked: '+tags.join(', ')+'. Say more about it in your own words.':'A sentence or two about your visit is plenty.';
+    return lead+' '+n+' character'+(n===1?'':'s')+(n>=1500?' (maximum)':'')+'.';
+  }
+  function syncFields(){
+    rform.querySelectorAll('input[name="rvsvc"]').forEach(function(i){i.checked=(i.value===R.svc)});
+    rform.querySelectorAll('input[name="rvtag"]').forEach(function(i){i.checked=R.tags.indexOf(i.value)>=0});
+    document.getElementById('rvText').value=R.text;document.getElementById('rvName').value=R.name;
+    document.getElementById('rvHint').textContent=hintText();
+  }
+  rform.addEventListener('input',function(e){
+    if(e.target.id==='rvText'){R.text=e.target.value;document.getElementById('rvHint').textContent=hintText();saveDraft()}
+    if(e.target.id==='rvName'){R.name=e.target.value;saveDraft()}
+  });
+  rform.addEventListener('change',function(e){
+    if(e.target.name==='rvsvc'){R.svc=e.target.value;saveDraft()}
+    if(e.target.name==='rvtag'){R.tags=[].slice.call(rform.querySelectorAll('input[name="rvtag"]:checked')).map(function(i){return i.value});document.getElementById('rvHint').textContent=hintText();saveDraft()}
+  });
+
+  function showR(n,focus){
+    rstep=n;
+    rsteps.forEach(function(x){x.hidden=(+x.getAttribute('data-rstep')!==n)});
+    if(n<=3){rLabel.textContent='Step '+n+' of 3: '+rLabels[n-1];rBar.style.width=(n/3*100)+'%'}else{rLabel.textContent='Thank you';rBar.style.width='100%'}
+    rBack.hidden=(n===1||n===4);
+    rNext.hidden=false;
+    rNext.textContent=n===1?'Next':n===2?'Next':n===3?'Done':'Close';
+    rNext.disabled=(n===1&&!R.rating);
+    if(n===3)prepShare();
+    if(focus!==false){var h=rsteps[n-1].querySelector('h3');if(h)h.focus({preventScroll:true})}
+    rdlg.querySelector('.bk-body').scrollTop=0;
+  }
+  function prepShare(){
+    fillStars(document.getElementById('pvStars'),R.rating);
+    var t=R.text.trim();document.getElementById('pvText').textContent=t||'No text added. You can still open Google and choose your stars there.';
+    document.getElementById('rvStatus').textContent='';document.getElementById('rvFallback').hidden=true;
+    document.getElementById('rvGoogle').textContent=t?'Copy and post on Google':'Post on Google';
+  }
+  function legacyCopy(text){
+    try{
+      var ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;top:0;left:0;opacity:0';
+      document.body.appendChild(ta);ta.focus();ta.select();ta.setSelectionRange(0,text.length);
+      var ok=document.execCommand('copy');document.body.removeChild(ta);return !!ok;
+    }catch(_){return false}
+  }
+  function copyText(text){
+    try{if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(text).then(function(){return true},function(){return legacyCopy(text)})}catch(_){}
+    return Promise.resolve(legacyCopy(text));
+  }
+  document.getElementById('rvGoogle').addEventListener('click',function(){
+    var text=R.text.trim(),url=writeUrl(),st=document.getElementById('rvStatus'),fb=document.getElementById('rvFallback');
+    var done=text?copyText(text):Promise.resolve(null);   /* clipboard write starts inside the click handler */
+    try{window.open(url,'_blank','noopener')}catch(_){}
+    thanksVariant='google';
+    done.then(function(ok){
+      var link='<a href="'+url+'" target="_blank" rel="noopener noreferrer">Open Google again</a>';
+      if(ok===null){st.innerHTML='Google should open in a new tab. '+link+'.';fb.hidden=true}
+      else if(ok){st.innerHTML='Your review is copied. Paste it into Google and tap Post. '+link+'.';fb.hidden=true}
+      else{
+        st.innerHTML='Copying did not work on this device. Select the text below, copy it, then paste it into Google and tap Post. '+link+'.';
+        var ta=document.getElementById('rvFallbackText');ta.value=text;fb.hidden=false;
+        try{ta.focus();ta.select()}catch(_){}
+      }
+    });
+  });
+  document.getElementById('rvPrivateBtn').addEventListener('click',function(){
+    var box=document.getElementById('rvPrivate'),open=box.hidden;box.hidden=!open;this.setAttribute('aria-expanded',open);
+    if(open){var m=document.getElementById('pfMsg');if(!m.value)m.value=R.text.trim();document.getElementById('pfDemo').hidden=!!FEEDBACK_ENDPOINT;m.focus()}
+  });
+  var pfSending=false;
+  document.getElementById('pfSend').addEventListener('click',function(){
+    if(pfSending)return;
+    var btn=this,err=document.getElementById('pfErr'),msg=document.getElementById('pfMsg').value.trim();
+    err.textContent='';
+    if(!msg){err.textContent='Please write a short message first.';document.getElementById('pfMsg').focus();return}
+    var payload={rating:R.rating,service:R.svc||undefined,stoodOut:R.tags.length?R.tags:undefined,message:msg,name:R.name.trim()||undefined,
+      contact:document.getElementById('pfContact').value.trim()||undefined,source:'website-review-flow',submittedAt:new Date().toISOString()};
+    pfSending=true;btn.disabled=true;btn.textContent='Sending…';
+    submitFeedback(payload).then(function(res){
+      pfSending=false;btn.disabled=false;btn.textContent='Send privately';
+      thanksVariant=res.demo?'private-demo':'private';clearDraft();showR(4);applyThanks();
+    }).catch(function(){
+      pfSending=false;btn.disabled=false;btn.textContent='Try again';
+      err.textContent='We could not send your message. Please try again, or call (216) 213-2622.';
+    });
+  });
+  function applyThanks(){
+    var t=document.getElementById('rvThanksMsg');
+    t.textContent=thanksVariant==='private'?'Thank you. Your feedback has reached the Temp Tech team.'
+      :thanksVariant==='private-demo'?'Thank you. Demo only: nothing was sent, because private feedback is not connected yet.'
+      :'Thank you for taking the time. We appreciate it.';
+  }
+  rform.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(rstep===1){if(R.rating)showR(2)}
+    else if(rstep===2){showR(3)}
+    else if(rstep===3){clearDraft();showR(4);applyThanks()}
+    else closeReview();
+  });
+  rBack.addEventListener('click',function(){if(rstep>1&&rstep<4)showR(rstep-1)});
+  document.getElementById('rvClose').addEventListener('click',closeReview);
+  function closeReview(){if(rdlg.open)rdlg.close()}
+  rdlg.addEventListener('close',function(){document.documentElement.style.overflow='';if(ropener&&ropener.focus)ropener.focus();dlgClosed()});
+  rdlg.addEventListener('click',function(e){if(e.target===rdlg)closeReview()});
+  function openReview(from){
+    if(!rcan)return false;
+    ropener=from||document.activeElement;
+    R={rating:0,svc:'',tags:[],text:'',name:''};loadDraft();
+    thanksVariant='google';document.getElementById('rvPrivate').hidden=true;document.getElementById('rvPrivateBtn').setAttribute('aria-expanded','false');
+    document.getElementById('pfMsg').value='';document.getElementById('pfContact').value='';document.getElementById('pfErr').textContent='';
+    rstep=1;paintCR();syncFields();
+    if(!rdlg.open){pushDlg('review');rdlg.showModal()}
+    document.documentElement.style.overflow='hidden';
+    showR(1);
+    return true;
+  }
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-review]');
+    if(!t)return;
+    if(openReview(t))e.preventDefault();
+  });
+
   /* ---------- hero thermostat dial ---------- */
   var dial=document.getElementById('dial');
   if(!dial)return;
   var MIN=0,MAX=100,hero=document.getElementById('home');
-  var prog=document.getElementById('prog'),knob=document.getElementById('knob'),ticksG=document.getElementById('ticks');
+  var prog=document.getElementById('prog'),knob=document.getElementById('knob'),ticksG=document.getElementById('ticks'),knobHit=document.getElementById('knobHit');
   var numEl=document.getElementById('num'),numText=document.getElementById('numText');
   var msg=document.getElementById('dialMsg'),cta=document.getElementById('dialCta'),callLine=document.getElementById('dialCall');
   var target=70,shown=70,lastInt=null,raf=0,dragging=false,ticks=[];
@@ -1095,6 +1599,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   function draw(){
     var th=-135+(shown-MIN)/(MAX-MIN)*270,pct=(shown-MIN)/(MAX-MIN)*100;
     knob.setAttribute('transform','rotate('+th.toFixed(2)+' 150 150)');
+    var rr=th*Math.PI/180;knobHit.style.left=(50+36*Math.sin(rr)).toFixed(2)+'%';knobHit.style.top=(50-36*Math.cos(rr)).toFixed(2)+'%';
     prog.setAttribute('stroke-dasharray',pct.toFixed(2)+' 100');
     theme(shown);
     var n=Math.round(shown);
@@ -1127,7 +1632,11 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     if(th>135||th<-135)th=target>=(MIN+MAX)/2?135:-135;
     setTarget(MIN+(th+135)/270*(MAX-MIN),true);
   }
+  /* Touch: only the knob handle captures the gesture (touch-action:none there), so a vertical swipe anywhere else on the dial
+     still scrolls the page. A quick tap on the dial face sets the value. Mouse and pen can drag from anywhere. */
+  var tap=null;
   dial.addEventListener('pointerdown',function(e){
+    if(e.pointerType==='touch'&&e.target!==knobHit){tap={x:e.clientX,y:e.clientY,t:Date.now(),id:e.pointerId};return}
     dragging=true;dial.classList.add('drag');dial.classList.remove('kb');
     try{dial.setPointerCapture(e.pointerId)}catch(_){}
     dial.focus({preventScroll:true});
@@ -1135,7 +1644,14 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   });
   dial.addEventListener('pointermove',function(e){if(dragging)fromPoint(e.clientX,e.clientY)});
   function end(){dragging=false;dial.classList.remove('drag');if(preview)userTouched()}
-  dial.addEventListener('pointerup',end);dial.addEventListener('pointercancel',end);
+  dial.addEventListener('pointerup',function(e){
+    if(tap&&e.pointerId===tap.id){
+      if(Math.hypot(e.clientX-tap.x,e.clientY-tap.y)<10&&Date.now()-tap.t<600){dial.classList.remove('kb');fromPoint(e.clientX,e.clientY)}
+      tap=null;
+    }
+    end();
+  });
+  dial.addEventListener('pointercancel',function(){tap=null;end()});
   dial.addEventListener('keydown',function(e){
     dial.classList.add('kb');
     var k=e.key,d=0;

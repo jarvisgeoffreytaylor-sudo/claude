@@ -77,9 +77,9 @@ h1,h2,h3,p{margin:0}
 .btn.sm{min-height:44px;padding:0 12px;font-size:14px}
 .btn[disabled]{opacity:1;color:var(--muted);background:transparent;border-style:dashed}
 
-.tabs{display:flex;gap:6px;margin-top:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabs{display:flex;gap:4px;margin-top:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .tabs::-webkit-scrollbar{display:none}
-.tab{flex:1 0 auto;min-height:44px;padding:0 10px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--muted);font-weight:600;font-size:14px;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:5px}
+.tab{flex:1 0 auto;min-height:44px;padding:0 5px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--muted);font-weight:600;font-size:14px;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:4px}
 .tab[aria-selected=true]{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-line)}
 .tab.drop-hot,.parking.drop-hot{outline:2px dashed var(--accent);outline-offset:2px;background:var(--accent-soft)}
 .badge{min-width:22px;height:22px;border-radius:11px;padding:0 6px;background:var(--warn);color:var(--accent-ink);font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
@@ -335,6 +335,7 @@ var T=(function(){
     time:function(m,mer){var h=Math.floor(m/60)%24,mm=m%60,h12=h%12||12;return h12+':'+pad(mm)+(mer===false?'':' '+(h<12?'AM':'PM'))},
     range:function(s,e){var sm=s%1440<720,em=e%1440<720;return sm===em?t.time(s,false)+'\u2013'+t.time(e):t.time(s)+'\u2013'+t.time(e)},
     day:function(d){return fmtDay.format(utc(d))},
+    nice:function(d){var r=t.rel(d);return (r==='Today'||r==='Tomorrow'||r==='Yesterday')?r+', '+fmtDay.format(utc(d)):fmtDay.format(utc(d))},
     dayLong:function(d){return fmtLong.format(utc(d))},
     weekday:function(d){return fmtWd.format(utc(d))},
     rel:function(d){var td=t.today();if(d===td)return 'Today';if(d===t.addDays(td,1))return 'Tomorrow';if(d===t.addDays(td,-1))return 'Yesterday';return t.weekday(d)},
@@ -361,7 +362,7 @@ function digits(p){return String(p||'').replace(/[^\d+]/g,'')}
 /* ================= state ================= */
 var S={jobs:new Map(),requests:new Map(),trucks:[{id:'t1',name:'Truck 1'},{id:'t2',name:'Truck 2'}],trucksDoc:null,
   db:null,mode:'loading',ready:{jobs:false,requests:false,trucks:false},trucksExists:false,readOnly:false,syncErr:null};
-var ui={date:T.today(),view:'timeline',tab:'board',truck:'t1',sheet:null,panel:null,parkOpen:true,rl:'all',
+var ui={date:T.today(),view:'timeline',tab:'board',truck:'t1',sheet:null,panel:null,parkOpen:!window.matchMedia('(max-width:759px)').matches,rl:'all',
   callOpen:null,pick:null,msg:null,draft:null,confirmRemove:null,confirmClear:false,scrolled:false,suppressClick:false,toastActs:[],rlSheet:null};
 
 /* ---- job helpers ---- */
@@ -621,9 +622,8 @@ function renderHeader(){
   var html='';
   if(isNarrow()){
     S.trucks.forEach(function(t){
-      var n=dayJobs(ui.date).filter(function(j){return truckOf(j)===t.id}).length;
       var sel=ui.tab==='board'&&ui.view==='timeline'&&ui.truck===t.id;
-      html+='<button class="tab" role="tab" aria-selected="'+sel+'" data-act="tab-truck" data-id="'+esc(t.id)+'" data-drop-truck="'+esc(t.id)+'">'+esc(t.name)+' <span class="n">'+n+'</span></button>';
+      html+='<button class="tab" role="tab" aria-selected="'+sel+'" data-act="tab-truck" data-id="'+esc(t.id)+'" data-drop-truck="'+esc(t.id)+'">'+esc(t.name)+'</button>';
     });
     html+='<button class="tab" role="tab" aria-selected="'+(ui.tab==='board'&&ui.view==='list')+'" data-act="tab-list">All trucks</button>';
   }else{
@@ -668,7 +668,7 @@ function boardHTML(){
   if(ah)sum+=' \u00b7 <span style="color:var(--warn)">'+ah+' after hours</span>';
   if(!T.isBiz(date))sum+=' \u00b7 <span style="color:var(--warn)">weekend, outside normal hours</span>';
   html+='<div class="toolbar"><div class="summary">'+sum+'</div><button class="btn warn" data-act="rl-day"'+(jobs.length?'':' disabled')+'>Running long</button></div>';
-  html+='<div class="hint">Tap an empty slot to add a job. Press and hold a card, then drag, to move it.</div>';
+  html+='<div class="hint">Tap an empty slot to add. Press and hold a card to drag it.</div>';
   html+=parkingHTML(parked);
   if(!jobs.length){
     var nReq=0;S.requests.forEach(function(r){if(r.status==='new')nReq++});
@@ -826,7 +826,7 @@ function reqCardHTML(r){
   h+='<h3>'+esc(r.name||'Customer')+'</h3>';
   h+='<div class="line"><span>Address</span> '+esc(r.address)+'</div>';
   h+='<div class="line"><span>Phone</span> '+esc(r.phone||'not given')+'</div>';
-  h+='<div class="line"><span>Wants</span> '+esc(r.prefDay?T.rel(r.prefDay)+', '+T.day(r.prefDay):'No day given')+' \u00b7 '+esc(w.l)+'</div>';
+  h+='<div class="line"><span>Wants</span> '+esc(r.prefDay?T.nice(r.prefDay):'No day given')+' \u00b7 '+esc(w.l)+'</div>';
   if(r.temp)h+='<div class="line"><span>Indoor temperature</span> '+esc(r.temp)+'</div>';
   if(r.note)h+='<div class="line"><span>Note</span> '+esc(r.note)+'</div>';
   if(ui.callOpen===r.id)h+='<div class="callbox"><span class="num" id="num-'+esc(r.id)+'">'+esc(r.phone||'No number given')+'</span>'+(r.phone?'<button class="btn sm" data-act="copy" data-text="'+esc(r.phone)+'" data-sel="num-'+esc(r.id)+'">Copy</button><a class="btn sm ghost" href="tel:'+esc(digits(r.phone))+'">Open dialer</a>':'')+'</div>';
@@ -875,7 +875,7 @@ function sheetHead(title,sub){
 function jobSheetHTML(j){
   var parked=!j.start,tk=truckName(truckOf(j));
   var ov=overlapsOf(j),ah=afterHours(j);
-  var h=sheetHead(j.service||'Service call',(parked?'No time yet':T.rel(jd(j))+', '+T.day(jd(j))+' \u00b7 '+T.range(js(j),je(j)))+' \u00b7 '+tk);
+  var h=sheetHead(j.service||'Service call',(parked?'No time yet':T.nice(jd(j))+' \u00b7 '+T.range(js(j),je(j)))+' \u00b7 '+tk);
   h+='<div class="sheet-body">';
   h+='<div class="sec"><p class="addr">'+esc(j.address)+'</p><div class="chiprow">'+stChip(j.status)+srcChip(j.source)+(j.example?chip('ex','Example'):'')+(ov.length?chip('warn','Overlaps '+ov.length+' job'+(ov.length>1?'s':'')):'')+(ah?chip('warn','After hours'):'')+(j.returnNeeded?chip('warn','Return visit booked'):'')+'</div>';
   if(j.customer)h+='<div class="kv"><span>'+esc(j.customer)+'</span></div>';
@@ -955,7 +955,7 @@ function addSheetHTML(){
   h+='<div class="sheet-body">';
   if(r){
     var w=WINDOWS[r.window]||WINDOWS.anytime;
-    h+='<div class="banner"><b>Website request</b>'+(r.example?' (example)':'')+': wants '+esc(r.prefDay?T.rel(r.prefDay)+' '+T.day(r.prefDay):'any day')+', '+esc(w.l.toLowerCase())+'.'+(r.temp?' Indoor temp '+esc(r.temp)+'.':'')+' Suggested the first open slot.</div>';
+    h+='<div class="banner"><b>Website request</b>'+(r.example?' (example)':'')+': wants '+esc(r.prefDay?T.nice(r.prefDay):'any day')+', '+esc(w.l.toLowerCase())+'.'+(r.temp?' Indoor temp '+esc(r.temp)+'.':'')+' Suggested the first open slot.</div>';
   }
   h+='<div class="fld"><label class="lbl" for="f-addr">Address <em>required</em></label><input class="input" id="f-addr" type="text" autocomplete="street-address" enterkeyhint="done" placeholder="Street address" value="'+esc(d.address)+'"><div class="err" id="f-addr-err" role="alert"></div></div>';
   h+='<div class="fld"><span class="lbl">What</span>'+pillGroup('service',SERVICES.map(function(s){return {v:s,l:s}}),d.service)+'<textarea class="input" id="f-note" rows="2" style="margin-top:8px" placeholder="Note (optional): what is wrong, gate code, etc." aria-label="Note">'+esc(d.note)+'</textarea></div>';
@@ -1007,9 +1007,8 @@ function saveDraft(){
   if(ov.length)msg+=' (overlaps '+ov.length+')';
   var date=d.date;
   closeSheet();
-  commit(changes,msg,{actions:(!d.parked&&date!==ui.date)?[{label:'View day',fn:function(){gotoDate(date)}}]:null});
-  if(!d.parked&&date!==ui.date&&!d.editing){/* stay put; toast offers View day */}
-  if(d.req&&ui.tab==='requests'&&!d.parked){ui.tab='board';gotoDate(date)}
+  var viewIt=!d.parked&&(date!==ui.date||ui.tab!=='board');
+  commit(changes,msg,{actions:viewIt?[{label:'View day',fn:function(){gotoDate(date)}}]:null});
 }
 
 /* ---- running long ---- */
@@ -1023,12 +1022,12 @@ function currentJobFor(truck,date){
 }
 /* returns list of changed jobs (new objects); first is the anchor */
 function runLongChanges(job,by){
-  var d=jd(job),t=truckOf(job),dur=job.durMin+by;
+  var d=jd(job),t=truckOf(job),dur=job.durMin+by,oldEnd=je(job);
   if(js(job)+dur>LAST_MIN)dur=LAST_MIN-js(job);
   if(dur<=job.durMin)return [];
   var out=[withTimes(job,d,js(job),dur)];
   var prevEnd=js(job)+dur;
-  var later=dayJobs(d).filter(function(o){return o.id!==job.id&&o.status!=='done'&&truckOf(o)===t&&js(o)>=js(job)}).sort(function(a,b){return js(a)-js(b)||(a.id<b.id?-1:1)});
+  var later=dayJobs(d).filter(function(o){return o.id!==job.id&&o.status!=='done'&&truckOf(o)===t&&js(o)>=oldEnd}).sort(function(a,b){return js(a)-js(b)||(a.id<b.id?-1:1)});
   later.forEach(function(o){
     if(js(o)<prevEnd){
       var ns=Math.min(prevEnd,LAST_MIN-o.durMin);
@@ -1119,7 +1118,7 @@ function msgText(j,kind){
     var t=j.start?' Your new arrival time is around '+T.time(js(j)+30)+'.':'';
     return hi+' We\u2019re running about 30 minutes behind for your visit at '+j.address+'.'+t+' Sorry for the wait.';
   }
-  var when=j.start?T.rel(jd(j))+', '+T.day(jd(j))+' at '+T.time(js(j)):'[time]';
+  var when=j.start?T.nice(jd(j))+' at '+T.time(js(j)):'[time]';
   return hi+' We need to move your visit at '+j.address+' to '+when+'. Does that work for you?';
 }
 
@@ -1151,7 +1150,7 @@ var ACT={
     var d=T.isBiz(T.addDays(jd(j),1))?T.addDays(jd(j),1):T.nextBiz(jd(j));
     var n=withTimes(j,d,js(j),j.durMin);
     closeSheet();
-    commit([jobChange(n)],'Moved to '+T.rel(d)+' '+T.day(d)+', '+T.time(js(n)),{actions:[{label:'View day',fn:function(){gotoDate(d)}}]});
+    commit([jobChange(n)],'Moved to '+T.nice(d)+', '+T.time(js(n)),{actions:[{label:'View day',fn:function(){gotoDate(d)}}]});
   },
   'park':function(){
     var j=jobOf(ui.sheet.id);if(!j)return;
@@ -1227,7 +1226,7 @@ var ACT={
     if(j.start)Object.assign(copy,times(d,js(j),j.durMin));
     var orig=Object.assign({},j,{status:'done',returnNeeded:true});
     closeSheet();
-    commit([jobChange(orig),jobChange(copy)],'Return visit booked for '+T.rel(d)+' '+T.day(d),{actions:[{label:'View day',fn:function(){gotoDate(d)}}]});
+    commit([jobChange(orig),jobChange(copy)],'Return visit booked for '+T.nice(d),{actions:[{label:'View day',fn:function(){gotoDate(d)}}]});
   },
   'cancel':function(){
     var j=jobOf(ui.sheet.id);if(!j)return;
