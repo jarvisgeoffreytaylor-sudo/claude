@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<!--
+  TO CONFIRM WITH THE CLIENT before launch (nothing below is shown to visitors as unfinished):
+  - Service descriptions (four services), FAQ answers, the three "How we work" principles
+  - Hours (Mon-Fri 7AM-5PM is from the current site), service area wording, insurance wording ($1.5 million coverage)
+  - Logo: the inline SVG is a stand-in for the real file; photos: the "Our work" band uses illustrations until real project photos exist
+  - LICENSING: do NOT claim "licensed" or "bonded" anywhere, and show no licence numbers, until the client supplies licence details.
+  - Request form and weather: front-end only; see SCHEDULING.md to connect the request form
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -16,7 +24,18 @@
   "@type": "HVACBusiness",
   "name": "Temp Tech Heating & Cooling",
   "slogan": "Service & Installation",
+  "description": "HVAC installation, repair and maintenance for residential and commercial properties in North Ridgeville and throughout Northeast Ohio.",
   "areaServed": "Northeast Ohio",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "HVAC services",
+    "itemListElement": [
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Air Conditioning Installs & Repairs"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Heating Installs & Repairs"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Indoor Air Quality"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Water Heating Solutions"}}
+    ]
+  },
   "telephone": "+12162132622",
   "email": "TempTechCle@gmail.com",
   "address": { "@type": "PostalAddress", "addressLocality": "North Ridgeville", "addressRegion": "OH", "addressCountry": "US" },
@@ -149,8 +168,6 @@ nav a.btn:hover{background:var(--accent-hi)}
 .dial-call{margin:-6px 0 0;font-size:.92rem;color:#c3cfdb;text-align:center}
 .dial-call a{color:var(--accent-hi);font-weight:500}
 
-/* Placeholders (marker boxes) */
-.ph{background:rgba(217,193,154,.07);border:1px dashed rgba(217,193,154,.5);color:var(--sand-soft);border-radius:10px;padding:10px 13px;font-size:.88rem;display:block;line-height:1.5}
 
 /* About */
 .two{display:grid;gap:48px}
@@ -161,7 +178,6 @@ nav a.btn:hover{background:var(--accent-hi)}
 .facts div:first-child{border-top:1px solid var(--line)}
 .facts dt{font-family:var(--font-head);font-weight:500;font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:3px}
 .facts dd{margin:0}
-.facts .ph{margin-top:6px}
 .disc{margin-top:28px;max-width:560px}
 .disc>summary{display:inline-flex;align-items:center;gap:10px;cursor:pointer;color:var(--accent-text);font-weight:500;font-size:.98rem;list-style:none;padding:10px 0;min-height:44px}
 .disc>summary::-webkit-details-marker{display:none}
@@ -180,16 +196,29 @@ nav a.btn:hover{background:var(--accent-hi)}
 .svc article{padding:30px 0 34px;border-top:1px solid var(--line)}
 .svc h3{font-size:1.2rem;margin-bottom:.6em}
 .svc p{color:var(--muted);margin:0;max-width:440px}
-.svc-note{margin-top:28px}
 
-/* Gallery */
-.gallery{display:grid;grid-template-columns:1fr;gap:32px}
-@media(min-width:760px){.gallery{grid-template-columns:repeat(3,1fr);gap:28px}}
-.gallery figure{margin:0}
-.gallery figcaption{margin-top:14px;color:var(--muted);font-size:.97rem}
-.tile{aspect-ratio:4/3;border-radius:var(--radius);background:var(--surface);display:grid;place-items:center;text-align:center;color:var(--muted);font-size:.86rem;padding:12px;border:1px dashed rgba(255,255,255,.2)}
-.tile svg{display:block;margin:0 auto 8px;opacity:.55}
-.gal-note{margin-top:14px}
+/* Trust strip + how we work */
+.strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0}
+.strip ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 40px;color:var(--muted);font-size:.92rem;text-align:center}
+.strip strong{color:#fff;font-weight:500}
+.how{margin:34px 0 4px;max-width:560px}
+.how h3{font-size:.74rem;font-family:var(--font-head);font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-text);margin-bottom:14px}
+.principles{list-style:none;margin:0;padding:0;counter-reset:p}
+.principles li{counter-increment:p;position:relative;padding:14px 0 14px 46px;border-top:1px solid var(--line);color:#cdd8e3}
+.principles li:last-child{border-bottom:1px solid var(--line)}
+.principles li::before{content:"0" counter(p);position:absolute;left:0;top:14px;font-family:var(--font-head);font-size:.82rem;color:var(--accent-text)}
+.principles b{font-weight:500;color:#fff}
+
+/* Our work (illustrations) */
+.work{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+@media(min-width:860px){.work{grid-template-columns:repeat(4,1fr);gap:28px}}
+.work figure{margin:0}
+.art{aspect-ratio:1;border-radius:var(--radius);background:rgba(var(--accent-rgb),.06);display:grid;place-items:center;padding:clamp(18px,3vw,34px);color:var(--accent-text);border:1px solid var(--line)}
+.art svg{width:100%;height:100%;max-width:150px}
+.work figcaption{margin-top:12px;color:var(--muted);font-size:.95rem;text-align:center}
+.promises{list-style:none;margin:clamp(36px,6vw,60px) 0 0;padding:0;display:grid;gap:10px 40px;color:#cdd8e3}
+@media(min-width:860px){.promises{grid-template-columns:repeat(3,1fr)}}
+.promises li{padding-top:14px;border-top:1px solid var(--line);font-size:.97rem}
 
 /* FAQ */
 .faq{max-width:760px}
@@ -401,15 +430,33 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   </div>
 </section>
 
+<div class="strip">
+  <div class="wrap reveal">
+    <ul>
+      <li><strong>Fully insured.</strong> $1.5 million coverage.</li>
+      <li>Residential &amp; commercial</li>
+      <li>Mon-Fri 7AM-5PM</li>
+    </ul>
+  </div>
+</div>
+
 <!-- ABOUT -->
 <section class="sec" id="about">
   <div class="wrap two">
     <div class="about-text reveal">
       <span class="eyebrow">About Us</span>
       <h2>Expert installation, repair &amp; maintenance</h2>
-      <p>Temp Tech Heating &amp; Cooling is based in North Ridgeville, Ohio. We install, repair and maintain heating and cooling systems for residential and commercial properties, and we are licensed, bonded &amp; insured.</p>
+      <p>Temp Tech Heating &amp; Cooling is based in North Ridgeville, Ohio. We install, repair and maintain heating and cooling systems for homes and businesses across Northeast Ohio.</p>
+      <div class="how">
+        <h3>How we work</h3>
+        <ol class="principles">
+          <li><b>Diagnose first.</b> We find the cause before we recommend a repair or a replacement.</li>
+          <li><b>Clear options.</b> We explain your options and the pricing before work begins.</li>
+          <li><b>Leave it tidy.</b> Your space is left as clean as we found it.</li>
+        </ol>
+      </div>
       <details class="disc">
-        <summary>More about how we work</summary>
+        <summary>More about our approach</summary>
         <div class="inner">
           <ul class="checks">
             <li>Trusted, skilled technicians for professional HVAC installations that ensure optimal performance.</li>
@@ -418,16 +465,15 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
             <li>Exceptional customer service and transparent pricing.</li>
             <li>Peace of mind knowing your comfort is our top priority.</li>
           </ul>
-          <div class="trust"><p>We take pride in being a trusted, reputable HVAC company that is licensed, bonded &amp; insured, capable of any residential and commercial HVAC need.</p></div>
-          <span class="ph">[Placeholder – replace with client copy: owner / company story, if the client wants to add it]</span>
+          <div class="trust"><p>A trusted, reputable HVAC company, fully insured with $1.5 million in coverage, and capable of any residential and commercial HVAC need.</p></div>
         </div>
       </details>
     </div>
     <dl class="facts reveal" aria-label="Business details">
       <div><dt>Location</dt><dd>North Ridgeville, Ohio</dd></div>
+      <div><dt>Service area</dt><dd>North Ridgeville and throughout Northeast Ohio. Not sure we cover your address? Call and we will tell you.</dd></div>
       <div><dt>Hours</dt><dd>Mon-Fri 7AM-5PM</dd></div>
-      <div><dt>Service area</dt><dd>Northeast, Ohio<span class="ph">[Placeholder – list towns served]</span></dd></div>
-      <div><dt>License numbers</dt><dd><span class="ph">[Placeholder – add license / bond / insurance details only if client supplies them]</span></dd></div>
+      <div><dt>Insurance</dt><dd>Fully insured. $1.5 million coverage.</dd></div>
     </dl>
   </div>
 </section>
@@ -437,8 +483,8 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">Services</span>
-      <h2>Four services, one point of contact</h2>
-      <p>Expert heating and cooling, maintenance and installation throughout Northeast Ohio, for residential and commercial properties.</p>
+      <h2>Heating, cooling, air and hot water</h2>
+      <p>Expert heating and cooling, maintenance and installation throughout Northeast Ohio.</p>
     </div>
     <div class="svc">
       <article id="air-conditioning" class="reveal">
@@ -458,32 +504,27 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
         <p>Hot water systems installed, repaired and replaced, from standard water heaters to boilers. Both are handled as one service.</p>
       </article>
     </div>
-    <span class="ph svc-note">[Placeholder – service descriptions are draft copy; confirm or replace with client copy]</span>
   </div>
 </section>
 
-<!-- GALLERY -->
+<!-- OUR WORK (illustrations until real project photos exist) -->
 <section class="sec" id="gallery">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Unmatched craftsmanship</span>
+      <span class="eyebrow">Our work</span>
       <h2>Dependable service regardless of weather or time</h2>
     </div>
-    <div class="gallery">
-      <figure class="reveal">
-        <div class="tile" role="img" aria-label="Placeholder for project photo 1"><div><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 1</div></div>
-        <figcaption>Day or night we handle emergency calls as a top priority</figcaption>
-      </figure>
-      <figure class="reveal">
-        <div class="tile" role="img" aria-label="Placeholder for project photo 2"><div><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 2</div></div>
-        <figcaption>Rain or shine we make sure your job gets done</figcaption>
-      </figure>
-      <figure class="reveal">
-        <div class="tile" role="img" aria-label="Placeholder for project photo 3"><div><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>Photo placeholder 3</div></div>
-        <figcaption>We are licensed, bonded, and insured through the state of Ohio</figcaption>
-      </figure>
+    <div class="work">
+      <figure class="reveal"><div class="art"><svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="18" y="20" width="84" height="80" rx="8"/><path d="M26 29h68" opacity=".5"/><circle cx="60" cy="63" r="26"/><circle cx="60" cy="63" r="4"/><path d="M60 59c0-10 8-14 14-10-2 8-8 11-14 10z"/><path d="M64 63c10 0 14 8 10 14-8-2-11-8-10-14z"/><path d="M60 67c0 10-8 14-14 10 2-8 8-11 14-10z"/><path d="M56 63c-10 0-14-8-10-14 8 2 11 8 10 14z"/><path d="M30 100v7M90 100v7"/></svg></div><figcaption>Air conditioning</figcaption></figure>
+      <figure class="reveal"><div class="art"><svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="30" y="14" width="60" height="92" rx="6"/><path d="M30 34h60"/><path d="M40 22h40M40 27h40" opacity=".55"/><rect x="40" y="44" width="40" height="44" rx="4"/><path d="M60 82c-7-4-9-11-4-17 1 4 3 5 5 4 0-4 2-7 4-9 1 7 7 10 4 17-2 3-5 5-9 5z"/><circle cx="48" cy="97" r="3"/><path d="M58 97h22"/></svg></div><figcaption>Heating</figcaption></figure>
+      <figure class="reveal"><div class="art"><svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="16" y="52" width="88" height="48" rx="6"/><path d="M26 65h68M26 76h68M26 87h68"/><path d="M28 40c11-10 21 6 32-2s21 6 32-2" opacity=".65"/><path d="M28 27c11-10 21 6 32-2s21 6 32-2" opacity=".35"/></svg></div><figcaption>Indoor air quality</figcaption></figure>
+      <figure class="reveal"><div class="art"><svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="34" y="22" width="52" height="84" rx="14"/><path d="M48 22v-9M72 22v-9M44 13h8M68 13h8"/><path d="M60 50c-8 10-10 15-10 20a10 10 0 0 0 20 0c0-5-2-10-10-20z"/><path d="M34 92h52" opacity=".5"/><path d="M44 106v7M76 106v7"/></svg></div><figcaption>Water heating</figcaption></figure>
     </div>
-    <span class="ph gal-note">[Placeholder – replace tiles with real project photos supplied by the client]</span>
+    <ul class="promises reveal">
+      <li>Day or night we handle emergency calls as a top priority.</li>
+      <li>Rain or shine we make sure your job gets done.</li>
+      <li>Fully insured. $1.5 million coverage.</li>
+    </ul>
   </div>
 </section>
 
@@ -493,14 +534,16 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     <div class="section-head reveal">
       <span class="eyebrow">FAQ</span>
       <h2>Common questions</h2>
-      <p>Sample questions only. The client will supply the real questions and answers.</p>
+      <p>Straightforward answers, in brief.</p>
     </div>
     <div class="faq reveal">
-      <details><summary>What areas do you serve?</summary><div class="ans"><span class="ph">[Placeholder – replace with client copy]</span></div></details>
-      <details><summary>How do I request a visit?</summary><div class="ans"><p>Use the Request a visit button, or call (216) 213-2622, Mon-Fri 7AM-5PM. We call or text to confirm your time.</p></div></details>
-      <details><summary>What types of systems do you work on?</summary><div class="ans"><span class="ph">[Placeholder – replace with client copy]</span></div></details>
-      <details><summary>Do you offer maintenance plans?</summary><div class="ans"><span class="ph">[Placeholder – replace with client copy]</span></div></details>
-      <details><summary>Do you offer emergency service?</summary><div class="ans"><span class="ph">[Placeholder – replace with client copy]</span></div></details>
+      <details><summary>How does requesting a visit work?</summary><div class="ans"><p>Choose a service and the day and time window that suit you, then leave your details. We call or text to confirm your time, and we will let you know if anything changes.</p></div></details>
+      <details><summary>What if I have no heat or no cooling?</summary><div class="ans"><p>Call us directly at <a href="tel:+12162132622">(216) 213-2622</a>. We work Monday to Friday, 7AM to 5PM, and we try to accommodate all emergency needs as soon as possible.</p></div></details>
+      <details><summary>Where do you work?</summary><div class="ans"><p>We are based in North Ridgeville and work throughout Northeast Ohio. Not sure we cover your address? Call and we will tell you.</p></div></details>
+      <details><summary>Do you work on homes and businesses?</summary><div class="ans"><p>Both. We are capable of any residential and commercial HVAC need.</p></div></details>
+      <details><summary>Do you offer estimates, and how is pricing handled?</summary><div class="ans"><p>Estimates are free on a complete system replacement. For all work, we explain your options and the pricing before work begins.</p></div></details>
+      <details><summary>Are you insured?</summary><div class="ans"><p>Yes. We are fully insured, with $1.5 million in coverage.</p></div></details>
+      <details><summary>Why does maintenance matter?</summary><div class="ans"><p>Regular maintenance helps heating and cooling equipment run efficiently year-round, and it is a good moment to spot small issues before they grow.</p></div></details>
     </div>
   </div>
 </section>
@@ -517,7 +560,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
         <a class="phone-link" href="tel:+12162132622">Prefer to talk? (216) 213-2622</a>
       </div>
       <p class="nojs-only" style="color:var(--muted);margin:0">Online requests need JavaScript. Please call or email us.</p>
-      <p class="note">Demo: the request form is front-end only and nothing is sent. It must be connected to the client's email, dispatch board or booking service before launch.</p>
+      <p class="note">Demo: the request form does not send anything yet.</p>
     </div>
     <dl class="facts reveal">
       <div><dt>Phone</dt><dd><a href="tel:+12162132622">(216) 213-2622</a></dd></div>
@@ -535,6 +578,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     <div>
       <strong class="fh">About</strong>
       <p>We have experience servicing all brands and are a trusted company within the community.</p>
+      <p>Fully insured. $1.5 million coverage.</p>
       <p><strong style="color:#fff;font-weight:500">Temp Tech Heating &amp; Cooling</strong><br>Service &amp; Installation<br>North Ridgeville, Ohio</p>
     </div>
     <div>
@@ -552,7 +596,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
       <p><a href="tel:+12162132622">(216) 213-2622</a><br><a href="mailto:TempTechCle@gmail.com">TempTechCle@gmail.com</a></p>
     </div>
   </div>
-  <div class="wrap"><p class="demo">Demo redesign. Logo, photos and some copy are placeholders.</p></div>
+  <div class="wrap"><p class="demo">Demo redesign of the Temp Tech Heating &amp; Cooling website.</p></div>
 </footer>
 
 <div class="callbar">
@@ -780,11 +824,11 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   function tzName(){try{var s=new Intl.DateTimeFormat('en-US',{timeZone:AVAILABILITY.timezone,timeZoneName:'long'}).format(new Date());return s.split(', ').pop()}catch(_){return AVAILABILITY.timezone}}
 
   function currentDay(){var ds=val('day'),day=null;slotData.forEach(function(d){if(d.date===ds)day=d});return day}
-  var CALL_HTML='please call <a href="tel:+12162132622">(216) 213-2622</a>';
+  var CALL_HTML='call <a href="tel:+12162132622">(216) 213-2622</a>';
   function renderWindows(keepWin){
     var day=currentDay();
     winsEl.innerHTML='';slotMsg.innerHTML='';
-    if(!day){slotMsg.innerHTML='No days are open for online requests right now, '+CALL_HTML+'.';return}
+    if(!day){slotMsg.innerHTML='No days are open for online requests right now, please '+CALL_HTML+'.';return}
     day.windows.forEach(function(w){
       var l=document.createElement('label');l.className='choice wide'+(w.open?'':' none');
       l.innerHTML='<input type="radio" name="window" value="'+w.id+'"'+(w.open?'':' disabled')+'><span class="box">'+w.label+(w.open?'':'<small>Call us</small>')+'</span>';
@@ -797,7 +841,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
     slotData=getSlots(AVAILABILITY,serviceKey(),Date.now());
     daysEl.innerHTML='';winsEl.innerHTML='';slotMsg.innerHTML='';
     tzNote.textContent='Windows are in '+tzName()+'.';
-    if(!slotData.length){slotMsg.innerHTML='No days are open for online requests right now, '+CALL_HTML+'.';return}
+    if(!slotData.length){slotMsg.innerHTML='No days are open for online requests right now, please '+CALL_HTML+'.';return}
     var pick=null;
     slotData.forEach(function(d){if(!pick&&d.open)pick=d.date});
     if(!pick)pick=slotData[0].date;
