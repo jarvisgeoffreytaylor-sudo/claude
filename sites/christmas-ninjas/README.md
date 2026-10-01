@@ -1,33 +1,29 @@
-# Christmas Ninjas website
+# The Christmas Ninjas website
 
-Static site. Open `index.html` directly or serve the folder. No build step.
+Static site. Open `index.html` or serve the folder (`npx http-server`). No build step, no frameworks.
+Files: `index.html`, `styles.css`, `script.js`, `assets/` (`logo.png`, `house.jpg`, `team.jpg`, `favicon.svg`), `robots.txt`, `sitemap.xml`.
+Optional Google Fonts (Fredoka) is the only external request. It falls back to system fonts if blocked.
 
-Files: `index.html`, `styles.css`, `script.js`, `assets/favicon.svg`, `robots.txt`, `sitemap.xml`.
+## What is real (from the client)
+Business name and tagline, address (35873 Lorain Rd, North Ridgeville, OH), phone 440-320-8377, email 7Christmasninjas@gmail.com, owner Joey Wilson, the "Christmas Lighting Experts" about copy, services (holiday install, takedown, storage; permanent/semi-permanent track lighting; homes and businesses), "Cleveland Area".
+Logo, house photo and team photo are cropped from a screenshot of their current site (low resolution). Replace with originals when available. Logo is unaltered on a white rounded badge because the black ninja disappears on a dark background.
 
-## Placeholders to fill
+## Features
+- Roofline scroll progress and section nav (ninja walks the roofline, bulbs light in sequence, bulbs are links). Static with all lights on under `prefers-reduced-motion`.
+- Light designer (holiday/permanent, 5 scenes, 12 color options plus custom picker, 6 placement zones). "Get a quote for this look" fills the quote form.
+- Quote form: validates, then opens a `mailto:` to the client email with everything prefilled. Shows tap-to-call, "Open email again" and "Copy request" fallbacks.
+- Lights on/off toggle (glow and animation), remembered in `localStorage` (key `cn-lights`).
 
-Search the folder for `[` to find all of them.
+## [TO CONFIRM] with the owner
+- Business hours (none shown, none in JSON-LD).
+- Service area detail: only "Cleveland Area" is used. Which towns/counties?
+- License, insurance, bonding: nothing claimed. Add only if verified.
+- Domain: `sitemap.xml` and `robots.txt` contain `[WEBSITE URL]`. Also add `canonical`, `og:url`, absolute `og:image` (`assets/house.jpg` is relative now) and `url` in the JSON-LD once known.
+- ZIP code for the address (omitted from JSON-LD, not provided).
+- Whether the permanent track lighting is color-changing. The designer shows colors as a preview and says the final look is confirmed with the client. Remove colors for permanent mode if it is white-only.
+- Who is in the team photo and their names/roles (caption and alt text are generic).
+- Social profiles, reviews (testimonials intentionally omitted), pricing, years in business, warranties: none included.
+- Better logo and photo files; a 1200x630 social share image.
 
-| Placeholder | Where | Notes |
-|---|---|---|
-| `[PHONE]` | index.html (hero, quote section, footer, JSON-LD, `tel:` links) | Use digits-only format in `tel:` links, e.g. `tel:+15551234567` |
-| `[EMAIL]` | index.html (quote section, footer, JSON-LD, `mailto:`) | |
-| `[CITY]`, `[STATE]`, `[ZIP]`, `[COUNTRY]` | title, meta, hero, FAQ, footer, JSON-LD | |
-| `[STREET ADDRESS]` | footer, JSON-LD | Remove if no public address |
-| `[SERVICE AREA]` | hero, FAQ, quote section, footer, JSON-LD | |
-| `[HOURS]` | quote section | JSON-LD `openingHours` needs schema format, e.g. `Mo-Fr 08:00-17:00` |
-| `[LICENSE # - TO BE PROVIDED]` | footer | Remove if not applicable. Do not add until verified |
-| `[WEBSITE URL]` | canonical, Open Graph, JSON-LD, robots.txt, sitemap.xml | Final domain, no trailing slash |
-| `[PRICE RANGE - OPTIONAL]` | JSON-LD | Delete the line if unused |
-| `[FORM ENDPOINT - TO BE CONNECTED]` | quote form `action` | See below |
-| `[YEAR]` | footer | Auto-replaced by JS. Fallback only |
-| `[CONFIRM ...]` | FAQ, permanent lighting section | Owner must confirm: booking deadlines, who supplies lights, repair policy, pricing policy, product features |
-| Gallery `[PHOTO: ...]` | gallery and permanent section | Replace with real project photos and alt text |
-
-## Other to-dos
-
-- **Quote form is front-end only.** It validates, then shows a "not connected" message. Hook up a backend or form service (Formspree, Netlify Forms, own endpoint), set the `action`, update `script.js`, and remove the visible "Developer note" line in `index.html`.
-- **Testimonials** are intentionally omitted. Add only real, permitted reviews.
-- **Assets:** add `assets/og-image.jpg` (1200x630) for social sharing. Replace the logo mark (inline SVG) if the client has a logo.
-- No years in business, stats, certifications or insurance claims are included. Add only if verified.
-- Test the form, links and layout again after filling placeholders.
+## Form backend (to do)
+There is no backend. `mailto:` depends on the visitor having an email app set up. Replace with a form service (Formspree, Netlify Forms, Basin, or own endpoint) by changing the submit handler in `script.js` (`Quote` module) and keeping the call/copy fallback. Their old site used reCAPTCHA; add spam protection with any service.

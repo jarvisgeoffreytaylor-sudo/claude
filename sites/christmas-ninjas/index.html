@@ -3,323 +3,445 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Christmas Ninjas | Holiday Light Installation, Takedown &amp; Storage in [CITY]</title>
-  <meta name="description" content="Christmas Ninjas installs holiday lights, takes them down and stores them for you in [CITY]. Also semi-permanent LED track lighting for homes and businesses. Request a free quote.">
+  <title>The Christmas Ninjas | Holiday &amp; Permanent Lighting, Cleveland Area</title>
+  <meta name="description" content="Holiday and permanent lighting for homes and businesses in the Cleveland area. Christmas light installation, takedown and storage, plus permanent track lighting. North Ridgeville, OH.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="[WEBSITE URL]/">
-  <meta name="theme-color" content="#0e0f12">
+  <meta name="theme-color" content="#05070d">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Christmas Ninjas | Holiday Light Installation in [CITY]">
-  <meta property="og:description" content="Holiday light install, takedown and storage, plus permanent LED track lighting. Residential and commercial. Free quotes.">
-  <meta property="og:url" content="[WEBSITE URL]/">
-  <meta property="og:image" content="[WEBSITE URL]/assets/og-image.jpg">
+  <meta property="og:site_name" content="The Christmas Ninjas">
+  <meta property="og:title" content="The Christmas Ninjas | Holiday &amp; Permanent Lighting">
+  <meta property="og:description" content="Local lighting company for homes and businesses in the Cleveland area. Holiday install, takedown and storage, plus permanent track lighting.">
+  <meta property="og:image" content="assets/house.jpg">
+  <meta property="og:image:width" content="994">
+  <meta property="og:image:height" content="522">
+  <meta property="og:image:alt" content="A house at night with warm white lights along its rooflines">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;display=swap">
   <link rel="stylesheet" href="styles.css">
+
+  <script>
+    /* Set before first paint so there is no flash: JS flag + remembered lights state. */
+    document.documentElement.classList.add('js');
+    try { if (localStorage.getItem('cn-lights') === 'off') document.documentElement.dataset.lights = 'off'; } catch (e) {}
+  </script>
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "HomeAndConstructionBusiness",
-    "name": "Christmas Ninjas",
-    "description": "Holiday light installation, takedown and storage, plus semi-permanent LED track lighting for residential and commercial customers.",
-    "url": "[WEBSITE URL]",
-    "telephone": "[PHONE]",
-    "email": "[EMAIL]",
-    "image": "[WEBSITE URL]/assets/og-image.jpg",
-    "priceRange": "[PRICE RANGE - OPTIONAL]",
+    "@type": "LocalBusiness",
+    "name": "The Christmas Ninjas",
+    "description": "Local lighting company owned by Joey Wilson, offering holiday and permanent lighting for homes and businesses in the Cleveland area.",
+    "telephone": "+1-440-320-8377",
+    "email": "7Christmasninjas@gmail.com",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "[STREET ADDRESS]",
-      "addressLocality": "[CITY]",
-      "addressRegion": "[STATE]",
-      "postalCode": "[ZIP]",
-      "addressCountry": "[COUNTRY]"
+      "streetAddress": "35873 Lorain Rd",
+      "addressLocality": "North Ridgeville",
+      "addressRegion": "OH",
+      "addressCountry": "US"
     },
-    "areaServed": "[SERVICE AREA - CITIES/COUNTIES]",
-    "openingHours": "[HOURS - e.g. Mo-Fr 08:00-17:00]",
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Services",
-      "itemListElement": [
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Holiday light installation" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Holiday light takedown" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Holiday light storage" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Semi-permanent LED track lighting" } },
-        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Commercial holiday and event lighting" } }
-      ]
-    }
+    "areaServed": { "@type": "AdministrativeArea", "name": "Cleveland Area" },
+    "founder": { "@type": "Person", "name": "Joey Wilson" }
   }
   </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="#top" aria-label="Christmas Ninjas home">
-        <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-          <path d="M32 2 38 24 62 32 38 40 32 62 26 40 2 32 26 24Z" fill="#d62839"/>
-          <circle cx="32" cy="32" r="8" fill="#0e0f12"/>
-          <circle cx="32" cy="32" r="3" fill="#e0b84c"/>
-        </svg>
-        <span>Christmas <strong>Ninjas</strong></span>
+  <!-- Shared SVG defs: ninja sprite + glow filter -->
+  <svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="3.2" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <symbol id="ninja" viewBox="0 0 48 44">
+        <!-- trailing light string -->
+        <path d="M30 27 Q38 29 44 24" fill="none" stroke="#8d97b5" stroke-width="1.4" stroke-linecap="round"/>
+        <circle cx="35" cy="28.6" r="2.2" fill="#ff4d4d"/>
+        <circle cx="40" cy="27.2" r="2.2" fill="#4ee08e"/>
+        <circle cx="44" cy="24" r="2.2" fill="#ffd98a"/>
+        <!-- legs -->
+        <path d="M18 33 L11 41 M25 34 L31 41" fill="none" stroke="#f2f4fb" stroke-width="5" stroke-linecap="round"/>
+        <path d="M18 33 L11 41 M25 34 L31 41" fill="none" stroke="#0a0a10" stroke-width="2.2" stroke-linecap="round"/>
+        <!-- body -->
+        <path d="M13 19 C14 13 25 12 29 18 C33 24 31 32 24 35 L16 35 C11 31 11 24 13 19Z" fill="#0a0a10" stroke="#f2f4fb" stroke-width="2.2" stroke-linejoin="round"/>
+        <!-- head -->
+        <circle cx="14" cy="16" r="8.5" fill="#0a0a10" stroke="#f2f4fb" stroke-width="2.2"/>
+        <rect x="6.5" y="13" width="13" height="4.6" rx="2.3" fill="#fff"/>
+        <circle cx="16.5" cy="15.3" r="1.1" fill="#0a0a10"/>
+        <!-- santa hat -->
+        <path d="M6 10.5 C8 2 18 0 25 4 C19 4.5 17 7 16.5 10.5Z" fill="#e5202b" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>
+        <rect x="5" y="9" width="13" height="3.2" rx="1.6" fill="#fff"/>
+        <circle cx="25.5" cy="4" r="2.4" fill="#fff"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <header class="site-header" id="site-header">
+    <div class="bar">
+      <a class="bar-logo" href="#top" aria-label="The Christmas Ninjas, back to top">
+        <img src="assets/logo.png" alt="The Christmas Ninjas" width="664" height="356">
       </a>
-
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-        <span class="sr-only">Menu</span>
-        <span class="bars" aria-hidden="true"></span>
-      </button>
-
-      <nav id="site-nav" class="site-nav" aria-label="Main">
-        <ul>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#how-it-works">How it works</a></li>
-          <li><a href="#permanent">Permanent lights</a></li>
-          <li><a href="#gallery">Gallery</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a class="btn btn-small" href="#quote">Free quote</a></li>
-        </ul>
-      </nav>
+      <div class="bar-actions">
+        <button type="button" class="lights-toggle" id="lights-toggle" role="switch" aria-checked="true" title="Turn glow and animation off to save battery">
+          <span class="lights-icon" aria-hidden="true"></span>
+          <span class="lights-label">Lights <span class="lights-state" aria-hidden="true">on</span></span>
+        </button>
+        <a class="btn btn-primary btn-sm" href="tel:+14403208377"><span class="btn-long">Call </span>440-320-8377</a>
+      </div>
     </div>
+
+    <!-- Roofline progress + section nav. Plain list of links without JS; JS draws the roofline, ninja and bulbs. -->
+    <nav class="roofline" id="roofline" aria-label="Page sections">
+      <svg class="roofline-svg" aria-hidden="true" focusable="false"></svg>
+      <ol>
+        <li><a href="#top"><span class="rl-bulb" aria-hidden="true"></span><span class="rl-label">Home</span></a></li>
+        <li><a href="#services"><span class="rl-bulb" aria-hidden="true"></span><span class="rl-label">Services</span></a></li>
+        <li><a href="#designer"><span class="rl-bulb" aria-hidden="true"></span><span class="rl-label">Designer</span></a></li>
+        <li><a href="#how"><span class="rl-bulb" aria-hidden="true"></span><span class="rl-label">How it works</span></a></li>
+        <li><a href="#about"><span class="rl-bulb" aria-hidden="true"></span><span class="rl-label">About</span></a></li>
+        <li><a href="#contact"><span class="rl-bulb" aria-hidden="true"></span><span class="rl-label">Contact</span></a></li>
+      </ol>
+    </nav>
   </header>
 
   <main id="main">
+    <!-- HERO -->
     <section class="hero" id="top" aria-labelledby="hero-title">
-      <div class="container hero-inner">
-        <p class="eyebrow">Holiday lighting in [CITY] and [SERVICE AREA]</p>
-        <h1 id="hero-title">We hang the lights. <span class="accent">You enjoy the season.</span></h1>
-        <p class="lead">Christmas Ninjas installs your holiday lights, takes them down when the season ends and stores them until next year. Want lights that stay up? Ask about permanent LED track lighting.</p>
-        <div class="cta-row">
-          <a class="btn" href="#quote">Get a free quote</a>
-          <a class="btn btn-ghost" href="tel:[PHONE]">Call [PHONE]</a>
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <img class="hero-logo" src="assets/logo.png" alt="The Christmas Ninjas" width="664" height="356">
+          <p class="eyebrow"><span class="dots" aria-hidden="true"></span>Lights &middot; Holiday / Permanent</p>
+          <h1 id="hero-title">Holiday &amp; permanent lighting, Cleveland area</h1>
+          <p class="lead">A local lighting company owned by Joey Wilson, for homes and businesses.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="tel:+14403208377">Call 440-320-8377</a>
+            <a class="btn btn-ghost" href="#quote">Get a quote</a>
+          </div>
         </div>
-        <p class="hero-note">Homes and businesses. Quotes are free.</p>
+        <figure class="hero-photo">
+          <img src="assets/house.jpg" alt="A house at night with warm white lights along its rooflines" width="994" height="522" fetchpriority="high">
+        </figure>
       </div>
     </section>
 
-    <section id="services" class="section" aria-labelledby="services-title">
-      <div class="container">
-        <h2 id="services-title">What we do</h2>
-        <p class="section-intro">Three ways we can help, for homes and for businesses.</p>
-        <div class="grid grid-3">
-          <article class="card">
-            <h3>Holiday light install, takedown and storage</h3>
-            <p>We design the layout, hang the lights, take everything down after the holidays and store it for you. No ladders, no tangled cords, no attic boxes.</p>
+    <!-- SERVICES -->
+    <section class="section" id="services" aria-labelledby="services-title">
+      <div class="wrap">
+        <p class="eyebrow"><span class="dots" aria-hidden="true"></span>Services</p>
+        <h2 id="services-title">Two ways to light it up</h2>
+        <div class="card-grid">
+          <article class="card card-holiday">
+            <h3>Holiday lighting</h3>
+            <p>Professional holiday light installation, so your property is ready for the season.</p>
             <ul class="ticks">
-              <li>Rooflines, trees, shrubs, wreaths and garland</li>
-              <li>Installation before the season</li>
-              <li>Takedown after the season</li>
-              <li>Off-season storage</li>
+              <li><strong>Installation.</strong> We design and hang your lights.</li>
+              <li><strong>Takedown.</strong> We take them down when the season is over.</li>
+              <li><strong>Storage.</strong> We store them until next time.</li>
             </ul>
           </article>
-          <article class="card">
-            <h3>Permanent and semi-permanent lighting</h3>
-            <p>Permanent LED track lighting is mounted along your roofline. Use it for the holidays, for events, or as everyday accent lighting.</p>
+          <article class="card card-permanent">
+            <h3>Permanent lighting</h3>
+            <p>Permanent and semi-permanent track lighting that stays on your property, ready for any occasion.</p>
             <ul class="ticks">
-              <li>Low-profile roofline track</li>
-              <li>Holiday, event and everyday looks</li>
-              <li>Installed once, no seasonal hanging</li>
-            </ul>
-            <p><a href="#permanent">Why choose permanent lights</a></p>
-          </article>
-          <article class="card">
-            <h3>Commercial</h3>
-            <p>Storefronts, offices, restaurants, apartment communities and HOAs. We work around your hours and your schedule.</p>
-            <ul class="ticks">
-              <li>Storefront and building displays</li>
-              <li>Seasonal install, takedown and storage</li>
-              <li>Permanent track lighting for brand and event looks</li>
+              <li>Look good on holidays and every other night.</li>
+              <li>No yearly hang-and-takedown cycle.</li>
             </ul>
           </article>
+        </div>
+        <div class="who">
+          <div><h3>Homes</h3><p>Light up your house for the season or for good.</p></div>
+          <div><h3>Businesses</h3><p>Light up your business for the season or for good.</p></div>
         </div>
       </div>
     </section>
 
-    <section id="how-it-works" class="section section-alt" aria-labelledby="how-title">
-      <div class="container">
-        <h2 id="how-title">How it works</h2>
+    <!-- LIGHT DESIGNER -->
+    <section class="section" id="designer" aria-labelledby="designer-title">
+      <div class="wrap">
+        <p class="eyebrow"><span class="dots" aria-hidden="true"></span>Light designer</p>
+        <h2 id="designer-title">Try a look on the house</h2>
+        <p class="section-lead">Pick a color and where the lights go. Send the look to us as part of your quote request.</p>
+
+        <noscript><p class="notice">The light designer needs JavaScript. You can still call 440-320-8377 or use the quote form below.</p></noscript>
+
+        <div class="designer" id="designer-app">
+          <div class="designer-preview">
+            <svg id="house-svg" viewBox="0 0 640 400" role="img" aria-labelledby="house-title house-desc">
+              <title id="house-title">Light designer preview</title>
+              <desc id="house-desc">A cartoon house at night with a ninja on the roof. Lights appear where you choose them.</desc>
+              <defs>
+                <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#03050b"/><stop offset="1" stop-color="#0e1733"/>
+                </linearGradient>
+              </defs>
+              <rect width="640" height="400" fill="url(#sky)"/>
+              <g fill="#fff" opacity=".8">
+                <circle cx="250" cy="34" r="1.6"/><circle cx="420" cy="50" r="1.3"/><circle cx="560" cy="30" r="1.8"/>
+                <circle cx="330" cy="22" r="1.2"/><circle cx="500" cy="96" r="1.3"/><circle cx="170" cy="110" r="1.2"/>
+                <circle cx="610" cy="120" r="1.4"/><circle cx="30" cy="150" r="1.2"/>
+              </g>
+              <circle cx="88" cy="62" r="22" fill="#f4efd9"/>
+              <circle cx="98" cy="55" r="20" fill="#060a16"/>
+              <rect y="338" width="640" height="62" fill="#0a1124"/>
+              <path d="M0 338 H640" stroke="#46537f" stroke-width="4"/>
+
+              <g stroke="#46537f" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+                <!-- trees (behind) -->
+                <rect x="524" y="330" width="12" height="10" fill="#2a1f2e"/>
+                <rect x="597" y="330" width="12" height="10" fill="#2a1f2e"/>
+                <g fill="#0f2b27">
+                  <polygon points="530,188 562,252 498,252"/>
+                  <polygon points="530,224 568,292 492,292"/>
+                  <polygon points="530,262 574,334 486,334"/>
+                  <polygon points="603,246 624,296 582,296"/>
+                  <polygon points="603,274 630,332 576,332"/>
+                </g>
+                <!-- garage wing -->
+                <rect x="62" y="252" width="132" height="86" fill="#121a36"/>
+                <polygon points="48,257 128,204 208,257" fill="#1a2347"/>
+                <rect x="78" y="276" width="100" height="62" rx="4" fill="#0b1126"/>
+                <path d="M78 296 H178 M78 316 H178" stroke-width="2.5"/>
+                <!-- chimney -->
+                <rect x="388" y="112" width="26" height="54" fill="#1a2347"/>
+                <!-- main house -->
+                <rect x="190" y="200" width="262" height="138" fill="#121a36"/>
+                <polygon points="168,206 320,98 474,206" fill="#1a2347"/>
+                <!-- windows -->
+                <g fill="#0b1126">
+                  <rect x="216" y="232" width="50" height="58" rx="3"/>
+                  <rect x="376" y="232" width="50" height="58" rx="3"/>
+                </g>
+                <path d="M241 232 V290 M216 261 H266 M401 232 V290 M376 261 H426" stroke-width="2.5"/>
+                <!-- door -->
+                <path d="M298 338 V282 A22 22 0 0 1 342 282 V338Z" fill="#7a1219"/>
+                <circle cx="334" cy="310" r="2.5" fill="#ffd98a" stroke="none"/>
+                <!-- shrubs -->
+                <g fill="#0f2b27">
+                  <ellipse cx="236" cy="334" rx="27" ry="19"/>
+                  <ellipse cx="404" cy="334" rx="27" ry="19"/>
+                </g>
+              </g>
+
+              <!-- wreath (decor shown with holiday wreath lights) -->
+              <g id="wreath-decor" aria-hidden="true">
+                <circle cx="320" cy="292" r="12" fill="none" stroke="#1f7a3f" stroke-width="6"/>
+                <path d="M314 304 L320 298 L326 304 L320 308Z" fill="#e5202b" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>
+              </g>
+
+              <!-- light zones, filled by script.js -->
+              <g class="zone" id="z-trees"></g>
+              <g class="zone" id="z-shrubs"></g>
+              <g class="zone" id="z-windows"></g>
+              <g class="zone" id="z-door"></g>
+              <g class="zone" id="z-wreath"></g>
+              <g class="zone" id="z-roof"></g>
+
+              <!-- ninja sneaking along the roof -->
+              <use href="#ninja" x="276" y="50" width="62" height="57"/>
+            </svg>
+          </div>
+
+          <div class="designer-controls">
+            <fieldset class="seg" id="mode-group">
+              <legend>Type of lighting</legend>
+              <div class="seg-row">
+                <label><input type="radio" name="mode" value="holiday" checked><span>Holiday</span></label>
+                <label><input type="radio" name="mode" value="permanent"><span>Permanent</span></label>
+              </div>
+              <p class="hint" id="mode-hint">Holiday: seasonal lights, put up and taken down.</p>
+            </fieldset>
+
+            <fieldset class="scenes" id="scene-group">
+              <legend>Start from a scene</legend>
+              <div class="chip-row">
+                <button type="button" class="chip" data-scene="christmas" aria-pressed="false">Christmas</button>
+                <button type="button" class="chip" data-scene="halloween" aria-pressed="false">Halloween</button>
+                <button type="button" class="chip" data-scene="july4" aria-pressed="false">4th of July</button>
+                <button type="button" class="chip" data-scene="gameday" aria-pressed="false">Game day</button>
+                <button type="button" class="chip" data-scene="everyday" aria-pressed="false">Everyday warm</button>
+              </div>
+            </fieldset>
+
+            <fieldset class="colors" id="color-group">
+              <legend>Light color: <span id="color-name">Warm white</span></legend>
+              <div class="swatch-grid">
+                <label><input type="radio" name="palette" value="warm" data-name="Warm white" data-colors="#ffd27a" checked><span class="swatch"><span class="sr-only">Warm white</span></span></label>
+                <label><input type="radio" name="palette" value="cool" data-name="Cool white" data-colors="#cfe6ff"><span class="swatch"><span class="sr-only">Cool white</span></span></label>
+                <label><input type="radio" name="palette" value="multi" data-name="Multicolor" data-colors="#ff3b3b,#ffb02e,#35e07a,#4a9bff"><span class="swatch"><span class="sr-only">Multicolor</span></span></label>
+                <label><input type="radio" name="palette" value="red" data-name="Red" data-colors="#ff3b3b"><span class="swatch"><span class="sr-only">Red</span></span></label>
+                <label><input type="radio" name="palette" value="green" data-name="Green" data-colors="#35e07a"><span class="swatch"><span class="sr-only">Green</span></span></label>
+                <label><input type="radio" name="palette" value="blue" data-name="Blue" data-colors="#4a9bff"><span class="swatch"><span class="sr-only">Blue</span></span></label>
+                <label><input type="radio" name="palette" value="orange" data-name="Orange" data-colors="#ff8a1f"><span class="swatch"><span class="sr-only">Orange</span></span></label>
+                <label><input type="radio" name="palette" value="purple" data-name="Purple" data-colors="#b06cff"><span class="swatch"><span class="sr-only">Purple</span></span></label>
+                <label><input type="radio" name="palette" value="redgreen" data-name="Red and green" data-colors="#ff3b3b,#35e07a"><span class="swatch"><span class="sr-only">Red and green</span></span></label>
+                <label><input type="radio" name="palette" value="rwb" data-name="Red, white and blue" data-colors="#ff3b3b,#ffffff,#4a9bff"><span class="swatch"><span class="sr-only">Red, white and blue</span></span></label>
+                <label><input type="radio" name="palette" value="orangepurple" data-name="Orange and purple" data-colors="#ff8a1f,#b06cff"><span class="swatch"><span class="sr-only">Orange and purple</span></span></label>
+                <label><input type="radio" name="palette" value="custom" data-name="Custom" data-colors="#ff7a1a"><span class="swatch"><span class="sr-only">Custom color</span></span></label>
+              </div>
+              <div class="custom-row">
+                <label for="custom-color">Custom color</label>
+                <input type="color" id="custom-color" value="#ff7a1a">
+                <span class="hint">Pick any color, like your team's.</span>
+              </div>
+            </fieldset>
+
+            <fieldset class="zones" id="zone-group">
+              <legend>Where the lights go</legend>
+              <div class="chip-row">
+                <label class="chip-check"><input type="checkbox" name="zone" value="roof" data-label="roofline" checked><span>Roofline</span></label>
+                <label class="chip-check"><input type="checkbox" name="zone" value="windows" data-label="windows" checked><span>Windows</span></label>
+                <label class="chip-check"><input type="checkbox" name="zone" value="door" data-label="front door"><span>Front door</span></label>
+                <label class="chip-check holiday-only"><input type="checkbox" name="zone" value="trees" data-label="trees"><span>Trees</span></label>
+                <label class="chip-check holiday-only"><input type="checkbox" name="zone" value="shrubs" data-label="shrubs"><span>Shrubs</span></label>
+                <label class="chip-check holiday-only"><input type="checkbox" name="zone" value="wreath" data-label="wreath"><span>Wreath</span></label>
+              </div>
+              <p class="hint" id="zone-hint" hidden>Permanent lighting is shown on the building only: roofline, windows and front door.</p>
+            </fieldset>
+
+            <div class="summary">
+              <h3 class="summary-title">Your look</h3>
+              <p id="design-summary" aria-live="polite" aria-atomic="true"></p>
+              <a class="btn btn-primary" id="design-quote" href="#quote">Get a quote for this look</a>
+              <p class="hint">A preview only. We confirm the final look with you.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section" id="how" aria-labelledby="how-title">
+      <div class="wrap">
+        <p class="eyebrow"><span class="dots" aria-hidden="true"></span>How it works</p>
+        <h2 id="how-title">Four simple steps</h2>
         <ol class="steps">
-          <li>
-            <h3>Consult</h3>
-            <p>Tell us about your property and what you want. We confirm the details and give you a free quote.</p>
-          </li>
-          <li>
-            <h3>Design</h3>
-            <p>We plan the layout, colors and lighting for your roofline, trees and entryways.</p>
-          </li>
-          <li>
-            <h3>Install</h3>
-            <p>Our crew installs the lights on a date we agree with you, and tests everything before we leave.</p>
-          </li>
-          <li>
-            <h3>Maintain and remove</h3>
-            <p>If a section goes out during the season, call us. After the holidays we take it all down and store it, or leave permanent track in place.</p>
-          </li>
+          <li><span class="step-num" aria-hidden="true">1</span><h3>Consult</h3><p>Tell us about your property and what you would like lit.</p></li>
+          <li><span class="step-num" aria-hidden="true">2</span><h3>Design</h3><p>We plan the lights and layout with you. Bring ideas from the designer above.</p></li>
+          <li><span class="step-num" aria-hidden="true">3</span><h3>Install</h3><p>The ninjas install your lighting.</p></li>
+          <li><span class="step-num" aria-hidden="true">4</span><h3>Takedown &amp; storage, or upkeep</h3><p>Holiday lights come down and go into storage. Permanent lighting stays up. Ask us about upkeep.</p></li>
         </ol>
       </div>
     </section>
 
-    <section id="permanent" class="section" aria-labelledby="permanent-title">
-      <div class="container split">
+    <!-- ABOUT -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="wrap about-grid">
+        <figure class="about-photo">
+          <img src="assets/team.jpg" alt="Two smiling members of the Christmas Ninjas team at night in front of a house with string lights" width="544" height="234" loading="lazy">
+        </figure>
         <div>
-          <h2 id="permanent-title">Why semi-permanent lights</h2>
-          <p>Hanging lights every year takes time, ladders and a weekend. Permanent LED track lighting is installed once and stays on your roofline.</p>
-          <ul class="ticks">
-            <li><strong>No yearly install.</strong> The track stays up, so there is nothing to hang or take down each season.</li>
-            <li><strong>More than Christmas.</strong> Use it for holidays, game days, parties and events, or as everyday accent lighting.</li>
-            <li><strong>Clean look.</strong> Low-profile track follows your roofline without loose cords or clips.</li>
-            <li><strong>Easy control.</strong> Features such as colors, scheduling and app control depend on the system we install. Ask us what is available. [CONFIRM PRODUCT FEATURES]</li>
-          </ul>
-          <a class="btn" href="#quote">Ask about permanent lighting</a>
-        </div>
-        <div class="photo-ph" role="img" aria-label="Placeholder for a photo of permanent roofline track lighting">
-          <span>[PHOTO: permanent roofline track lighting]</span>
+          <p class="eyebrow"><span class="dots" aria-hidden="true"></span>About</p>
+          <h2 id="about-title">Christmas Lighting Experts</h2>
+          <p>Christmas Ninjas is a local lighting company owned by Joey Wilson, specializing in high-quality, professional holiday and permanent lighting services for homes and businesses in the Cleveland Area.</p>
+          <p>Our team of experienced &ldquo;ninjas&rdquo; is skilled in lighting design and installation, ensuring your property shines brightly for any occasion.</p>
         </div>
       </div>
     </section>
 
-    <section id="gallery" class="section section-alt" aria-labelledby="gallery-title">
-      <div class="container">
-        <h2 id="gallery-title">Our work</h2>
-        <p class="section-intro">[GALLERY - REAL PROJECT PHOTOS TO BE SUPPLIED. Replace each placeholder below with an image and descriptive alt text.]</p>
-        <div class="gallery">
-          <div class="photo-ph" role="img" aria-label="Placeholder for a residential holiday lighting photo"><span>[PHOTO: home roofline, night]</span></div>
-          <div class="photo-ph" role="img" aria-label="Placeholder for a tree and shrub lighting photo"><span>[PHOTO: trees and shrubs]</span></div>
-          <div class="photo-ph" role="img" aria-label="Placeholder for a commercial storefront lighting photo"><span>[PHOTO: commercial storefront]</span></div>
-          <div class="photo-ph" role="img" aria-label="Placeholder for a permanent track lighting photo"><span>[PHOTO: permanent track, event colors]</span></div>
-          <div class="photo-ph" role="img" aria-label="Placeholder for a crew at work photo"><span>[PHOTO: crew installing]</span></div>
-          <div class="photo-ph" role="img" aria-label="Placeholder for a daytime track lighting photo"><span>[PHOTO: track lighting, daytime]</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- TESTIMONIALS: intentionally omitted. Add only real customer reviews, with permission. -->
-
-    <section id="faq" class="section" aria-labelledby="faq-title">
-      <div class="container narrow">
-        <h2 id="faq-title">Questions</h2>
-        <details>
-          <summary>What areas do you serve?</summary>
-          <p>We serve [CITY] and [SERVICE AREA]. Not sure if we cover you? Send a request and ask.</p>
-        </details>
-        <details>
-          <summary>When should I book?</summary>
-          <p>Book early. Installation dates fill up before the season. [CONFIRM BOOKING DEADLINES AND SEASON DATES]</p>
-        </details>
-        <details>
-          <summary>Do you take the lights down and store them?</summary>
-          <p>Yes. After the season we take the lights down and store them for you until next year.</p>
-        </details>
-        <details>
-          <summary>Do you provide the lights, or do I?</summary>
-          <p>[CONFIRM: we supply commercial-grade lights / customer-supplied lights accepted]</p>
-        </details>
-        <details>
-          <summary>What is permanent LED track lighting?</summary>
-          <p>It is a low-profile track mounted along your roofline with LED lights built in. It can be used for holiday displays, events and everyday accent lighting without hanging lights each season.</p>
-        </details>
-        <details>
-          <summary>Do you work with businesses?</summary>
-          <p>Yes. We light storefronts, offices, restaurants and communities. Tell us about your property in the quote form.</p>
-        </details>
-        <details>
-          <summary>What happens if a light goes out?</summary>
-          <p>[CONFIRM: service and repair policy during the season]</p>
-        </details>
-        <details>
-          <summary>How much does it cost?</summary>
-          <p>Cost depends on the size of your property and what you want. Request a free quote and we will give you a price. [CONFIRM PRICING POLICY]</p>
-        </details>
-      </div>
-    </section>
-
-    <section id="quote" class="section section-alt" aria-labelledby="quote-title">
-      <div class="container split">
-        <div>
-          <h2 id="quote-title">Request a free quote</h2>
-          <p>Tell us about your property and we will reply with next steps.</p>
+    <!-- CONTACT + QUOTE -->
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <div class="wrap contact-grid">
+        <div class="contact-info">
+          <p class="eyebrow"><span class="dots" aria-hidden="true"></span>Contact</p>
+          <h2 id="contact-title">Talk to the ninjas</h2>
           <ul class="contact-list">
-            <li><strong>Phone:</strong> <a href="tel:[PHONE]">[PHONE]</a></li>
-            <li><strong>Email:</strong> <a href="mailto:[EMAIL]">[EMAIL]</a></li>
-            <li><strong>Service area:</strong> [CITY] and [SERVICE AREA]</li>
-            <li><strong>Hours:</strong> [HOURS]</li>
+            <li><span class="cl-label">Call</span><a class="cl-big" href="tel:+14403208377">440-320-8377</a></li>
+            <li><span class="cl-label">Email</span><a href="mailto:7Christmasninjas@gmail.com">7Christmasninjas@gmail.com</a></li>
+            <li><span class="cl-label">Visit</span>
+              <address>35873 Lorain Rd<br>North Ridgeville, OH, USA</address>
+              <a href="https://www.google.com/maps/search/?api=1&amp;query=35873+Lorain+Rd+North+Ridgeville+OH" target="_blank" rel="noopener">Open in Google Maps<span class="sr-only"> (opens in a new tab)</span></a>
+            </li>
+            <li><span class="cl-label">Serving</span>The Cleveland area</li>
           </ul>
         </div>
 
-        <!--
-          DEV NOTE: This form is front-end only. It does not send anywhere.
-          Connect a backend or form service (e.g. Formspree, Netlify Forms, or a server endpoint),
-          then set the action/method below and remove the "not connected" handling in script.js.
-        -->
-        <form id="quote-form" class="form" action="[FORM ENDPOINT - TO BE CONNECTED]" method="post" novalidate>
-          <div class="field">
-            <label for="name">Name <span class="req">(required)</span></label>
-            <input id="name" name="name" type="text" autocomplete="name" required>
-          </div>
-          <div class="field">
-            <label for="phone">Phone <span class="req">(required)</span></label>
-            <input id="phone" name="phone" type="tel" autocomplete="tel" required>
-          </div>
-          <div class="field">
-            <label for="email">Email <span class="req">(required)</span></label>
-            <input id="email" name="email" type="email" autocomplete="email" required>
-          </div>
-          <div class="field">
-            <label for="address">Property address or city</label>
-            <input id="address" name="address" type="text" autocomplete="street-address">
-          </div>
-          <div class="field">
-            <label for="type">Property type</label>
-            <select id="type" name="type">
-              <option value="residential">Residential</option>
-              <option value="commercial">Commercial</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="service">Service</label>
-            <select id="service" name="service">
-              <option value="holiday">Holiday install, takedown and storage</option>
-              <option value="permanent">Permanent / semi-permanent track lighting</option>
-              <option value="both">Both</option>
-              <option value="unsure">Not sure yet</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="details">Details</label>
-            <textarea id="details" name="details" rows="4"></textarea>
-          </div>
-          <button class="btn" type="submit">Send request</button>
-          <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
-          <p class="form-dev-note">Developer note: form not yet connected to a backend. Remove this line when live.</p>
-        </form>
+        <div class="quote" id="quote">
+          <h3>Get a quote</h3>
+          <form id="quote-form" novalidate>
+            <div class="form-error" id="form-error" role="alert" hidden></div>
+
+            <div class="field">
+              <label for="f-name">Name</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name">
+              <p class="err" id="e-name" hidden></p>
+            </div>
+            <div class="field">
+              <label for="f-phone">Phone</label>
+              <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required aria-describedby="e-phone">
+              <p class="err" id="e-phone" hidden></p>
+            </div>
+            <div class="field">
+              <label for="f-email">Email <span class="opt">(optional)</span></label>
+              <input id="f-email" name="email" type="email" autocomplete="email" aria-describedby="e-email">
+              <p class="err" id="e-email" hidden></p>
+            </div>
+            <div class="field">
+              <label for="f-town">Address or town</label>
+              <input id="f-town" name="town" type="text" autocomplete="street-address" required aria-describedby="e-town">
+              <p class="err" id="e-town" hidden></p>
+            </div>
+            <div class="field">
+              <label for="f-service">Service</label>
+              <select id="f-service" name="service" required aria-describedby="e-service">
+                <option value="">Choose one</option>
+                <option>Holiday lighting</option>
+                <option>Permanent lighting</option>
+                <option>Both holiday and permanent</option>
+                <option>Commercial (business)</option>
+              </select>
+              <p class="err" id="e-service" hidden></p>
+            </div>
+            <div class="field">
+              <label for="f-design">Your lighting look <span class="opt">(from the designer)</span></label>
+              <textarea id="f-design" name="design" rows="3" placeholder="Optional. Build a look in the light designer and it will appear here."></textarea>
+            </div>
+            <div class="field">
+              <label for="f-notes">Notes <span class="opt">(optional)</span></label>
+              <textarea id="f-notes" name="notes" rows="3"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Send quote request</button>
+            <p class="hint">This opens your email app with everything filled in. Prefer to talk? <a href="tel:+14403208377">Call 440-320-8377</a>.</p>
+
+            <div class="form-status" id="form-status" role="status" tabindex="-1" hidden>
+              <p><strong>Your email app should be opening.</strong> If nothing happened, use one of these:</p>
+              <div class="cta-row">
+                <a class="btn btn-ghost btn-sm" id="status-mailto" href="mailto:7Christmasninjas@gmail.com">Open email again</a>
+                <a class="btn btn-ghost btn-sm" href="tel:+14403208377">Call 440-320-8377</a>
+                <button type="button" class="btn btn-ghost btn-sm" id="copy-btn">Copy request</button>
+              </div>
+              <p class="copy-msg" id="copy-msg" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-inner">
+    <div class="wrap footer-grid">
       <div>
-        <p class="footer-brand">Christmas <strong>Ninjas</strong></p>
-        <p>Holiday light installation, takedown and storage. Permanent LED track lighting.</p>
+        <img class="footer-logo" src="assets/logo.png" alt="The Christmas Ninjas" width="664" height="356" loading="lazy">
       </div>
       <div>
-        <p><strong>Contact</strong></p>
-        <p><a href="tel:[PHONE]">[PHONE]</a><br>
-        <a href="mailto:[EMAIL]">[EMAIL]</a><br>
-        [STREET ADDRESS], [CITY], [STATE] [ZIP]</p>
+        <p><strong>The Christmas Ninjas</strong><br>Lights, Holiday / Permanent</p>
+        <p>35873 Lorain Rd<br>North Ridgeville, OH, USA</p>
       </div>
       <div>
-        <p><strong>Service area</strong></p>
-        <p>[CITY] and [SERVICE AREA]</p>
-        <p>[LICENSE # - TO BE PROVIDED]</p>
+        <p><a href="tel:+14403208377">440-320-8377</a><br><a href="mailto:7Christmasninjas@gmail.com">7Christmasninjas@gmail.com</a></p>
+        <p>Serving the Cleveland area.</p>
       </div>
     </div>
-    <p class="copyright">&copy; <span id="year">[YEAR]</span> Christmas Ninjas. All rights reserved.</p>
+    <p class="copyright">&copy; <span id="year"></span> The Christmas Ninjas</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
