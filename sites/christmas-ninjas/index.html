@@ -6,7 +6,8 @@
   <title>The Christmas Ninjas | Holiday &amp; Permanent Lighting, Cleveland Area</title>
   <meta name="description" content="Holiday and permanent lighting for homes and businesses in the Cleveland area. Christmas light installation, takedown and storage, plus permanent track lighting. North Ridgeville, OH.">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#05070d">
+  <meta name="theme-color" content="#04060b">
+  <meta name="color-scheme" content="dark">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="The Christmas Ninjas">
@@ -22,13 +23,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="styles.css">
-  <!-- Fonts load without blocking first paint. If the host is blocked, the fallback stack in styles.css is used. -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;display=swap" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;display=swap"></noscript>
+  <!-- Fonts load without blocking first paint. If the host is blocked, the fallback stacks in styles.css are used. -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Jost:wght@300;400;500&amp;display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Jost:wght@300;400;500&amp;display=swap"></noscript>
 
   <script>
-    /* Set before first paint so the JS-only header styles do not flash. */
-    document.documentElement.classList.add('js');
+    /* Set before first paint. "js" enables JS-only styles. "motion" enables the scroll-driven opening;
+       without it (no JS, or prefers-reduced-motion) the hero is fully lit and static. */
+    (function (d) {
+      d.classList.add('js');
+      if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches) { d.classList.add('motion'); }
+    })(document.documentElement);
   </script>
 
   <script type="application/ld+json">
@@ -52,109 +57,212 @@
   </script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to main content</a>
-
-  <!-- Shared SVG defs: ninja sprite + glow filter -->
-  <svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
-    <defs>
-      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="3.2" result="b"/>
-        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <symbol id="ninja" viewBox="0 0 48 44">
-        <!-- trailing light string -->
-        <path d="M30 27 Q38 29 44 24" fill="none" stroke="#8d97b5" stroke-width="1.4" stroke-linecap="round"/>
-        <circle cx="35" cy="28.6" r="2.2" fill="#ff4d4d"/>
-        <circle cx="40" cy="27.2" r="2.2" fill="#4ee08e"/>
-        <circle cx="44" cy="24" r="2.2" fill="#ffd98a"/>
-        <!-- legs -->
-        <path d="M18 33 L11 41 M25 34 L31 41" fill="none" stroke="#f2f4fb" stroke-width="5" stroke-linecap="round"/>
-        <path d="M18 33 L11 41 M25 34 L31 41" fill="none" stroke="#0a0a10" stroke-width="2.2" stroke-linecap="round"/>
-        <!-- body -->
-        <path d="M13 19 C14 13 25 12 29 18 C33 24 31 32 24 35 L16 35 C11 31 11 24 13 19Z" fill="#0a0a10" stroke="#f2f4fb" stroke-width="2.2" stroke-linejoin="round"/>
-        <!-- head -->
-        <circle cx="14" cy="16" r="8.5" fill="#0a0a10" stroke="#f2f4fb" stroke-width="2.2"/>
-        <rect x="6.5" y="13" width="13" height="4.6" rx="2.3" fill="#fff"/>
-        <circle cx="16.5" cy="15.3" r="1.1" fill="#0a0a10"/>
-        <!-- santa hat -->
-        <path d="M6 10.5 C8 2 18 0 25 4 C19 4.5 17 7 16.5 10.5Z" fill="#e5202b" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>
-        <rect x="5" y="9" width="13" height="3.2" rx="1.6" fill="#fff"/>
-        <circle cx="25.5" cy="4" r="2.4" fill="#fff"/>
-      </symbol>
-    </defs>
-  </svg>
+  <a class="skip-link" href="#content">Skip to content</a>
 
   <header class="site-header" id="site-header">
     <div class="bar">
-      <a class="bar-logo" href="#top" aria-label="The Christmas Ninjas, back to top">
+      <a class="logo-plate" href="#top" aria-label="The Christmas Ninjas, back to top">
         <img src="assets/logo.png" alt="The Christmas Ninjas" width="664" height="356">
       </a>
-      <div class="bar-actions">
-        <a class="btn btn-primary btn-sm" href="tel:+14403208377"><span class="btn-long">Call </span>440-320-8377</a>
-      </div>
+      <nav class="nav" id="nav" aria-label="Main">
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#designer">Designer</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="call-link" href="tel:+14403208377" aria-label="Call 440-320-8377">Call<span class="call-num"> 440-320-8377</span></a>
     </div>
-
-    <!-- Roofline progress + section nav. Plain list of links without JS; JS draws the roofline, ninja and bulbs. -->
-    <nav class="roofline" id="roofline" aria-label="Page sections">
-      <svg class="roofline-svg" aria-hidden="true" focusable="false"></svg>
-      <ol>
-        <li><a href="#top"><span class="rl-bulb" aria-hidden="true"></span><span class="rl-label">Home</span></a></li>
-        <li><a href="#services"><span class="rl-bulb" aria-hidden="true"></span><span class="rl-label">Services</span></a></li>
-        <li><a href="#designer"><span class="rl-bulb" aria-hidden="true"></span><span class="rl-label">Designer</span></a></li>
-        <li><a href="#how"><span class="rl-bulb" aria-hidden="true"></span><span class="rl-label">How it works</span></a></li>
-        <li><a href="#about"><span class="rl-bulb" aria-hidden="true"></span><span class="rl-label">About</span></a></li>
-        <li><a href="#contact"><span class="rl-bulb" aria-hidden="true"></span><span class="rl-label">Contact</span></a></li>
-      </ol>
-    </nav>
   </header>
 
   <main id="main">
-    <!-- HERO -->
-    <section class="hero" id="top" aria-labelledby="hero-title">
-      <div class="wrap hero-grid">
+    <!-- HERO. The runway (hero-run) is extra scroll distance under JS: the roof is pinned while the ninja walks it. -->
+    <div class="hero-run" id="hero-run">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+
+        <div class="hero-scene" id="hero-scene">
+          <svg id="roof" viewBox="-150 -170 1320 562" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+            <defs>
+              <!-- soft light spill -->
+              <filter id="fHalo" filterUnits="userSpaceOnUse" x="-200" y="-200" width="1500" height="700"><feGaussianBlur stdDeviation="11"/></filter>
+              <filter id="fSoft" filterUnits="userSpaceOnUse" x="-200" y="-200" width="1500" height="700"><feGaussianBlur stdDeviation="6"/></filter>
+              <filter id="fMoon" filterUnits="userSpaceOnUse" x="-200" y="-200" width="1500" height="700"><feGaussianBlur stdDeviation="1.4"/></filter>
+              <!-- thin warm rim around the ninja, strength set by --lit -->
+              <filter id="fRim" filterUnits="userSpaceOnUse" x="-40" y="-70" width="90" height="90">
+                <feMorphology in="SourceAlpha" operator="dilate" radius=".9" result="d"/>
+                <feFlood flood-color="#ffd9a0"/>
+                <feComposite in2="d" operator="in"/>
+                <feGaussianBlur stdDeviation=".35"/>
+              </filter>
+              <radialGradient id="gWash" cx=".5" cy="0" r="1.05">
+                <stop offset="0" stop-color="#ffcf91" stop-opacity=".42"/>
+                <stop offset="1" stop-color="#ffcf91" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="gPilot">
+                <stop offset="0" stop-color="#ffe9c0" stop-opacity=".9"/>
+                <stop offset=".25" stop-color="#ffbb62" stop-opacity=".35"/>
+                <stop offset="1" stop-color="#ff9d2e" stop-opacity="0"/>
+              </radialGradient>
+
+              <!-- Hand-traced light strings along the real roofline (traced from assets/house.jpg, 994 x 522 space). All run left to right. -->
+              <path id="s1"  d="M72 388 L90 293"/>
+              <path id="s2"  d="M108 362 L186 289 L270 373"/>
+              <path id="s2b" d="M270 373 L343 375"/>
+              <path id="s3"  d="M294 303 L323 236 L412 350 L402 358 L500 347"/>
+              <path id="s4"  d="M481 249 L507 206 L545 238"/>
+              <path id="s5"  d="M500 345 L620 210 L728 350"/>
+              <path id="s6"  d="M716 358 L798 367"/>
+              <path id="s7"  d="M702 304 L806 181 L824 199"/>
+              <path id="s8"  d="M752 292 L872 195 L947 297"/>
+
+              <!-- One mask per string. The script draws it up to the ninja so lights come on behind him. -->
+              <mask id="m1"  maskUnits="userSpaceOnUse" x="-200" y="-200" width="1500" height="700"><use href="#s1"  class="mk"/></mask>
+              <mask id="m2"  maskUnits="userSpaceOnUse" x="-200" y="-200" width="1500" height="700"><use href="#s2"  class="mk"/></mask>
+              <mask id="m2b" maskUnits="userSpaceOnUse" x="-200" y="-200" width="1500" height="700"><use href="#s2b" class="mk"/></mask>
+              <mask id="m3"  maskUnits="userSpaceOnUse" x="-200" y="-200" width="1500" height="700"><use href="#s3"  class="mk"/></mask>
+              <mask id="m4"  maskUnits="userSpaceOnUse" x="-200" y="-200" width="1500" height="700"><use href="#s4"  class="mk"/></mask>
+              <mask id="m5"  maskUnits="userSpaceOnUse" x="-200" y="-200" width="1500" height="700"><use href="#s5"  class="mk"/></mask>
+              <mask id="m6"  maskUnits="userSpaceOnUse" x="-200" y="-200" width="1500" height="700"><use href="#s6"  class="mk"/></mask>
+              <mask id="m7"  maskUnits="userSpaceOnUse" x="-200" y="-200" width="1500" height="700"><use href="#s7"  class="mk"/></mask>
+              <mask id="m8"  maskUnits="userSpaceOnUse" x="-200" y="-200" width="1500" height="700"><use href="#s8"  class="mk"/></mask>
+
+              <!-- Ninja silhouette, feet at 0,0, facing right (after the logo's ninja: big black head, white mask band, crouched, coil of lights on his back). -->
+              <g id="nj" fill="#000" stroke="#000" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="-12" cy="-17" r="5.1" fill="none" stroke-width="4.4"/>
+                <path d="M-8 -6 L-16 -4 L-15 -1" fill="none" stroke-width="4.4"/>
+                <path d="M2 -8 L10 -5 L9 -1" fill="none" stroke-width="4.4"/>
+                <path d="M-11 -11 C-12 -22 -3 -23 4 -21 C10 -19 10 -12 4 -8 L-7 -6 Z" stroke-width=".6"/>
+                <path d="M4 -17 L11 -13 L15 -7" fill="none" stroke-width="3.2"/>
+                <circle cx="6" cy="-27" r="8.6" stroke-width=".6"/>
+              </g>
+              <g id="ninja-sym">
+                <g class="n-rim" filter="url(#fRim)"><use href="#nj"/></g>
+                <use href="#nj"/>
+                <!-- coil bulbs -->
+                <g class="n-bulbs">
+                  <circle cx="-17.2" cy="-17" r="1.35" fill="#ff4d4d"/>
+                  <circle cx="-12" cy="-22.2" r="1.35" fill="#4ee08e"/>
+                  <circle cx="-6.8" cy="-17" r="1.35" fill="#ffd98a"/>
+                  <circle cx="-12" cy="-11.8" r="1.35" fill="#ff4d4d"/>
+                  <circle cx="-18" cy="-9" r="1.2" fill="#4ee08e"/>
+                </g>
+                <!-- santa hat -->
+                <g class="n-hat">
+                  <path d="M-2 -30 C-1 -42 12 -44 15 -31 Z" fill="#c4161f"/>
+                  <path d="M4 -41 C-4 -44 -11 -40 -12 -33" fill="none" stroke="#c4161f" stroke-width="4.2" stroke-linecap="round"/>
+                  <circle cx="-12" cy="-31" r="2.8" fill="#f4f1ea"/>
+                  <path d="M-2.5 -30.2 L15.5 -31.2" stroke="#f4f1ea" stroke-width="2.8" stroke-linecap="round"/>
+                </g>
+                <!-- mask band and eyes -->
+                <path class="n-band" d="M-2.2 -27.6 L14.4 -29 L14.6 -23.6 L-1.6 -22.6 Z" fill="#c9d0e2"/>
+                <circle class="n-eye" cx="8.4" cy="-26.2" r="1.15" fill="#fff4d8"/>
+                <circle class="n-eye" cx="12.2" cy="-26.5" r="1.15" fill="#fff4d8"/>
+                <circle class="n-hand" cx="15.4" cy="-6.4" r="1.6" fill="#fff1cf"/>
+              </g>
+            </defs>
+
+            <!-- trees and ground (black) -->
+            <g class="land" fill="#000">
+              <polygon points="-95,177 -89,209 -75,219 -86,232 -69,260 -84,273 -63,302 -81,315 -56,344 -79,357 -50,386 -91,392 -99,392 -140,386 -111,357 -134,344 -109,315 -127,302 -106,273 -121,260 -104,232 -115,219 -101,209"/>
+              <polygon points="-30,242 -25,264 -15,271 -23,280 -10,300 -21,309 -5,329 -19,338 0,358 -18,367 5,388 -26,392 -34,392 -65,388 -42,367 -60,358 -41,338 -55,329 -39,309 -50,300 -37,280 -45,271 -35,264"/>
+              <polygon points="28,297 32,311 40,315 34,321 44,334 35,340 48,352 36,358 52,371 38,376 56,389 32,392 24,392 0,389 18,376 4,371 20,358 8,352 21,340 12,334 22,321 16,315 24,311"/>
+              <polygon points="1010,207 1015,235 1028,243 1018,254 1033,279 1020,290 1039,315 1022,326 1044,351 1024,362 1050,386 1014,392 1006,392 970,386 996,362 976,351 998,326 981,315 1000,290 987,279 1002,254 992,243 1005,235"/>
+              <polygon points="1072,252 1076,273 1087,279 1079,288 1091,306 1080,315 1096,333 1082,342 1100,361 1084,369 1105,388 1076,392 1068,392 1039,388 1060,369 1044,361 1062,342 1048,333 1064,315 1053,306 1065,288 1057,279 1068,273"/>
+              <polygon points="1135,167 1141,201 1155,211 1144,224 1162,254 1147,268 1168,298 1149,311 1175,342 1151,355 1181,385 1139,392 1131,392 1089,385 1119,355 1095,342 1121,311 1102,298 1123,268 1108,254 1126,224 1115,211 1129,201"/>
+              <rect x="-160" y="382" width="1340" height="40"/>
+              <!-- the house: gables, dormer, garage-side roof, right wing -->
+              <polygon points="40,392 72,388 90,293 186,289 270,373 294,303 323,236 412,350 481,249 507,206 545,238 620,210 703,312 806,181 822,199 872,195 947,297 951,330 960,392"/>
+            </g>
+
+            <!-- faint moonlight on the roof edges so the shape is readable in the dark -->
+            <g class="moon" fill="none" stroke-linejoin="round">
+              <polyline class="moon-soft" points="72,388 90,293 186,289 270,373 294,303 323,236 412,350 481,249 507,206 545,238 620,210 703,312 806,181 822,199 872,195 947,297" filter="url(#fMoon)"/>
+              <polyline class="moon-line" points="72,388 90,293 186,289 270,373 294,303 323,236 412,350 481,249 507,206 545,238 620,210 703,312 806,181 822,199 872,195 947,297"/>
+            </g>
+
+            <!-- light spilling onto gable faces (lit with their string) -->
+            <g class="faces" fill="url(#gWash)">
+              <polygon class="wash" data-n="2"  points="108,362 186,289 270,373"/>
+              <polygon class="wash" data-n="3"  points="294,303 323,236 412,350 402,358 300,362"/>
+              <polygon class="wash" data-n="4"  points="481,249 507,206 545,238 512,262"/>
+              <polygon class="wash" data-n="5"  points="500,345 620,210 728,350"/>
+              <polygon class="wash" data-n="8"  points="752,292 872,195 947,297 947,330 752,330"/>
+              <g class="wash win" data-n="5" fill="#ffd9a0"><rect x="605" y="289" width="16" height="42"/></g>
+              <g class="wash win" data-n="8" fill="#ffd9a0"><rect x="862" y="298" width="17" height="38"/></g>
+            </g>
+
+            <!-- light strings: halo, bloom, trim and bulbs share one path -->
+            <g class="lights">
+              <g class="str" data-n="1"  data-u="0,0.8"><use href="#s1"  class="halo" filter="url(#fHalo)"/><use href="#s1"  class="bl bl2"/><use href="#s1"  class="bl bl1"/><use href="#s1"  class="trim"/><use href="#s1"  class="bulbs"/></g>
+              <g class="str" data-n="2"  data-u="0,2"><use href="#s2"  class="halo" filter="url(#fHalo)"/><use href="#s2"  class="bl bl2"/><use href="#s2"  class="bl bl1"/><use href="#s2"  class="trim"/><use href="#s2"  class="bulbs"/></g>
+              <g class="str" data-n="2b" data-u="2,3"><use href="#s2b" class="halo" filter="url(#fHalo)"/><use href="#s2b" class="bl bl2"/><use href="#s2b" class="bl bl1"/><use href="#s2b" class="trim"/><use href="#s2b" class="bulbs"/></g>
+              <g class="str" data-n="3"  data-u="3,6"><use href="#s3"  class="halo" filter="url(#fHalo)"/><use href="#s3"  class="bl bl2"/><use href="#s3"  class="bl bl1"/><use href="#s3"  class="trim"/><use href="#s3"  class="bulbs"/></g>
+              <g class="str" data-n="4"  data-u="6,6.5"><use href="#s4"  class="halo" filter="url(#fHalo)"/><use href="#s4"  class="bl bl2"/><use href="#s4"  class="bl bl1"/><use href="#s4"  class="trim"/><use href="#s4"  class="bulbs"/></g>
+              <g class="str" data-n="5"  data-u="6,8"><use href="#s5"  class="halo" filter="url(#fHalo)"/><use href="#s5"  class="bl bl2"/><use href="#s5"  class="bl bl1"/><use href="#s5"  class="trim"/><use href="#s5"  class="bulbs"/></g>
+              <g class="str" data-n="6"  data-u="8,9"><use href="#s6"  class="halo" filter="url(#fHalo)"/><use href="#s6"  class="bl bl2"/><use href="#s6"  class="bl bl1"/><use href="#s6"  class="trim"/><use href="#s6"  class="bulbs"/></g>
+              <g class="str" data-n="7"  data-u="9,10"><use href="#s7"  class="halo" filter="url(#fHalo)"/><use href="#s7"  class="bl bl2"/><use href="#s7"  class="bl bl1"/><use href="#s7"  class="trim"/><use href="#s7"  class="bulbs"/></g>
+              <g class="str" data-n="8"  data-u="9,11"><use href="#s8"  class="halo" filter="url(#fHalo)"/><use href="#s8"  class="bl bl2"/><use href="#s8"  class="bl bl1"/><use href="#s8"  class="trim"/><use href="#s8"  class="bulbs"/></g>
+            </g>
+
+            <!-- the one bulb that is on at load -->
+            <g class="pilot" transform="translate(124 345)">
+              <circle r="30" fill="url(#gPilot)"/>
+              <circle r="2" fill="#fff1cf"/>
+            </g>
+
+            <!-- the ninja. Position is set by the script; this is the lit, resting place without JS. -->
+            <g id="ninja" transform="translate(620 211)" style="--lit:1"><use href="#ninja-sym"/></g>
+          </svg>
+        </div>
+
         <div class="hero-copy">
-          <img class="hero-logo" src="assets/logo.png" alt="The Christmas Ninjas" width="664" height="356">
-          <p class="eyebrow"><span class="dots" aria-hidden="true"></span>Lights &middot; Holiday / Permanent</p>
-          <h1 id="hero-title">Holiday &amp; permanent lighting, Cleveland area</h1>
-          <p class="lead">A local lighting company owned by Joey Wilson, for homes and businesses.</p>
-          <div class="cta-row">
-            <a class="btn btn-primary" href="tel:+14403208377">Call 440-320-8377</a>
-            <a class="btn btn-ghost" href="#quote">Get a quote</a>
+          <h1 id="hero-title">The Christmas Ninjas</h1>
+          <p class="lede">Holiday and permanent lighting. Cleveland area.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#quote">Get a quote</a>
+            <a class="btn btn-quiet" href="tel:+14403208377">Call 440-320-8377</a>
           </div>
         </div>
-        <figure class="hero-photo">
-          <img src="assets/house.jpg" alt="A house at night with warm white lights along its rooflines" width="994" height="522" fetchpriority="high">
-        </figure>
-      </div>
-    </section>
+
+        <div class="hero-ui">
+          <p class="hero-hint" id="hero-hint" hidden>Scroll, swipe or use the arrow keys to guide the ninja along the roof.</p>
+          <p class="hero-status" id="hero-status" role="status" hidden></p>
+          <button class="lights-btn" id="lights-btn" type="button" hidden>Turn on all lights</button>
+        </div>
+      </section>
+    </div>
+
+    <div id="content" tabindex="-1"></div>
 
     <!-- SERVICES -->
     <section class="section" id="services" aria-labelledby="services-title">
       <div class="wrap">
-        <p class="eyebrow"><span class="dots" aria-hidden="true"></span>Services</p>
-        <h2 id="services-title">Two ways to light it up</h2>
-        <div class="card-grid">
-          <article class="card card-holiday">
+        <p class="eyebrow rv">Services</p>
+        <h2 id="services-title" class="rv">Two ways to light it up</h2>
+        <div class="cols">
+          <article class="col rv">
             <h3>Holiday lighting</h3>
             <p>Professional holiday light installation, so your property is ready for the season.</p>
-            <ul class="ticks">
+            <ul class="lines">
               <li><strong>Installation.</strong> We design and hang your lights.</li>
               <li><strong>Takedown.</strong> We take them down when the season is over.</li>
               <li><strong>Storage.</strong> We store them until next time.</li>
             </ul>
           </article>
-          <article class="card card-permanent">
+          <article class="col rv">
             <h3>Permanent lighting</h3>
             <p>Permanent and semi-permanent track lighting that stays on your property, ready for any occasion.</p>
-            <ul class="ticks">
+            <ul class="lines">
               <li>Look good on holidays and every other night.</li>
               <li>No yearly hang-and-takedown cycle.</li>
             </ul>
           </article>
         </div>
-        <div class="who">
-          <div><h3>Homes</h3><p>Light up your house for the season or for good.</p></div>
-          <div><h3>Businesses</h3><p>Light up your business for the season or for good.</p></div>
+        <div class="cols cols-who">
+          <div class="col rv"><h3>Homes</h3><p>Light up your house for the season or for good.</p></div>
+          <div class="col rv"><h3>Businesses</h3><p>Light up your business for the season or for good.</p></div>
         </div>
       </div>
     </section>
@@ -162,74 +270,47 @@
     <!-- LIGHT DESIGNER -->
     <section class="section" id="designer" aria-labelledby="designer-title">
       <div class="wrap">
-        <p class="eyebrow"><span class="dots" aria-hidden="true"></span>Light designer</p>
-        <h2 id="designer-title">Try a look on the house</h2>
-        <p class="section-lead">Pick a color and where the lights go. Send the look to us as part of your quote request.</p>
+        <p class="eyebrow rv">Light designer</p>
+        <h2 id="designer-title" class="rv">Try a look on the house</h2>
+        <p class="section-lead rv">Pick a color and where the lights go. Send the look to us as part of your quote request.</p>
 
         <noscript><p class="notice">The light designer needs JavaScript. You can still call 440-320-8377 or use the quote form below.</p></noscript>
 
-        <div class="designer" id="designer-app">
+        <div class="designer rv" id="designer-app">
           <div class="designer-preview">
             <svg id="house-svg" viewBox="0 0 640 400" role="img" aria-labelledby="house-title house-desc">
               <title id="house-title">Light designer preview</title>
-              <desc id="house-desc">A cartoon house at night with a ninja on the roof. Lights appear where you choose them.</desc>
-              <defs>
-                <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#03050b"/><stop offset="1" stop-color="#0e1733"/>
-                </linearGradient>
-              </defs>
-              <rect width="640" height="400" fill="url(#sky)"/>
-              <g fill="#fff" opacity=".8">
-                <circle cx="250" cy="34" r="1.6"/><circle cx="420" cy="50" r="1.3"/><circle cx="560" cy="30" r="1.8"/>
-                <circle cx="330" cy="22" r="1.2"/><circle cx="500" cy="96" r="1.3"/><circle cx="170" cy="110" r="1.2"/>
-                <circle cx="610" cy="120" r="1.4"/><circle cx="30" cy="150" r="1.2"/>
-              </g>
-              <circle cx="88" cy="62" r="22" fill="#f4efd9"/>
-              <circle cx="98" cy="55" r="20" fill="#060a16"/>
-              <rect y="338" width="640" height="62" fill="#0a1124"/>
-              <path d="M0 338 H640" stroke="#46537f" stroke-width="4"/>
-
-              <g stroke="#46537f" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
-                <!-- trees (behind) -->
-                <rect x="524" y="330" width="12" height="10" fill="#2a1f2e"/>
-                <rect x="597" y="330" width="12" height="10" fill="#2a1f2e"/>
-                <g fill="#0f2b27">
-                  <polygon points="530,188 562,252 498,252"/>
-                  <polygon points="530,224 568,292 492,292"/>
-                  <polygon points="530,262 574,334 486,334"/>
-                  <polygon points="603,246 624,296 582,296"/>
-                  <polygon points="603,274 630,332 576,332"/>
+              <desc id="house-desc">A thin-line drawing of a house at night with a ninja on the roof. Lights appear where you choose them.</desc>
+              <defs><filter id="zglow" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur in="SourceGraphic" stdDeviation="3.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+              <rect width="640" height="400" fill="#04060b"/>
+              <g class="hl" fill="#04060b" stroke-linejoin="round" stroke-linecap="round">
+                <path d="M0 338 H640" fill="none"/>
+                <!-- trees -->
+                <g fill="none" class="hl-dim">
+                  <polygon points="530,188 562,252 498,252"/><polygon points="530,224 568,292 492,292"/><polygon points="530,262 574,334 486,334"/>
+                  <polygon points="603,246 624,296 582,296"/><polygon points="603,274 630,332 576,332"/>
                 </g>
                 <!-- garage wing -->
-                <rect x="62" y="252" width="132" height="86" fill="#121a36"/>
-                <polygon points="48,257 128,204 208,257" fill="#1a2347"/>
-                <rect x="78" y="276" width="100" height="62" rx="4" fill="#0b1126"/>
-                <path d="M78 296 H178 M78 316 H178" stroke-width="2.5"/>
-                <!-- chimney -->
-                <rect x="388" y="112" width="26" height="54" fill="#1a2347"/>
-                <!-- main house -->
-                <rect x="190" y="200" width="262" height="138" fill="#121a36"/>
-                <polygon points="168,206 320,98 474,206" fill="#1a2347"/>
-                <!-- windows -->
-                <g fill="#0b1126">
-                  <rect x="216" y="232" width="50" height="58" rx="3"/>
-                  <rect x="376" y="232" width="50" height="58" rx="3"/>
+                <rect x="62" y="252" width="132" height="86"/>
+                <polygon points="48,257 128,204 208,257"/>
+                <path d="M78 338 V276 H178 V338 M78 296 H178 M78 316 H178" fill="none" class="hl-dim"/>
+                <!-- chimney and main house -->
+                <rect x="388" y="112" width="26" height="54"/>
+                <rect x="190" y="200" width="262" height="138"/>
+                <polygon points="168,206 320,98 474,206"/>
+                <!-- windows and door -->
+                <g fill="none">
+                  <rect x="216" y="232" width="50" height="58"/><rect x="376" y="232" width="50" height="58"/>
+                  <path d="M241 232 V290 M216 261 H266 M401 232 V290 M376 261 H426" class="hl-dim"/>
+                  <path d="M298 338 V282 A22 22 0 0 1 342 282 V338"/>
                 </g>
-                <path d="M241 232 V290 M216 261 H266 M401 232 V290 M376 261 H426" stroke-width="2.5"/>
-                <!-- door -->
-                <path d="M298 338 V282 A22 22 0 0 1 342 282 V338Z" fill="#7a1219"/>
-                <circle cx="334" cy="310" r="2.5" fill="#ffd98a" stroke="none"/>
-                <!-- shrubs -->
-                <g fill="#0f2b27">
-                  <ellipse cx="236" cy="334" rx="27" ry="19"/>
-                  <ellipse cx="404" cy="334" rx="27" ry="19"/>
+                <g fill="none" class="hl-dim">
+                  <ellipse cx="236" cy="334" rx="27" ry="19"/><ellipse cx="404" cy="334" rx="27" ry="19"/>
                 </g>
               </g>
 
-              <!-- wreath (decor shown with holiday wreath lights) -->
               <g id="wreath-decor" aria-hidden="true">
-                <circle cx="320" cy="292" r="12" fill="none" stroke="#1f7a3f" stroke-width="6"/>
-                <path d="M314 304 L320 298 L326 304 L320 308Z" fill="#e5202b" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>
+                <circle cx="320" cy="292" r="12" fill="none" stroke="#1f7a3f" stroke-width="4"/>
               </g>
 
               <!-- light zones, filled by script.js -->
@@ -240,33 +321,33 @@
               <g class="zone" id="z-wreath"></g>
               <g class="zone" id="z-roof"></g>
 
-              <!-- ninja sneaking along the roof -->
-              <use href="#ninja" x="276" y="43" width="62" height="57"/>
+              <!-- the ninja on the ridge -->
+              <g transform="translate(300 100) scale(.9)" style="--lit:.55"><use href="#ninja-sym"/></g>
             </svg>
           </div>
 
           <div class="designer-controls">
-            <fieldset class="seg" id="mode-group">
+            <fieldset class="ctl" id="mode-group">
               <legend>Type of lighting</legend>
-              <div class="seg-row">
-                <label><input type="radio" name="mode" value="holiday" checked><span>Holiday</span></label>
-                <label><input type="radio" name="mode" value="permanent"><span>Permanent</span></label>
+              <div class="toggle-row">
+                <label class="tg"><input type="radio" name="mode" value="holiday" checked><span>Holiday</span></label>
+                <label class="tg"><input type="radio" name="mode" value="permanent"><span>Permanent</span></label>
               </div>
               <p class="hint" id="mode-hint">Holiday: seasonal lights, put up and taken down.</p>
             </fieldset>
 
-            <fieldset class="scenes" id="scene-group">
+            <fieldset class="ctl" id="scene-group">
               <legend>Start from a scene</legend>
-              <div class="chip-row">
-                <button type="button" class="chip" data-scene="christmas" aria-pressed="false">Christmas</button>
-                <button type="button" class="chip" data-scene="halloween" aria-pressed="false">Halloween</button>
-                <button type="button" class="chip" data-scene="july4" aria-pressed="false">4th of July</button>
-                <button type="button" class="chip" data-scene="gameday" aria-pressed="false">Game day</button>
-                <button type="button" class="chip" data-scene="everyday" aria-pressed="false">Everyday warm</button>
+              <div class="toggle-row">
+                <button type="button" class="tg-btn" data-scene="christmas" aria-pressed="false">Christmas</button>
+                <button type="button" class="tg-btn" data-scene="halloween" aria-pressed="false">Halloween</button>
+                <button type="button" class="tg-btn" data-scene="july4" aria-pressed="false">4th of July</button>
+                <button type="button" class="tg-btn" data-scene="gameday" aria-pressed="false">Game day</button>
+                <button type="button" class="tg-btn" data-scene="everyday" aria-pressed="false">Everyday warm</button>
               </div>
             </fieldset>
 
-            <fieldset class="colors" id="color-group">
+            <fieldset class="ctl" id="color-group">
               <legend>Light color: <span id="color-name">Warm white</span></legend>
               <div class="swatch-grid">
                 <label title="Warm white"><input type="radio" name="palette" value="warm" data-name="Warm white" data-colors="#ffd27a" checked><span class="swatch"><span class="sr-only">Warm white</span></span></label>
@@ -280,28 +361,28 @@
                 <label title="Red and green"><input type="radio" name="palette" value="redgreen" data-name="Red and green" data-colors="#ff3b3b,#35e07a"><span class="swatch"><span class="sr-only">Red and green</span></span></label>
                 <label title="Red, white and blue"><input type="radio" name="palette" value="rwb" data-name="Red, white and blue" data-colors="#ff3b3b,#ffffff,#4a9bff"><span class="swatch"><span class="sr-only">Red, white and blue</span></span></label>
                 <label title="Orange and purple"><input type="radio" name="palette" value="orangepurple" data-name="Orange and purple" data-colors="#ff8a1f,#b06cff"><span class="swatch"><span class="sr-only">Orange and purple</span></span></label>
-                              </div>
+              </div>
               <div class="custom-row" id="custom-row">
                 <label for="custom-color">Or pick any color</label>
                 <input type="color" id="custom-color" value="#ff7a1a">
               </div>
             </fieldset>
 
-            <fieldset class="zones" id="zone-group">
+            <fieldset class="ctl" id="zone-group">
               <legend>Where the lights go</legend>
-              <div class="chip-row">
-                <label class="chip-check"><input type="checkbox" name="zone" value="roof" data-label="roofline" checked><span>Roofline</span></label>
-                <label class="chip-check"><input type="checkbox" name="zone" value="windows" data-label="windows" checked><span>Windows</span></label>
-                <label class="chip-check"><input type="checkbox" name="zone" value="door" data-label="front door"><span>Front door</span></label>
-                <label class="chip-check holiday-only"><input type="checkbox" name="zone" value="trees" data-label="trees"><span>Trees</span></label>
-                <label class="chip-check holiday-only"><input type="checkbox" name="zone" value="shrubs" data-label="shrubs"><span>Shrubs</span></label>
-                <label class="chip-check holiday-only"><input type="checkbox" name="zone" value="wreath" data-label="wreath"><span>Wreath</span></label>
+              <div class="toggle-row">
+                <label class="tg tg-check"><input type="checkbox" name="zone" value="roof" data-label="roofline" checked><span>Roofline</span></label>
+                <label class="tg tg-check"><input type="checkbox" name="zone" value="windows" data-label="windows" checked><span>Windows</span></label>
+                <label class="tg tg-check"><input type="checkbox" name="zone" value="door" data-label="front door"><span>Front door</span></label>
+                <label class="tg tg-check holiday-only"><input type="checkbox" name="zone" value="trees" data-label="trees"><span>Trees</span></label>
+                <label class="tg tg-check holiday-only"><input type="checkbox" name="zone" value="shrubs" data-label="shrubs"><span>Shrubs</span></label>
+                <label class="tg tg-check holiday-only"><input type="checkbox" name="zone" value="wreath" data-label="wreath"><span>Wreath</span></label>
               </div>
               <p class="hint" id="zone-hint" hidden>Permanent lighting is shown on the building only: roofline, windows and front door.</p>
             </fieldset>
 
             <div class="summary">
-              <h3 class="summary-title">Your look</h3>
+              <p class="label">Your look</p>
               <p id="design-summary" aria-live="polite" aria-atomic="true"></p>
               <a class="btn btn-primary" id="design-quote" href="#quote">Get a quote for this look</a>
               <p class="hint">A preview only. We confirm the final look with you.</p>
@@ -314,13 +395,13 @@
     <!-- HOW IT WORKS -->
     <section class="section" id="how" aria-labelledby="how-title">
       <div class="wrap">
-        <p class="eyebrow"><span class="dots" aria-hidden="true"></span>How it works</p>
-        <h2 id="how-title">Four simple steps</h2>
+        <p class="eyebrow rv">How it works</p>
+        <h2 id="how-title" class="rv">Four simple steps</h2>
         <ol class="steps">
-          <li><span class="step-num" aria-hidden="true">1</span><h3>Consult</h3><p>Tell us about your property and what you would like lit.</p></li>
-          <li><span class="step-num" aria-hidden="true">2</span><h3>Design</h3><p>We plan the lights and layout with you. Bring ideas from the designer above.</p></li>
-          <li><span class="step-num" aria-hidden="true">3</span><h3>Install</h3><p>The ninjas install your lighting.</p></li>
-          <li><span class="step-num" aria-hidden="true">4</span><h3>Takedown &amp; storage, or upkeep</h3><p>Holiday lights come down and go into storage. Permanent lighting stays up. Ask us about upkeep.</p></li>
+          <li class="rv"><span class="step-num" aria-hidden="true">01</span><h3>Consult</h3><p>Tell us about your property and what you would like lit.</p></li>
+          <li class="rv"><span class="step-num" aria-hidden="true">02</span><h3>Design</h3><p>We plan the lights and layout with you. Bring ideas from the designer above.</p></li>
+          <li class="rv"><span class="step-num" aria-hidden="true">03</span><h3>Install</h3><p>The ninjas install your lighting.</p></li>
+          <li class="rv"><span class="step-num" aria-hidden="true">04</span><h3>Takedown &amp; storage, or upkeep</h3><p>Holiday lights come down and go into storage. Permanent lighting stays up. Ask us about upkeep.</p></li>
         </ol>
       </div>
     </section>
@@ -328,11 +409,11 @@
     <!-- ABOUT -->
     <section class="section" id="about" aria-labelledby="about-title">
       <div class="wrap about-grid">
-        <figure class="about-photo">
+        <figure class="about-photo rv">
           <img src="assets/team.jpg" alt="Two smiling members of the Christmas Ninjas team at night in front of a house with string lights" width="544" height="234" loading="lazy" decoding="async">
         </figure>
-        <div>
-          <p class="eyebrow"><span class="dots" aria-hidden="true"></span>About</p>
+        <div class="rv">
+          <p class="eyebrow">About</p>
           <h2 id="about-title">Christmas Lighting Experts</h2>
           <p>Christmas Ninjas is a local lighting company owned by Joey Wilson, specializing in high-quality, professional holiday and permanent lighting services for homes and businesses in the Cleveland Area.</p>
           <p>Our team of experienced &ldquo;ninjas&rdquo; is skilled in lighting design and installation, ensuring your property shines brightly for any occasion.</p>
@@ -343,8 +424,8 @@
     <!-- CONTACT + QUOTE -->
     <section class="section" id="contact" aria-labelledby="contact-title">
       <div class="wrap contact-grid">
-        <div class="contact-info">
-          <p class="eyebrow"><span class="dots" aria-hidden="true"></span>Contact</p>
+        <div class="contact-info rv">
+          <p class="eyebrow">Contact</p>
           <h2 id="contact-title">Talk to the ninjas</h2>
           <ul class="contact-list">
             <li><span class="cl-label">Call</span><a class="cl-big" href="tel:+14403208377">440-320-8377</a></li>
@@ -357,7 +438,7 @@
           </ul>
         </div>
 
-        <div class="quote" id="quote">
+        <div class="quote rv" id="quote">
           <h3>Get a quote</h3>
           <form id="quote-form" novalidate>
             <div class="form-error" id="form-error" role="alert" hidden></div>
@@ -407,10 +488,10 @@
 
             <div class="form-status" id="form-status" role="status" tabindex="-1" hidden>
               <p><strong>Your email app should be opening.</strong> If nothing happened, use one of these:</p>
-              <div class="cta-row">
-                <a class="btn btn-ghost btn-sm" id="status-mailto" href="mailto:7Christmasninjas@gmail.com">Open email again</a>
-                <a class="btn btn-ghost btn-sm" href="tel:+14403208377">Call 440-320-8377</a>
-                <button type="button" class="btn btn-ghost btn-sm" id="copy-btn">Copy request</button>
+              <div class="actions">
+                <a class="btn btn-quiet" id="status-mailto" href="mailto:7Christmasninjas@gmail.com">Open email again</a>
+                <a class="btn btn-quiet" href="tel:+14403208377">Call 440-320-8377</a>
+                <button type="button" class="btn btn-quiet" id="copy-btn">Copy request</button>
               </div>
               <p class="copy-msg" id="copy-msg" aria-live="polite"></p>
             </div>
@@ -423,7 +504,7 @@
   <footer class="site-footer">
     <div class="wrap footer-grid">
       <div>
-        <img class="footer-logo" src="assets/logo.png" alt="The Christmas Ninjas" width="664" height="356" loading="lazy" decoding="async">
+        <span class="logo-plate logo-plate-static"><img src="assets/logo.png" alt="The Christmas Ninjas" width="664" height="356" loading="lazy" decoding="async"></span>
       </div>
       <div>
         <p><strong>The Christmas Ninjas</strong><br>Lights, Holiday / Permanent</p>

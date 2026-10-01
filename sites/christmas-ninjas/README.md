@@ -2,18 +2,27 @@
 
 Static site. Open `index.html` or serve the folder (`npx http-server`). No build step, no frameworks.
 Files: `index.html`, `styles.css`, `script.js`, `assets/` (`logo.png`, `house.jpg`, `team.jpg`, `favicon.svg`), `robots.txt`, `sitemap.xml`.
-Optional Google Fonts (Fredoka) is the only external request. It loads without blocking first paint (`font-display: swap`). If blocked, a metric-matched fallback (`Fredoka Fallback`, size-adjusted Arial/Helvetica) is used so the layout does not shift.
+Optional Google Fonts (Jost, Inter) are the only external request. They load without blocking first paint (`font-display: swap`). If blocked, system fallbacks are used.
 
 ## What is real (from the client)
 Business name and tagline, address (35873 Lorain Rd, North Ridgeville, OH), phone 440-320-8377, email 7Christmasninjas@gmail.com, owner Joey Wilson, the "Christmas Lighting Experts" about copy, services (holiday install, takedown, storage; permanent/semi-permanent track lighting; homes and businesses), "Cleveland Area".
-Logo, house photo and team photo are cropped from a screenshot of their current site (low resolution). Replace with originals when available. Logo is unaltered on a white rounded badge because the black ninja disappears on a dark background.
+Logo, house photo and team photo are cropped from a screenshot of their current site (low resolution). Replace with originals when available. Logo is unaltered on a square white plate because the black ninja disappears on a dark background.
+
+## Design (v2, minimalist)
+Mostly black, lit only by its own lights. Jost (light display, tracked caps labels) + Inter (body) from Google Fonts with real fallbacks (Avenir Next, Century Gothic, system-ui). Hairline rules, 2px radii, no pills. One red (from the logo) for the primary button and tiny rules; green appears only inside the light designer. Cartoon lives only in the logo and the ninja silhouette. Logo is unaltered on a square white plate (header and footer).
 
 ## Features
-- Roofline scroll progress and section nav (ninja walks the roofline, bulbs light in sequence, bulbs are links). Static with all lights on under `prefers-reduced-motion`.
-- Light designer (holiday/permanent, 5 scenes, 11 color options plus a custom color picker, 6 placement zones). "Get a quote for this look" fills the quote form.
-- Quote form: validates, then opens a `mailto:` to the client email with everything prefilled. Shows tap-to-call, "Open email again" and "Copy request" fallbacks.
-- Glow is used only on the lights themselves (roofline, designer). Animation stops under `prefers-reduced-motion`. Without JS the header is a plain list of section links.
-- Accessibility: skip link, landmarks, labelled form fields, roofline links have text names, designer works by keyboard (radios, chips, checkboxes), 44px minimum tap targets, AA contrast checked on text pairs.
+- Hero: full-viewport inline SVG of the house roofline, hand-traced from `assets/house.jpg` (gables, dormer, garage-side roof, right wing; trace coordinates are in photo pixel space, 994 x 522). A bulb string follows the real roof edges. A small ninja (after the logo's ninja) crouches in the dark next to one dim pilot bulb. Under JS the roof is pinned for about 2 extra screens of scroll: scrolling, swiping/dragging, tapping or the arrow keys move him along the roof and bulbs switch on behind him; at the end the full roofline is lit. On narrow or tall screens the view follows him.
+- Nothing is gated: header nav, Call and Get a quote are visible at once; "Turn on all lights" button (becomes "Replay"), skip link and any in-page link jump past the animation. The hero scene is a keyboard slider (Left/Right/Home/End). Position is simply scroll position, so there is no scroll hijacking.
+- No JS or `prefers-reduced-motion`: no runway, fully lit static hero, ninja on the middle peak, scroll reveals off.
+- Fixed minimal header (logo, Services/Designer/About/Contact, Call). Menu button on small screens (plain wrapping links without JS).
+- Light designer: thin-line house, text toggles, square swatches, 6 zones plus custom color, live glow, aria-live summary, "Get a quote for this look" fills the form.
+- Quote form: underline inputs, validates, opens a `mailto:` to the client email with everything prefilled. Tap-to-call, "Open email again" and "Copy request" fallbacks.
+- Team photo shown dark, desaturated, with a vignette (CSS only; the file is untouched).
+- Accessibility: skip link, landmarks, visible focus, 44px targets, AA contrast on text, labelled fields.
+
+## Editing the hero
+Light strings are the `<path id="s1..s8">` elements inside `#roof` in `index.html`; each `<g class="str" data-u="a,b">` lights while the ninja walks route vertices a to b. The route vertices (`RV`) are at the top of the `Hero` module in `script.js`. Ninja artwork is `#nj` / `#ninja-sym` in the same SVG (also reused in the designer).
 
 ## [TO CONFIRM] with the owner
 - Business hours (none shown, none in JSON-LD).

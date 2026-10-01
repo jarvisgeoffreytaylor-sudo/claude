@@ -1,6 +1,7 @@
 /* The Christmas Ninjas. Vanilla JS, no dependencies.
-   Modules: Roofline (scroll progress + nav),
-   Designer (light designer), Quote (form to mailto), plus a tiny footer helper. */
+   Modules: Hero (scroll-driven roofline opening), Menu, Reveal, Designer (light designer),
+   Quote (form to mailto), plus a tiny footer helper.
+   Nothing here gates content: without JS, or with prefers-reduced-motion, the hero is fully lit and static. */
 (function () {
   'use strict';
 
@@ -17,176 +18,295 @@
     for (var k in attrs) { el.setAttribute(k, attrs[k]); }
     return el;
   }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function smooth(t) { t = clamp(t, 0, 1); return t * t * (3 - 2 * t); }
   function listToText(items) {
     if (items.length <= 1) { return items.join(''); }
     return items.slice(0, -1).join(', ') + ' and ' + items[items.length - 1];
   }
+  function smoothOK() { return !reduceMotionQuery.matches; }
 
   /* ---------------------------------------------------------------
-     1. Roofline scroll progress + section nav
-     A ninja sneaks along the roofline as you scroll; bulbs switch on
-     behind him. Each peak is a link to a section.
+     1. Hero. The roof is pinned for one extra screen or two of scroll.
+        Scroll position IS the state: scroll, swipe, arrow keys, tap and the
+        "Turn on all lights" button all just move the page, and the ninja
+        walks the roofline stringing lights. Jumping to any link below the
+        hero (or the Skip link) lands past the runway with everything lit.
      --------------------------------------------------------------- */
-  var Roofline = (function () {
-    var nav = $('#roofline');
+  var Hero = (function () {
+    var run = $('#hero-run'), hero = $('#top'), scene = $('#hero-scene'), svg = $('#roof');
+    if (!run || !hero || !scene || !svg) { return {}; }
+    var ninja = $('#ninja'), pilot = $('.pilot', svg);
+    var btn = $('#lights-btn'), hint = $('#hero-hint'), status = $('#hero-status');
     var header = $('#site-header');
-    if (!nav || !header) { return {}; }
-    var svg = $('.roofline-svg', nav);
-    var items = $$('li', nav);
-    var links = items.map(function (li) { return $('a', li); });
-    var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
-    var N = links.length;
-    var BULB_COLORS = ['#ff5a5f', '#ffd98a', '#4ee08e', '#ffd98a'];
+    var active = root.classList.contains('motion');
 
-    var pts = [], cum = [], total = 0, peakIdx = [], peakLen = [];
-    var bulbs = [], bulbLens = [], lit = 0;
-    var ninja = null, edge = null;
-    var ticking = false, movingTimer = null, lastLen = -1;
-
-    function build() {
-      var W = nav.clientWidth, H = nav.clientHeight;
-      if (!W || !H) { return; }
-      while (svg.firstChild) { svg.removeChild(svg.firstChild); }
-      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-
-      var m = W >= 760 ? Math.max(56, Math.min(80, W * 0.05)) : Math.max(28, Math.min(64, W * 0.06));
-      var step = (W - 2 * m) / (N - 1);
-      var e = step * 0.38;
-      var vy = H - 16;
-      var PEAK_Y = 34;
-      pts = [[0, vy]];
-      peakIdx = [];
-      var xs = [];
-      for (var i = 0; i < N; i++) {
-        var x = m + i * step;
-        xs.push(x);
-        pts.push([Math.max(0, x - e), vy]);
-        pts.push([x, PEAK_Y]);
-        peakIdx.push(pts.length - 1);
-        pts.push([Math.min(W, x + e), vy]);
-      }
-      pts.push([W, vy]);
-
-      cum = [0];
-      for (var j = 1; j < pts.length; j++) {
-        cum.push(cum[j - 1] + Math.hypot(pts[j][0] - pts[j - 1][0], pts[j][1] - pts[j - 1][1]));
-      }
-      total = cum[cum.length - 1];
-      peakLen = peakIdx.map(function (idx) { return cum[idx]; });
-
-      var d = pts.map(function (p, k) { return (k ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
-      svg.appendChild(svgEl('path', { 'class': 'rl-fill', d: d + ' L' + W + ' ' + H + ' L0 ' + H + 'Z' }));
-      edge = svgEl('path', { 'class': 'rl-edge', d: d });
-      svg.appendChild(edge);
-
-      var g = svgEl('g', { 'class': 'rl-bulbs' });
-      bulbs = []; bulbLens = []; lit = 0;
-      var count = Math.floor(total / 15);
-      for (var b = 1; b < count; b++) {
-        var len = (b / count) * total;
-        var p = pointAt(len);
-        var c = svgEl('circle', { cx: p.x.toFixed(1), cy: p.y.toFixed(1), r: 3 });
-        c.style.setProperty('--c', BULB_COLORS[b % BULB_COLORS.length]);
-        g.appendChild(c);
-        bulbs.push(c);
-        bulbLens.push(len);
-      }
-      svg.appendChild(g);
-
-      ninja = svgEl('g', { 'class': 'rl-ninja' });
-      ninja.appendChild(svgEl('use', { href: '#ninja', width: 38, height: 35 }));
-      svg.appendChild(ninja);
-
-      items.forEach(function (li, k) {
-        li.style.left = xs[k].toFixed(1) + 'px';
-        $('.rl-bulb', li).style.top = (pts[peakIdx[k]][1] + 12) + 'px';
-      });
-      lastLen = -1;
-      update(true);
+    // Scene space = viewBox of #roof (house.jpg traced at 994 x 522).
+    var VB = { x: -150, w: 1320, h: 562 };
+    var CAM_MIN = 30, CAM_MAX = 1010;
+    // Route the ninja walks: left foot of the left gable, peaks and feet, to the far right gable.
+    var RV = [[108, 362], [186, 289], [270, 373], [294, 303], [323, 236], [412, 350], [500, 345], [620, 210], [728, 350], [752, 292], [872, 195], [947, 297]];
+    var cum = [0];
+    for (var i = 1; i < RV.length; i++) {
+      cum.push(cum[i - 1] + Math.hypot(RV[i][0] - RV[i - 1][0], RV[i][1] - RV[i - 1][1]));
+    }
+    var routeLen = cum[cum.length - 1];
+    function lenAtU(u) {
+      var k = Math.min(RV.length - 2, Math.floor(u));
+      return cum[k] + (cum[k + 1] - cum[k]) * (u - k);
+    }
+    function pointAt(L) {
+      L = clamp(L, 0, routeLen);
+      var k = 1;
+      while (k < cum.length - 1 && cum[k] < L) { k++; }
+      var t = (L - cum[k - 1]) / ((cum[k] - cum[k - 1]) || 1);
+      var a = RV[k - 1], b = RV[k];
+      return { x: a[0] + (b[0] - a[0]) * t, y: a[1] + (b[1] - a[1]) * t };
+    }
+    function angleAt(L) {
+      var a = pointAt(L - 14), b = pointAt(L + 14);
+      return Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
     }
 
-    function pointAt(len) {
-      len = Math.max(0, Math.min(total, len));
-      var i = 1;
-      while (i < cum.length - 1 && cum[i] < len) { i++; }
-      var seg = cum[i] - cum[i - 1] || 1;
-      var t = (len - cum[i - 1]) / seg;
-      var a = pts[i - 1], b = pts[i];
-      return { x: a[0] + (b[0] - a[0]) * t, y: a[1] + (b[1] - a[1]) * t, angle: Math.atan2(b[1] - a[1], b[0] - a[0]) };
+    var strings = $$('.str', svg).map(function (g) {
+      var n = g.getAttribute('data-n');
+      var u = g.getAttribute('data-u').split(',').map(Number);
+      return {
+        n: n, g: g, f: -1,
+        len: $('#s' + n, svg).getTotalLength(),
+        a: lenAtU(u[0]), b: lenAtU(u[1]),
+        mk: $('#m' + n + ' .mk', svg),
+        washes: $$('.wash[data-n="' + n + '"]', svg)
+      };
+    });
+
+    var cw = 0, ch = 0, s = 1, vw = 980, camCur = null;
+    var runPx = 1, heroH = 1;
+    var target = 0, cur = 0, running = false, prevP = 0, lastLit = -1;
+
+    function measure() {
+      heroH = hero.offsetHeight;
+      runPx = Math.max(1, run.offsetHeight - heroH);
+    }
+    function layout() {
+      cw = scene.clientWidth; ch = scene.clientHeight;
+      if (!cw || !ch) { return; }
+      // Full house edge to edge on wide screens; on tall or narrow screens zoom in and follow the ninja.
+      s = Math.min(2.8, Math.max(cw / (CAM_MAX - CAM_MIN), ch * 0.0021));
+      vw = cw / s;
+      svg.classList.add('cam');
+      svg.style.width = (VB.w * s) + 'px';
+      svg.style.height = (VB.h * s) + 'px';
     }
 
-    /* Section progress p in [0, N-1]. Integer values mean the section
-       top sits at the header edge. Handles short last sections. */
-    function progress() {
-      var y = window.pageYOffset;
-      var hh = header.offsetHeight;
-      var max = Math.max(1, root.scrollHeight - window.innerHeight);
-      var eff = targets.map(function (t, k) {
-        var top = t.getBoundingClientRect().top + y - hh;
-        return k === 0 ? 0 : Math.min(top, max - (N - 1 - k) * 24);
-      });
-      var k = N - 1;
-      while (k > 0 && y < eff[k]) { k--; }
-      if (k === N - 1) { return N - 1; }
-      var span = Math.max(1, eff[k + 1] - eff[k]);
-      return Math.max(0, Math.min(N - 1, k + (y - eff[k]) / span));
-    }
-
-    function update(force) {
-      ticking = false;
-      if (!pts.length) { return; }
-      var p = progress();
-      var active = Math.round(p);
-      links.forEach(function (a, k) {
-        if (k === active) { a.setAttribute('aria-current', 'true'); } else { a.removeAttribute('aria-current'); }
-      });
-      var reduce = reduceMotionQuery.matches;
-      var len;
-      if (reduce) {
-        len = peakLen[0];       // parked at the first peak, all lights already on
+    function setLight(st, f) {
+      if (f === st.f) { return; }
+      st.f = f;
+      if (f <= 0) {
+        st.g.classList.remove('on'); st.g.removeAttribute('mask');
       } else {
-        var i = Math.min(N - 2, Math.floor(p));
-        len = peakLen[i] + (peakLen[i + 1] - peakLen[i]) * (p - i);
+        st.g.classList.add('on');
+        if (f >= 1) { st.g.removeAttribute('mask'); }
+        else {
+          st.mk.style.strokeDasharray = (f * st.len).toFixed(1) + ' ' + (st.len * 3).toFixed(1);
+          st.g.setAttribute('mask', 'url(#m' + st.n + ')');
+        }
       }
-      items.forEach(function (li, k) {
-        $('.rl-bulb', li).classList.toggle('lit', reduce || p >= k - 0.02);
+      var w = smooth(f * 1.4);
+      st.washes.forEach(function (el) { el.style.opacity = w.toFixed(3); });
+    }
+
+    function render(p, instantCam) {
+      var L = p * routeLen;
+      var front = L - 9 * (1 - clamp((p - 0.97) / 0.03, 0, 1));
+      if (p >= 0.999) { front = routeLen + 1; }
+      strings.forEach(function (st) {
+        var f = clamp((front - st.a) / (st.b - st.a), 0, 1);
+        setLight(st, f < 0.004 ? 0 : (f > 0.996 ? 1 : f));
       });
 
-      if (force || len !== lastLen) {
-        var pt = pointAt(len);
-        var rot = Math.max(-22, Math.min(22, pt.angle * 57.3 * 0.6));
-        ninja.setAttribute('transform', 'translate(' + (pt.x - 19).toFixed(1) + ' ' + (pt.y - 32).toFixed(1) + ') rotate(' + rot.toFixed(1) + ' 19 32)');
-        var want = reduce ? bulbs.length : bulbLens.filter(function (l) { return l <= len + 1; }).length;
-        while (lit < want) { bulbs[lit].classList.add('on'); lit++; }
-        while (lit > want) { lit--; bulbs[lit].classList.remove('on'); }
-        if (!reduce && lastLen >= 0) {
-          ninja.classList.add('moving');
-          clearTimeout(movingTimer);
-          movingTimer = setTimeout(function () { ninja.classList.remove('moving'); }, 180);
+      var pt = pointAt(L);
+      var ang = clamp(angleAt(L) * 0.55, -26, 26);
+      var moving = Math.abs(p - prevP) > 0.00015;
+      prevP = p;
+      var bob = moving ? Math.sin(L * 0.32) * 1.1 : 0;
+      var sway = moving ? Math.sin(L * 0.32 + 1) * 2 : 0;
+      ninja.setAttribute('transform', 'translate(' + pt.x.toFixed(1) + ' ' + (pt.y + 1 + bob).toFixed(1) + ') rotate(' + (ang + sway).toFixed(1) + ')');
+      var lit = 0.3 + 0.7 * smooth(p / 0.1);
+      if (Math.abs(lit - lastLit) > 0.004) { ninja.style.setProperty('--lit', lit.toFixed(3)); lastLit = lit; }
+      if (pilot) { pilot.style.display = p > 0.07 ? 'none' : ''; pilot.style.opacity = (1 - smooth(p / 0.06)).toFixed(2); }
+
+      // camera: follow the ninja when the screen is narrower than the house
+      var want = pt.x - vw * 0.4;
+      var lo = CAM_MIN, hi = CAM_MAX - vw;
+      want = hi < lo ? (lo + hi) / 2 : clamp(want, lo, hi);
+      // on wide screens the finished house settles back to centre
+      if (hi - lo < 260 && hi >= lo) { want += ((lo + hi) / 2 - want) * smooth((p - 0.88) / 0.12); }
+      camCur = (camCur === null || instantCam) ? want : camCur + (want - camCur) * 0.2;
+      if (Math.abs(want - camCur) < 0.05) { camCur = want; }
+      svg.style.transform = 'translate3d(' + (-(camCur - VB.x) * s).toFixed(1) + 'px,0,0)';
+
+      var done = p >= 0.999;
+      if (slider) {
+        scene.setAttribute('aria-valuenow', String(Math.round(p * 100)));
+        scene.setAttribute('aria-valuetext', done ? 'Roofline fully lit' : Math.round(p * 100) + ' percent of the roofline lit');
+      }
+      if (hint) { hint.classList.toggle('gone', p > 0.02); }
+      if (btn) {
+        var label = done ? 'Replay' : 'Turn on all lights';
+        if (btn.textContent !== label) { btn.textContent = label; }
+        if (status) {
+          var msg = done ? 'All lights are on.' : '';
+          if (status.textContent !== msg) { status.textContent = msg; status.hidden = !done; if (hint) { hint.hidden = done; } }
         }
-        lastLen = len;
       }
     }
 
+    var slider = false;
+    function targetFromScroll() {
+      var y = -run.getBoundingClientRect().top;
+      return clamp(y / runPx, 0, 1);
+    }
+    var lastT = 0;
+    function tick(t) {
+      var dt = lastT ? Math.min(100, t - lastT) : 16;
+      lastT = t;
+      var d = target - cur;
+      if (Math.abs(d) < 0.0006) { cur = target; render(cur); running = false; lastT = 0; return; }
+      cur += d * (1 - Math.exp(-dt / 120));
+      render(cur);
+      window.requestAnimationFrame(tick);
+    }
     function onScroll() {
-      root.classList.toggle('scrolled', window.pageYOffset > 120);
-      if (!ticking) { ticking = true; window.requestAnimationFrame(function () { update(false); }); }
+      var y = window.pageYOffset;
+      if (header) { header.classList.toggle('solid', y > (active ? runPx : 0) + heroH - 90); }
+      if (!active) { return; }
+      target = targetFromScroll();
+      // far below the hero nobody sees the walk: jump straight to the end state
+      if (window.pageYOffset > runPx + heroH * 1.2) { cur = target; }
+      if (!running) { running = true; window.requestAnimationFrame(tick); }
+    }
+
+    function scrollToP(p, smoothly) {
+      var top = run.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({ top: top + clamp(p, 0, 1) * runPx, behavior: (smoothly && smoothOK()) ? 'smooth' : 'auto' });
+    }
+    function nudge(dp) { scrollToP(targetFromScroll() + dp, true); }
+
+    function setup() {
+      measure(); layout();
+      if (active) {
+        target = cur = targetFromScroll();
+        camCur = null;
+        render(cur, true);
+      } else {
+        // static: all lights on, ninja crouched on the middle peak
+        strings.forEach(function (st) { setLight(st, 1); });
+        var pk = lenAtU(7), pt = pointAt(pk);
+        ninja.setAttribute('transform', 'translate(' + pt.x + ' ' + (pt.y + 1) + ')');
+        ninja.style.setProperty('--lit', '1');
+        if (pilot) { pilot.style.display = 'none'; }
+        camCur = null;
+        var want = pt.x - vw * 0.5, lo = CAM_MIN, hi = CAM_MAX - vw;
+        want = hi < lo ? (lo + hi) / 2 : clamp(want, lo, hi);
+        svg.style.transform = 'translate3d(' + (-(want - VB.x) * s).toFixed(1) + 'px,0,0)';
+      }
+      onScroll();
+    }
+
+    if (active) {
+      slider = true;
+      scene.setAttribute('role', 'slider');
+      scene.setAttribute('tabindex', '0');
+      scene.setAttribute('aria-label', 'Guide the ninja along the roof. Left and right arrow keys move him; lights switch on behind him.');
+      scene.setAttribute('aria-valuemin', '0');
+      scene.setAttribute('aria-valuemax', '100');
+      if (hint) { hint.hidden = false; }
+      if (btn) { btn.hidden = false; }
+
+      scene.addEventListener('keydown', function (e) {
+        var k = e.key;
+        if (k === 'ArrowRight') { e.preventDefault(); nudge(0.1); }
+        else if (k === 'ArrowLeft') { e.preventDefault(); nudge(-0.1); }
+        else if (k === 'Home') { e.preventDefault(); scrollToP(0, true); }
+        else if (k === 'End') { e.preventDefault(); scrollToP(1, true); }
+      });
+
+      // swipe / drag left moves him on, right brings him back; a plain tap nudges him forward
+      var drag = null;
+      scene.addEventListener('pointerdown', function (e) {
+        if (e.target.closest && e.target.closest('a, button')) { return; }
+        if (e.pointerType === 'mouse' && e.button !== 0) { return; }
+        drag = { x: e.clientX, y: e.clientY, t: Date.now(), moved: false, sy: window.pageYOffset, id: e.pointerId };
+      });
+      scene.addEventListener('pointermove', function (e) {
+        if (!drag || e.pointerId !== drag.id) { return; }
+        var dx = e.clientX - drag.x;
+        if (Math.abs(dx) > 8) {
+          drag.moved = true;
+          window.scrollTo(0, drag.sy - dx * (runPx / (cw * 0.9)));
+        }
+      });
+      function endDrag(e) {
+        if (!drag || e.pointerId !== drag.id) { return; }
+        var d = drag; drag = null;
+        if (e.type === 'pointerup' && !d.moved && Math.abs(e.clientY - d.y) < 8 && Date.now() - d.t < 400) { nudge(0.12); }
+      }
+      scene.addEventListener('pointerup', endDrag);
+      scene.addEventListener('pointercancel', function () { drag = null; });
+
+      if (btn) {
+        btn.addEventListener('click', function () {
+          if (target >= 0.999) { scrollToP(0, false); } else { scrollToP(1, true); }
+        });
+      }
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('load', function () { update(true); });
-    if (reduceMotionQuery.addEventListener) { reduceMotionQuery.addEventListener('change', function () { update(true); }); }
+    window.addEventListener('load', function () { measure(); onScroll(); });
     if (window.ResizeObserver) {
-      var lastW = 0;
+      var lw = 0, lh = 0;
       new ResizeObserver(function () {
-        if (nav.clientWidth !== lastW) { lastW = nav.clientWidth; build(); }
-      }).observe(nav);
+        if (scene.clientWidth !== lw || scene.clientHeight !== lh) { lw = scene.clientWidth; lh = scene.clientHeight; setup(); }
+      }).observe(scene);
     } else {
-      window.addEventListener('resize', build);
+      window.addEventListener('resize', setup);
     }
-    build();
-    onScroll();
+    setup();
     return {};
+  })();
+
+  /* ---------------------------------------------------------------
+     1b. Menu toggle (small screens). Links are plain anchors without JS.
+     --------------------------------------------------------------- */
+  (function () {
+    var header = $('#site-header'), btn = $('#nav-toggle'), list = $('#nav-links');
+    if (!header || !btn || !list) { return; }
+    function setOpen(open) {
+      header.classList.toggle('nav-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    btn.addEventListener('click', function () { setOpen(btn.getAttribute('aria-expanded') !== 'true'); });
+    list.addEventListener('click', function (e) { if (e.target.closest('a')) { setOpen(false); } });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') { setOpen(false); btn.focus(); }
+    });
+  })();
+
+  /* ---------------------------------------------------------------
+     1c. Reveal: text lights up as it enters. Resting state is visible;
+         this only runs with JS, motion allowed and IntersectionObserver.
+     --------------------------------------------------------------- */
+  (function () {
+    var items = $$('.rv');
+    if (!items.length || !('IntersectionObserver' in window) || !root.classList.contains('motion')) { return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    root.classList.add('reveal-on');
+    items.forEach(function (el) { io.observe(el); });
   })();
 
   /* ---------------------------------------------------------------
@@ -206,8 +326,8 @@
       wreath:  { paths: [{ d: 'M332 292 A12 12 0 1 1 308 292 A12 12 0 1 1 332 292', closed: true, tight: true }], holidayOnly: true }
     };
     var MODES = {
-      holiday:   { label: 'Holiday', spacing: 17, r: 4.6, hint: 'Holiday: seasonal lights, put up and taken down.' },
-      permanent: { label: 'Permanent', spacing: 11, r: 3, hint: 'Permanent: track lighting that stays up, ready for any occasion.' }
+      holiday:   { label: 'Holiday', spacing: 17, r: 3.2, hint: 'Holiday: seasonal lights, put up and taken down.' },
+      permanent: { label: 'Permanent', spacing: 11, r: 2.2, hint: 'Permanent: track lighting that stays up, ready for any occasion.' }
     };
     var SCENES = {
       christmas: { label: 'Christmas',     mode: 'holiday',   palette: 'redgreen',     zones: ['roof', 'windows', 'trees', 'shrubs', 'wreath'] },
@@ -304,10 +424,8 @@
         layoutFor(id, state.mode).forEach(function (path) {
           g.appendChild(svgEl('path', { d: path.d, 'class': state.mode === 'permanent' ? 'track' : 'cord' }));
           path.points.forEach(function (p) {
-            g.appendChild(svgEl('circle', {
-              'class': 'bulb', cx: p[0].toFixed(1), cy: p[1].toFixed(1), r: m.r,
-              fill: colors[idx % colors.length]
-            }));
+            var col = colors[idx % colors.length];
+            g.appendChild(svgEl('circle', { 'class': 'bulb', cx: p[0].toFixed(1), cy: p[1].toFixed(1), r: m.r, fill: col }));
             idx++;
           });
         });
