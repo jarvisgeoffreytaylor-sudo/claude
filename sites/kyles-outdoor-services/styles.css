@@ -2,7 +2,7 @@
   --black: #000;
   --white: #fff;
   --cyan: #19d3e8;
-  --grey: #666;
+  --grey: #595959;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -11,64 +11,74 @@ body {
   margin: 0;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   font-size: 1.125rem;
-  line-height: 1.6;
+  line-height: 1.5;
   color: var(--black);
   background: var(--white);
-  padding-bottom: 4.5rem; /* room for mobile call button */
+  padding-bottom: 4.25rem; /* room for mobile call bar */
 }
 
-.wrap { width: min(100% - 2.5rem, 40rem); margin-inline: auto; }
+.wrap { width: min(100% - 2.5rem, 60rem); margin-inline: auto; }
 
 a { color: var(--black); text-decoration-color: var(--cyan); text-decoration-thickness: 3px; text-underline-offset: 4px; }
 a:focus-visible { outline: 3px solid var(--black); outline-offset: 3px; }
 
-h1, h2 { line-height: 1.2; margin: 0 0 1rem; }
-h1 { font-size: 2rem; max-width: 18ch; }
-h2 { font-size: 1.125rem; }
-p, ul { margin: 0 0 1rem; }
-ul { padding-left: 1.25rem; }
-
-section { margin-block: 4rem; }
-
-/* Header */
-.header { display: flex; align-items: center; gap: .75rem; padding-block: 1.25rem; border-bottom: 1px solid var(--black); }
-.header p { margin: 0; }
-.name { font-weight: 700; margin-right: auto; }
-.header-phone { white-space: nowrap; display: none; } /* mobile uses the call bar */
-
-/* Placeholders: plain, quiet */
-.logo-slot, .photo-slot {
-  display: flex; align-items: center; justify-content: center;
-  border: 1px solid var(--grey); color: var(--grey); font-size: .875rem;
-}
-.logo-slot { width: 2.5rem; height: 2.5rem; border-radius: 50%; flex: none; }
-.photo-slot { aspect-ratio: 3 / 2; margin-top: 3rem; }
+h1, h2 { line-height: 1.1; margin: 0; }
+p, ul { margin: 0; }
 
 /* Hero */
-.hero { margin-top: 3.5rem; }
+.hero { background: var(--black); color: var(--white); border-bottom: 4px solid var(--cyan); }
+.hero a { color: var(--white); }
+.hero a:focus-visible { outline-color: var(--white); }
+
+.top { display: flex; justify-content: space-between; align-items: baseline; padding-block: 1rem; font-size: 1rem; }
+.name { font-weight: 700; }
+.top-phone { display: none; } /* mobile uses the call bar */
+
+.hero-grid { display: grid; gap: 1.75rem; justify-items: center; padding-block: 1.5rem 3rem; }
+.hero-logo { display: block; width: min(100%, 16rem); height: auto; border-radius: 50%; border: 3px solid var(--cyan); }
+.hero-text { text-align: center; }
+h1 { font-size: 2.25rem; font-weight: 800; letter-spacing: -.01em; }
+.hero-text p { margin-top: 1rem; }
+.hero-text p:last-child { margin-top: 1.75rem; }
+
 .button {
-  display: inline-block; padding: .75rem 1.25rem; font-weight: 700;
-  background: var(--cyan); color: var(--black); text-decoration: none;
+  display: inline-block; padding: .875rem 1.5rem; font-weight: 700;
+  background: var(--cyan); color: var(--black) !important; text-decoration: none;
 }
-.button:hover { background: var(--black); color: var(--white); }
+.button:hover { background: var(--white); }
+
+/* Sections */
+main section { padding-block: 3rem 0; }
+main section:last-child { padding-bottom: 3.5rem; }
+h2 { font-size: .875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--grey); margin-bottom: .75rem; }
+
+.rows { list-style: none; padding: 0; border-top: 2px solid var(--black); }
+.rows li { padding: 1rem 0; border-bottom: 1px solid #bbb; font-size: 1.5rem; font-weight: 700; line-height: 1.2; }
+
+#contact p { margin-top: .75rem; }
+.big-phone { font-size: 2.25rem; font-weight: 800; line-height: 1.1; }
+.big-phone a { display: inline-block; padding-block: .25rem; }
+#contact a { font-weight: 700; }
+.muted { color: var(--grey); }
 
 /* Footer */
-.footer { padding-block: 1.5rem; border-top: 1px solid var(--black); font-size: .875rem; color: var(--grey); }
-.footer p { margin: 0; }
+.footer { padding-block: 1.25rem; border-top: 1px solid #bbb; font-size: .875rem; color: var(--grey); }
 
-/* Sticky call button, mobile only */
+/* Sticky call bar, mobile only */
 .callbar {
   position: fixed; inset: auto 0 0 0; padding: 1rem; text-align: center;
   background: var(--cyan); color: var(--black); font-weight: 700; text-decoration: none;
   border-top: 1px solid var(--black);
 }
 
-@media (min-width: 40rem) {
+@media (min-width: 48rem) {
   body { padding-bottom: 0; font-size: 1.25rem; }
-  h1 { font-size: 2.75rem; }
-  .header-phone { display: inline; }
+  .top-phone { display: inline; font-weight: 700; }
+  .hero-grid { grid-template-columns: auto 1fr; gap: 4rem; justify-items: start; align-items: center; padding-block: 2rem 4rem; }
+  .hero-logo { width: 18.75rem; } /* 300px: source is low-res, do not enlarge */
+  .hero-text { text-align: left; }
+  h1 { font-size: 3.25rem; max-width: 14ch; }
+  .rows li { font-size: 1.75rem; }
+  .big-phone { font-size: 3rem; }
   .callbar { display: none; }
 }
-
-.logo { width: 3rem; height: 3rem; border-radius: 50%; flex: none; }
-.photo { display: block; width: 100%; height: auto; margin-top: 3rem; }

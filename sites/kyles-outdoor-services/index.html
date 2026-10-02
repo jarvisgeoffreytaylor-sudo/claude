@@ -30,33 +30,37 @@
   </script>
 </head>
 <body>
-  <header class="header wrap">
-    <img class="logo" src="images/logo.png" alt="Kyle's Outdoor Services logo" width="48" height="48">
-    <p class="name">Kyle's Outdoor Services</p>
-    <a class="header-phone" href="tel:+12168704153">(216) 870-4153</a>
-  </header>
+  <div class="hero">
+    <header class="wrap top">
+      <p class="name">Kyle's Outdoor Services</p>
+      <a class="top-phone" href="tel:+12168704153">(216) 870-4153</a>
+    </header>
 
-  <main class="wrap">
-    <section class="hero">
-      <h1>Stump grinding and dumpsters in Cleveland, OH.</h1>
-      <p>We offer stump grinding, dumpsters and much more!</p>
-      <p><a class="button" href="tel:+12168704153">Call (216) 870-4153</a></p>
-    </section>
+    <div class="wrap hero-grid">
+      <img class="hero-logo" src="images/logo.png" alt="Kyle's Outdoor Services logo: a saw blade and tracked stump grinder in a black circle" width="300" height="300">
+      <div class="hero-text">
+        <h1>Stump grinding and dumpsters in Cleveland, OH.</h1>
+        <p>We offer stump grinding, dumpsters and much more!</p>
+        <p><a class="button" href="tel:+12168704153">Call (216) 870-4153</a></p>
+      </div>
+    </div>
+  </div>
 
-    <section>
-      <h2>Services</h2>
-      <ul>
+  <main>
+    <section class="wrap" aria-labelledby="services-h">
+      <h2 id="services-h">Services</h2>
+      <ul class="rows">
         <li>Stump grinding</li>
         <li>Dumpster rental</li>
         <li>More: just ask</li>
       </ul>
     </section>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Phone: <a href="tel:+12168704153">(216) 870-4153</a></p>
-      <p>Facebook: <a href="https://www.facebook.com/p/Kyles-Outdoor-Services-100086757270905/" rel="noopener">Kyle's Outdoor Services</a></p>
-      <p>Cleveland, OH</p>
+    <section class="wrap" id="contact" aria-labelledby="contact-h">
+      <h2 id="contact-h">Contact</h2>
+      <p class="big-phone"><a href="tel:+12168704153">(216) 870-4153</a></p>
+      <p><a href="https://www.facebook.com/p/Kyles-Outdoor-Services-100086757270905/" rel="noopener">Message us on Facebook</a></p>
+      <p class="muted">Cleveland, OH</p>
     </section>
   </main>
 
