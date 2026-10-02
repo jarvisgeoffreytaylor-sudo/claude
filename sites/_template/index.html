@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{BUSINESS_NAME}} | {{TITLE_SERVICES}} in {{CITY}}, {{STATE}}</title>
+  <meta name="description" content="{{BUSINESS_NAME}} in {{CITY}}, {{STATE}}. {{META_SERVICES}}. Call {{PHONE_DISPLAY}}.">
+  <meta name="theme-color" content="#0b0b0b">
+  <link rel="canonical" href="https://{{DOMAIN}}/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{BUSINESS_NAME}} | {{CITY}}, {{STATE}}">
+  <meta property="og:description" content="{{TAGLINE}} Call {{PHONE_DISPLAY}}.">
+  <meta property="og:url" content="https://{{DOMAIN}}/">
+  <!-- TODO: add <meta property="og:image" content="https://{{DOMAIN}}/images/og.jpg"> once a real client photo exists. -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- JSON-LD: use a more specific @type if it fits (HVACBusiness, Plumber, Electrician, RoofingContractor, GeneralContractor, ...).
+       Remove the "sameAs" block if there is no social URL. Add streetAddress/postalCode only if the client wants the address public.
+       Add "email", "openingHours", "priceRange" only with client-supplied values. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "{{BUSINESS_NAME}}",
+    "url": "https://{{DOMAIN}}/",
+    "telephone": "{{PHONE_E164}}",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "{{CITY}}",
+      "addressRegion": "{{STATE}}"
+    },
+    "areaServed": "{{SERVICE_AREA}}",
+    "sameAs": [
+      "{{SOCIAL_URL}}"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="#top" aria-label="{{BUSINESS_NAME}}, home">
+        <!-- LOGO: with a real logo file, replace the brand-mark span with
+             <img class="brand-logo" src="images/logo.svg" alt="" width="" height=""> (see images/README.md) -->
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">
+          <span class="brand-top">{{BRAND_LINE_1}}</span>
+          <span class="brand-script">{{BRAND_LINE_2}}</span>
+        </span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="#services">Services</a>
+        <a href="#how">How it works</a>
+        <a href="#area">Service area</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="hdr-phone" href="tel:{{PHONE_E164}}">
+        <span class="hdr-phone-label">Call</span> {{PHONE_DISPLAY}}
+      </a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="kicker">{{CITY}}, {{STATE}}</p>
+          <h1>{{HERO_HEADLINE}} <span class="accent">{{HERO_ACCENT}}</span></h1>
+          <p class="lede">{{TAGLINE}}</p>
+          <p class="hero-actions">
+            <a class="btn btn-primary" href="tel:{{PHONE_E164}}">Call {{PHONE_DISPLAY}}</a>
+            <a class="btn btn-ghost" href="{{SOCIAL_URL}}" rel="noopener" target="_blank">Message on {{SOCIAL_LABEL}}</a>
+          </p>
+          <p class="small">{{CONTACT_NOTE}}</p>
+        </div>
+        <figure class="hero-photo">
+          <!-- PHOTO SLOT: replace the .ph div with <img src="images/hero.jpg" alt="..." width="" height="">. See images/README.md -->
+          <div class="ph ph-hero" role="img" aria-label="Photo placeholder: {{HERO_PHOTO_NOTE}}">
+            <span class="ph-tag">PHOTO PLACEHOLDER</span>
+            <span class="ph-note">{{HERO_PHOTO_NOTE}}</span>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="wrap">
+        <h2><span class="num">01</span> What we do</h2>
+
+        <!-- One <article class="service"> per service. Copy/delete blocks as needed; photo side alternates automatically. -->
+        <article class="service">
+          <div class="service-text">
+            <h3>{{SERVICE_1_NAME}}</h3>
+            <p>{{SERVICE_1_DESCRIPTION}}</p>
+            <p><a class="textlink" href="tel:{{PHONE_E164}}">{{SERVICE_1_CTA}}</a></p>
+          </div>
+          <figure class="service-photo">
+            <!-- PHOTO SLOT: images/service-1.jpg -->
+            <div class="ph" role="img" aria-label="Photo placeholder: {{SERVICE_1_PHOTO_NOTE}}">
+              <span class="ph-tag">PHOTO PLACEHOLDER</span>
+              <span class="ph-note">{{SERVICE_1_PHOTO_NOTE}}</span>
+            </div>
+          </figure>
+        </article>
+
+        <article class="service">
+          <div class="service-text">
+            <h3>{{SERVICE_2_NAME}}</h3>
+            <p>{{SERVICE_2_DESCRIPTION}}</p>
+            <p><a class="textlink" href="tel:{{PHONE_E164}}">{{SERVICE_2_CTA}}</a></p>
+          </div>
+          <figure class="service-photo">
+            <!-- PHOTO SLOT: images/service-2.jpg -->
+            <div class="ph" role="img" aria-label="Photo placeholder: {{SERVICE_2_PHOTO_NOTE}}">
+              <span class="ph-tag">PHOTO PLACEHOLDER</span>
+              <span class="ph-note">{{SERVICE_2_PHOTO_NOTE}}</span>
+            </div>
+          </figure>
+        </article>
+
+        <article class="service">
+          <div class="service-text">
+            <h3>{{SERVICE_3_NAME}}</h3>
+            <p>{{SERVICE_3_DESCRIPTION}}</p>
+            <p><a class="textlink" href="tel:{{PHONE_E164}}">{{SERVICE_3_CTA}}</a></p>
+          </div>
+          <figure class="service-photo">
+            <!-- PHOTO SLOT: images/service-3.jpg -->
+            <div class="ph" role="img" aria-label="Photo placeholder: {{SERVICE_3_PHOTO_NOTE}}">
+              <span class="ph-tag">PHOTO PLACEHOLDER</span>
+              <span class="ph-note">{{SERVICE_3_PHOTO_NOTE}}</span>
+            </div>
+          </figure>
+        </article>
+
+        <p class="other">
+          <strong>{{OTHER_WORK_HEADING}}</strong> {{OTHER_WORK_TEXT}}
+        </p>
+      </div>
+    </section>
+
+    <section class="section dark" id="how">
+      <div class="wrap">
+        <h2><span class="num">02</span> How it works</h2>
+        <!-- Generic default steps. Confirm they match how the client really works (no quote? emergency calls? deposit?) and edit. -->
+        <ol class="steps">
+          <li><strong>Call or message.</strong> Tell us what you need and where you are.</li>
+          <li><strong>Get a quote.</strong> We go over the job and give you a quote.</li>
+          <li><strong>We schedule it.</strong> We pick a time and show up for the job.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- OPTIONAL: REVIEWS. Enable ONLY with real reviews the customer gave permission to publish.
+         Use their exact words and name (or initials) as supplied. Never write, edit for effect, or invent reviews or ratings.
+         To enable: delete the comment markers, add a nav link (<a href="#reviews">Reviews</a>), and renumber the h2 spans if you want.
+    <section class="section" id="reviews">
+      <div class="wrap">
+        <h2>What customers say</h2>
+        <div class="reviews">
+          <blockquote class="review">
+            <p>&ldquo;{{REVIEW_1_TEXT}}&rdquo;</p>
+            <cite>{{REVIEW_1_NAME}}</cite>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+    -->
+
+    <!-- OPTIONAL: LICENSES / INSURANCE. Enable ONLY with credentials the client confirms and can document
+         (license number and issuer, insurer, bonding). Never list a license, certification, or insurance that was not supplied and verified.
+    <section class="section" id="credentials">
+      <div class="wrap">
+        <h2>Licensed &amp; insured</h2>
+        <ul class="creds">
+          <li>{{LICENSE_NAME_AND_NUMBER}}</li>
+          <li>{{INSURANCE_DETAIL}}</li>
+        </ul>
+      </div>
+    </section>
+    -->
+
+    <section class="section" id="area">
+      <div class="wrap two-col">
+        <div>
+          <h2><span class="num">03</span> Service area</h2>
+          <p class="big">{{SERVICE_AREA}}</p>
+        </div>
+        <p>{{SERVICE_AREA_NOTE}}</p>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div class="wrap">
+        <h2><span class="num">04</span> Contact</h2>
+        <div class="contact-grid">
+          <div>
+            <p class="label">Phone</p>
+            <p><a class="phone-big" href="tel:{{PHONE_E164}}">{{PHONE_DISPLAY}}</a></p>
+            <p class="small">{{CONTACT_NOTE}}</p>
+          </div>
+          <div>
+            <p class="label">{{SOCIAL_LABEL}}</p>
+            <p><a class="textlink" href="{{SOCIAL_URL}}" rel="noopener" target="_blank">{{BUSINESS_NAME}} on {{SOCIAL_LABEL}}</a></p>
+            <p class="small">Send a message there if you would rather not call.</p>
+
+            <!-- OPTIONAL: HOURS. Enable ONLY with hours the client gives you. No hours = no hours block. Do not imply 24/7 unless they say so.
+                 Also add "openingHours" to the JSON-LD if you enable this.
+            <p class="label">Hours</p>
+            <dl class="hours">
+              <dt>{{HOURS_DAYS_1}}</dt><dd>{{HOURS_TIME_1}}</dd>
+              <dt>{{HOURS_DAYS_2}}</dt><dd>{{HOURS_TIME_2}}</dd>
+            </dl>
+            -->
+          </div>
+        </div>
+
+        <!-- OPTIONAL: QUOTE FORM. Enable ONLY after the client picks a working destination (form service endpoint or email)
+             and you have sent a test submission that arrived. A form that silently fails loses jobs. Add a privacy note if the client needs one.
+        <form class="quote-form" action="{{FORM_ACTION_URL}}" method="post">
+          <label>Name <input type="text" name="name" autocomplete="name" required></label>
+          <label>Phone <input type="tel" name="phone" autocomplete="tel" required></label>
+          <label>What do you need? <textarea name="message" required></textarea></label>
+          <button class="btn btn-primary" type="submit">Request a quote</button>
+        </form>
+        -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap foot">
+      <p><strong>{{BUSINESS_NAME}}</strong><br>{{CITY}}, {{STATE}}</p>
+      <p><a href="tel:{{PHONE_E164}}">{{PHONE_DISPLAY}}</a><br>
+         <a href="{{SOCIAL_URL}}" rel="noopener" target="_blank">{{SOCIAL_LABEL}}</a></p>
+    </div>
+  </footer>
+
+  <a class="callbar" href="tel:{{PHONE_E164}}" aria-label="Call {{BUSINESS_NAME}} at {{PHONE_DISPLAY}}">
+    Tap to call &nbsp;{{PHONE_DISPLAY}}
+  </a>
+</body>
+</html>
