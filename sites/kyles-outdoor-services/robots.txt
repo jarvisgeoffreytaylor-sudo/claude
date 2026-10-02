@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kyles-outdoor-services.netlify.app/sitemap.xml
