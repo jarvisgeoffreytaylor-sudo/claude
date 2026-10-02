@@ -1,6 +1,6 @@
 # Owner TODO (Kyle's Outdoor Services)
 
-Only verified facts are on the site: name, Cleveland OH, phone (216) 870-4153, Facebook link, stump grinding, dumpster rental, "more: just ask".
+Only verified facts are on the site: name, Cleveland OH, phone (216) 870-4153, Facebook link, stump grinding, dumpsters, "more: just ask".
 
 - [ ] Logo file (see `images/README.md`).
 - [ ] Hero photo (see `images/README.md`).
