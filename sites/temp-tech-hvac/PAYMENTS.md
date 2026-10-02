@@ -4,7 +4,7 @@ Real fact: Temp Tech charges a **$100 service call fee** (a show-up fee). The si
 
 ## Day-one model
 
-1. Disclose the fee on the site (done) and in the request payload (`feeAcknowledged: true`, `serviceCallFeeUsd: 100`).
+1. Disclose the fee on the site (done) and in the submitted request (`feeAcknowledged` = true, `serviceCallFeeUsd` = 100, stored with each Netlify Forms submission).
 2. Take **no card online**.
 3. Collect the fee at the visit.
 4. Quote any repair, get the customer's approval, then invoice after the work.
