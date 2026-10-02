@@ -55,6 +55,12 @@ h2 { font-size: .875rem; font-weight: 700; text-transform: uppercase; letter-spa
 .rows { list-style: none; padding: 0; border-top: 2px solid var(--black); }
 .rows li { padding: 1rem 0; border-bottom: 1px solid #bbb; font-size: 1.5rem; font-weight: 700; line-height: 1.2; }
 
+/* Facebook Page Plugin: wrapper caps width, iframe shrinks to fit (no overflow at 320px) */
+.fb-embed { max-width: 500px; margin-top: 1.25rem; overflow: hidden; }
+.fb-embed iframe { display: block; width: 100%; max-width: 100%; height: 700px; border: 0; }
+.fb-link { margin-top: 1rem; }
+.fb-link a { font-weight: 700; }
+
 #contact p { margin-top: .75rem; }
 .big-phone { font-size: 2.25rem; font-weight: 800; line-height: 1.1; }
 .big-phone a { display: inline-block; padding-block: .25rem; }
