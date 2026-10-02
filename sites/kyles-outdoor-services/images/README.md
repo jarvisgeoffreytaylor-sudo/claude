@@ -1,10 +1,4 @@
-# Images needed
+# Images
 
-No images yet. The page shows two plain outlined boxes. Replace each with an `<img>` in `index.html` (add real `alt`, `width`, `height`).
-
-| File | Where | What to drop in |
-|------|-------|-----------------|
-| `logo.png` or `logo.svg` | Header (the small circle labeled "logo") | Kyle's logo, square, about 96px |
-| `hero.jpg` | Under the hero button (the box labeled "photo") | One of Kyle's own photos, e.g. the stump grinder on a lawn |
-
-Tips: JPG/WebP, about 1600px wide max, under 300 KB. Photos must be Kyle's own.
+- `logo.png`: cropped from a Facebook screenshot (about 380px). Replace with the full-resolution logo, same filename.
+- No hero photo yet. Add one with `<img class="photo" src="images/hero.jpg" alt="..." width="" height="">` under the hero button in `index.html`. Use one of Kyle's own photos, e.g. the stump grinder on a lawn, about 1600px wide, JPG/WebP, under 300 KB.

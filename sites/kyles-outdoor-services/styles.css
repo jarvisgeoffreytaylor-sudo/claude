@@ -69,3 +69,6 @@ section { margin-block: 4rem; }
   .header-phone { display: inline; }
   .callbar { display: none; }
 }
+
+.logo { width: 3rem; height: 3rem; border-radius: 50%; flex: none; }
+.photo { display: block; width: 100%; height: auto; margin-top: 3rem; }
