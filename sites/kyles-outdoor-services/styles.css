@@ -55,9 +55,10 @@ h2 { font-size: .875rem; font-weight: 700; text-transform: uppercase; letter-spa
 .rows { list-style: none; padding: 0; border-top: 2px solid var(--black); }
 .rows li { padding: 1rem 0; border-bottom: 1px solid #bbb; font-size: 1.5rem; font-weight: 700; line-height: 1.2; }
 
-/* Facebook Page Plugin: wrapper caps width, iframe shrinks to fit (no overflow at 320px) */
-.fb-embed { max-width: 500px; margin-top: 1.25rem; overflow: hidden; }
-.fb-embed iframe { display: block; width: 100%; max-width: 100%; height: 700px; border: 0; }
+/* Facebook Page Plugin: fixed 500x700 iframe scaled by a tiny inline script to fit the wrapper.
+   Without JS the iframe shows at natural size and the wrapper clips it (no horizontal overflow). */
+.fb-embed { position: relative; width: 100%; max-width: 500px; aspect-ratio: 500 / 700; margin-top: 1.25rem; overflow: hidden; }
+.fb-embed iframe { position: absolute; top: 0; left: 0; display: block; width: 500px; max-width: none; height: 700px; border: 0; transform-origin: top left; }
 .fb-link { margin-top: 1rem; }
 .fb-link a { font-weight: 700; }
 
