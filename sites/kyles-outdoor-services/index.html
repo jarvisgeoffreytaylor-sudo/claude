@@ -74,6 +74,42 @@
       <p class="big-phone"><a href="tel:+12168704153">(216) 870-4153</a></p>
       <p><a href="https://www.facebook.com/p/Kyles-Outdoor-Services-100086757270905/" rel="noopener">Message us on Facebook</a></p>
       <p class="muted">Cleveland, OH</p>
+
+      <h3 class="form-h" id="form-h">Or send a message</h3>
+      <form class="form" name="contact" method="POST" action="/thanks.html" data-netlify="true" data-netlify-honeypot="bot-field" aria-labelledby="form-h">
+        <input type="hidden" name="form-name" value="contact">
+        <div class="hp">
+          <label>Don't fill this out <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+        </div>
+
+        <div class="field">
+          <label for="f-name">Name</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="f-phone">Phone</label>
+          <input id="f-phone" name="phone" type="tel" autocomplete="tel" required>
+        </div>
+        <div class="field">
+          <label for="f-email">Email <span class="opt">(optional)</span></label>
+          <input id="f-email" name="email" type="email" autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="f-need">What do you need?</label>
+          <select id="f-need" name="need">
+            <option>Stump grinding</option>
+            <option>Dumpsters</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-message">Message <span class="opt">(optional)</span></label>
+          <span class="hint" id="f-message-hint">Address or area, and anything we should know</span>
+          <textarea id="f-message" name="message" rows="5" aria-describedby="f-message-hint"></textarea>
+        </div>
+
+        <button class="button" type="submit">Send message</button>
+      </form>
     </section>
   </main>
 
