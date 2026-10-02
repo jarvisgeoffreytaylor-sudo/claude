@@ -705,7 +705,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
       </div>
       <p class="nojs-only">Online requests need JavaScript. Please call or email us.</p>
       <p>Day or night we handle emergency calls as a top priority. Service call fee: <span data-fee>$100</span>.</p>
-      <p class="note">Demo: the request form does not send anything yet.</p>
+      <p class="note" id="contactNote">Demo: the request form does not send anything yet.</p>
     </div>
   </div>
 </section>
@@ -841,12 +841,12 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   </form>
 </dialog>
 
-<!-- BOOKING WIDGET (demo, front-end only) -->
+<!-- BOOKING WIDGET (sent per BOOKING_MODE: Netlify Form, JSON endpoint, or demo) -->
 <dialog id="book" class="sheet" aria-labelledby="bookTitle">
   <form class="book" id="bookForm" novalidate>
     <div class="bk-head">
       <div>
-        <p class="bk-demo">Demo &ndash; nothing is sent</p>
+        <p class="bk-demo" id="bkDemoPill">Demo &ndash; nothing is sent</p>
         <h2 id="bookTitle">Request a visit</h2>
       </div>
       <button type="button" class="bk-close" id="bookClose" aria-label="Close request form">
@@ -889,7 +889,8 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
 
       <div data-step="2" hidden>
         <h3 tabindex="-1">Pick a preferred day and window</h3>
-        <p class="demo-note">Demo: days and windows are examples, not live availability. We call or text to confirm your exact time.</p>
+        <p class="demo-note" id="step2Demo">Demo: days and windows are examples, not live availability. We call or text to confirm your exact time.</p>
+        <p class="demo-note" id="step2Live" hidden>These are your preferences, not live availability. We call or text to confirm your exact time.</p>
         <fieldset>
           <legend>Preferred day</legend>
           <div class="days" id="days"></div>
@@ -933,6 +934,41 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   </form>
 </dialog>
 
+<!-- Static copies of the forms so Netlify Forms can detect them at deploy time. They are never shown, focusable or submitted by visitors:
+     the real submissions are sent by script (see BOOKING_MODE and FEEDBACK_MODE). Keep these field names identical to FORM_FIELDS in the script. -->
+<form name="request" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden aria-hidden="true" inert>
+  <input type="hidden" name="form-name" value="request">
+  <input type="text" name="bot-field" tabindex="-1" autocomplete="off">
+  <input type="hidden" name="service">
+  <input type="hidden" name="serviceId">
+  <input type="hidden" name="day">
+  <input type="hidden" name="window">
+  <input type="hidden" name="timezone">
+  <input type="hidden" name="name">
+  <input type="hidden" name="phone">
+  <input type="hidden" name="address">
+  <textarea name="note"></textarea>
+  <input type="hidden" name="indoorTempF">
+  <input type="hidden" name="indoorTempSource">
+  <input type="hidden" name="outdoorTempF">
+  <input type="hidden" name="feeAcknowledged">
+  <input type="hidden" name="serviceCallFeeUsd">
+  <input type="hidden" name="submittedAt">
+  <input type="hidden" name="pageUrl">
+</form>
+<form name="feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden aria-hidden="true" inert>
+  <input type="hidden" name="form-name" value="feedback">
+  <input type="text" name="bot-field" tabindex="-1" autocomplete="off">
+  <input type="hidden" name="rating">
+  <input type="hidden" name="services">
+  <input type="hidden" name="highlights">
+  <textarea name="text"></textarea>
+  <input type="hidden" name="name">
+  <input type="hidden" name="contact">
+  <input type="hidden" name="submittedAt">
+  <input type="hidden" name="pageUrl">
+</form>
+
 <script>
 (function(){
   'use strict';
@@ -944,13 +980,20 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
      confirms the real time by phone or text. Values marked REAL come from the
      client's site; everything else is a default guess the OWNER MUST CONFIRM.
      ===================================================================== */
-  var BOOKING_ENDPOINT='';        /* '' = demo mode: nothing is sent. Set to a URL to POST requests as JSON. */
+  /* How the request-a-visit form is sent (see SCHEDULING.md):
+       'netlify'  - POST to / as a Netlify Form named "request" (the static copy near the end of <body> lets Netlify detect it)
+       'endpoint' - POST JSON to BOOKING_ENDPOINT (below); with an empty endpoint nothing is sent
+       'demo'     - nothing is sent; the dialog is labelled as a demo
+     A preview copy may swap the marker line by exact string replace. Any other value behaves like 'demo'. */
+  var BOOKING_MODE = 'netlify' /*BOOKING_MODE*/;
+  var FEEDBACK_MODE = 'netlify' /*FEEDBACK_MODE*/;   /* same three modes for the private review feedback (Netlify form "feedback") */
+  var BOOKING_ENDPOINT='';        /* used only when BOOKING_MODE is 'endpoint': URL that receives the request as JSON */
   /* Gallery photos: normally read from photos/gallery.json (see PHOTOS.md). A build step may substitute inline data here instead:
      [{file:'ac-install-01.jpg', thumb:'ac-install-01-640.jpg', caption:'Condenser replacement', service:'Air Conditioning', date:'2026-09-14', alt:'...'}]
      File names are relative to the photos/ folder. sample:true shows a visible "Sample" badge and must never ship. No photos = no gallery section at all. */
   var GALLERY_DATA = [] /*GALLERY_DATA*/;
   var SERVICE_CALL_FEE_USD=100;   /* REAL: the $100 service call (show-up) fee. The one place the number lives; [data-fee] spans are filled from it. */
-  var FEEDBACK_ENDPOINT='';       /* '' = demo mode: private review feedback is not sent. Set to a URL to POST it as JSON. */
+  var FEEDBACK_ENDPOINT='';       /* used only when FEEDBACK_MODE is 'endpoint': URL that receives private feedback as JSON */
   var AVAILABILITY_ENDPOINT='';   /* '' = none. Optional GET returning {"requests":[{"day":"2026-10-05","window":"morning"}, ...]} */
   var AVAILABILITY={
     timezone:'America/New_York',  /* business timezone; days and windows are computed in this zone, whatever the visitor's device says */
@@ -1025,28 +1068,66 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
       .then(function(d){var l=Array.isArray(d)?d:(d&&d.requests);if(!Array.isArray(l))throw 0;setRequests(l);clearTimeout(to);return true})
       .catch(function(){clearTimeout(to);return false});
   }
-  /* POSTs the request as JSON. Demo mode (empty endpoint) sends nothing. Rejects with err.code = HTTP status where relevant. */
-  function submitBooking(payload){
-    if(!BOOKING_ENDPOINT)return Promise.resolve({ok:true,demo:true});
+  /* Field names each Netlify form accepts. They MUST match the hidden static forms near the end of <body>
+     (that is how Netlify detects them); a test compares the two lists so they cannot drift. Unknown keys are never sent. */
+  var FORM_FIELDS={
+    request:['form-name','bot-field','service','serviceId','day','window','timezone','name','phone','address','note','indoorTempF','indoorTempSource','outdoorTempF','feeAcknowledged','serviceCallFeeUsd','submittedAt','pageUrl'],
+    feedback:['form-name','bot-field','rating','services','highlights','text','name','contact','submittedAt','pageUrl']
+  };
+  function postWithTimeout(url,init){
     if(typeof fetch!=='function'||typeof AbortController==='undefined')return Promise.reject(new Error('unsupported'));
     var ac=new AbortController(),to=setTimeout(function(){ac.abort()},10000);
-    return fetch(BOOKING_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:ac.signal})
-      .then(function(r){clearTimeout(to);if(!r.ok){var e=new Error('http '+r.status);e.code=r.status;throw e}return {ok:true,demo:false}})
+    init.signal=ac.signal;
+    return fetch(url,init)
+      .then(function(r){clearTimeout(to);if(!r.ok){var e=new Error('http '+r.status);e.code=r.status;throw e}return {ok:true,demo:false}})   /* any 2xx is success; a followed 303 ends 200 */
       .catch(function(e){clearTimeout(to);throw e});
   }
-  /* Private feedback (review flow). Same pattern as submitBooking: demo when the endpoint is empty. */
+  /* Netlify Forms: urlencoded POST to / with form-name and an empty honeypot. A 404 (forms not detected / not enabled) rejects: never a false success. */
+  function netlifyPost(form,values){
+    var params=new URLSearchParams();
+    FORM_FIELDS[form].forEach(function(k){
+      if(k==='form-name')params.append(k,form);
+      else if(k==='bot-field')params.append(k,'');
+      else if(values[k]!==undefined&&values[k]!==null)params.append(k,String(values[k]));
+    });
+    return postWithTimeout('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()});
+  }
+  function isDemo(mode,endpoint){return mode==='netlify'?false:(mode==='endpoint'&&endpoint)?false:true}
+  /* Sends the request per BOOKING_MODE. Rejects with err.code = HTTP status where relevant. */
+  function submitBooking(payload){
+    if(BOOKING_MODE==='netlify'){
+      var v={};Object.keys(payload).forEach(function(k){v[k]=payload[k]});
+      v.submittedAt=new Date().toISOString();v.pageUrl=location.href;
+      return netlifyPost('request',v);
+    }
+    if(BOOKING_MODE==='endpoint'&&BOOKING_ENDPOINT)return postWithTimeout(BOOKING_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    return Promise.resolve({ok:true,demo:true});
+  }
+  /* Private review feedback, same modes. */
   function submitFeedback(payload){
-    if(!FEEDBACK_ENDPOINT)return Promise.resolve({ok:true,demo:true});
-    if(typeof fetch!=='function'||typeof AbortController==='undefined')return Promise.reject(new Error('unsupported'));
-    var ac=new AbortController(),to=setTimeout(function(){ac.abort()},10000);
-    return fetch(FEEDBACK_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:ac.signal})
-      .then(function(r){clearTimeout(to);if(!r.ok){var e=new Error('http '+r.status);e.code=r.status;throw e}return {ok:true,demo:false}})
-      .catch(function(e){clearTimeout(to);throw e});
+    if(FEEDBACK_MODE==='netlify'){
+      return netlifyPost('feedback',{rating:payload.rating,services:payload.service,highlights:Array.isArray(payload.stoodOut)?payload.stoodOut.join(', '):undefined,
+        text:payload.message,name:payload.name,contact:payload.contact,submittedAt:new Date().toISOString(),pageUrl:location.href});
+    }
+    if(FEEDBACK_MODE==='endpoint'&&FEEDBACK_ENDPOINT)return postWithTimeout(FEEDBACK_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    return Promise.resolve({ok:true,demo:true});
   }
   window.TempTechScheduling={AVAILABILITY:AVAILABILITY,getSlots:getSlots,setRequests:setRequests,loadRequests:loadRequests,submitBooking:submitBooking,
-    setEndpoints:function(o){if(o&&typeof o.feedback==='string')FEEDBACK_ENDPOINT=o.feedback;if(o&&typeof o.booking==='string')BOOKING_ENDPOINT=o.booking;if(o&&typeof o.availability==='string')AVAILABILITY_ENDPOINT=o.availability}};
+    FORM_FIELDS:FORM_FIELDS,
+    setModes:function(o){if(o&&typeof o.booking==='string')BOOKING_MODE=o.booking;if(o&&typeof o.feedback==='string')FEEDBACK_MODE=o.feedback;applyModeLabels()},
+    setEndpoints:function(o){if(o&&typeof o.feedback==='string'){FEEDBACK_ENDPOINT=o.feedback;FEEDBACK_MODE='endpoint'}if(o&&typeof o.booking==='string'){BOOKING_ENDPOINT=o.booking;BOOKING_MODE='endpoint'}applyModeLabels();if(o&&typeof o.availability==='string')AVAILABILITY_ENDPOINT=o.availability}};
 
   document.querySelectorAll('[data-fee]').forEach(function(e){e.textContent='$'+SERVICE_CALL_FEE_USD});
+  /* demo labelling shows only when nothing is really sent */
+  function applyModeLabels(){
+    var bd=isDemo(BOOKING_MODE,BOOKING_ENDPOINT),fd=isDemo(FEEDBACK_MODE,FEEDBACK_ENDPOINT);
+    document.getElementById('bkDemoPill').hidden=!bd;
+    document.getElementById('contactNote').hidden=!bd;
+    document.getElementById('step2Demo').hidden=!bd;document.getElementById('step2Live').hidden=bd;
+    var pf=document.getElementById('pfDemo');if(pf)pf.hidden=!fd;
+  }
+  applyModeLabels();
+  [].forEach.call(document.querySelectorAll('form[data-netlify]'),function(f){f.addEventListener('submit',function(e){e.preventDefault()})});   /* the static detection forms can never be submitted by hand */
 
   /* ---------- mobile menu ---------- */
   var mbtn=document.getElementById('menuBtn'),nav=document.getElementById('nav');
@@ -1495,7 +1576,7 @@ legend{font-family:var(--font-head);font-weight:500;font-size:.9rem;color:#fff;m
   });
   document.getElementById('rvPrivateBtn').addEventListener('click',function(){
     var box=document.getElementById('rvPrivate'),open=box.hidden;box.hidden=!open;this.setAttribute('aria-expanded',open);
-    if(open){var m=document.getElementById('pfMsg');if(!m.value)m.value=R.text.trim();document.getElementById('pfDemo').hidden=!!FEEDBACK_ENDPOINT;m.focus()}
+    if(open){var m=document.getElementById('pfMsg');if(!m.value)m.value=R.text.trim();applyModeLabels();m.focus()}
   });
   var pfSending=false;
   document.getElementById('pfSend').addEventListener('click',function(){
