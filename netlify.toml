@@ -1,0 +1,5 @@
+# Publishes only the Kyle's Outdoor Services site and strips internal notes.
+[build]
+  base = "sites/kyles-outdoor-services"
+  publish = "."
+  command = "rm -f TODO.md images/README.md"
