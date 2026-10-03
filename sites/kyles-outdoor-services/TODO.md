@@ -2,7 +2,7 @@
 
 Only verified facts are on the site: name, Cleveland OH, phone (216) 870-4153, Facebook link, stump grinding, "more: just ask".
 
-- [ ] Source notes: "Snow and ice removal, including salting" came from the owner verbally, not from the Facebook page. It is in the services list, form dropdown, hero line, meta description and og:description. "Tree removal" is only in the form dropdown, pending confirmation; it is not in the services list.
+- [ ] Source notes: "Snow and ice removal, including salting" and "Tree removal" came from the owner verbally, not from the Facebook page. Snow and ice removal is in the services list, form dropdown, hero line, meta description and og:description. Tree removal is now also on the services list, hero line, meta description and og:description (and the form dropdown), confirmed verbally by the owner.
 - [ ] Logo file (see `images/README.md`).
 - [ ] Hero photo (see `images/README.md`).
 - [ ] Confirm the list of other jobs you do. Site only says "More: just ask".
